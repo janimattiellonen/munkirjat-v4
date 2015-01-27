@@ -1,6 +1,7 @@
 package models.daos.slick
 
 import play.api.db.slick.Config.driver.simple._
+import scala.slick.jdbc.{GetResult => GR}
 
 object DBTableDefinitions {
 
@@ -102,5 +103,129 @@ object DBTableDefinitions {
   val slickPasswordInfos = TableQuery[PasswordInfos]
   val slickOAuth1Infos = TableQuery[OAuth1Infos]
   val slickOAuth2Infos = TableQuery[OAuth2Infos]
+
+
+
+  case class AuthorRow(id: Int, firstname: String, lastname: String)
+  implicit def GetResultAuthorRow(implicit e0: GR[Int], e1: GR[String]): GR[AuthorRow] = GR{
+    prs => import prs._
+      AuthorRow.tupled((<<[Int], <<[String], <<[String]))
+  }
+  class Author(_tableTag: Tag) extends Table[AuthorRow](_tableTag, "author") {
+    def * = (id, firstname, lastname) <> (AuthorRow.tupled, AuthorRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (id.?, firstname.?, lastname.?).shaped.<>({r=>import r._; _1.map(_=> AuthorRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column id DBType(INT), AutoInc, PrimaryKey */
+    val id: Column[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    /** Database column firstname DBType(VARCHAR), Length(45,true) */
+    val firstname: Column[String] = column[String]("firstname", O.Length(45,varying=true))
+    /** Database column lastname DBType(VARCHAR), Length(45,true) */
+    val lastname: Column[String] = column[String]("lastname", O.Length(45,varying=true))
+  }
+  lazy val Author = new TableQuery(tag => new Author(tag))
+
+  case class BookRow(id: Int, title: String, languageId: String, pageCount: Int, isRead: Boolean, isbn: Option[String] = None, createdAt: java.sql.Timestamp, updatedAt: java.sql.Timestamp, startedReading: Option[java.sql.Timestamp] = None, finishedReading: Option[java.sql.Timestamp] = None, rating: Option[Double] = None, price: Option[scala.math.BigDecimal] = None)
+  implicit def GetResultBookRow(implicit e0: GR[Int], e1: GR[String], e2: GR[Boolean], e3: GR[Option[String]], e4: GR[java.sql.Timestamp], e5: GR[Option[java.sql.Timestamp]], e6: GR[Option[Double]], e7: GR[Option[scala.math.BigDecimal]]): GR[BookRow] = GR{
+    prs => import prs._
+      BookRow.tupled((<<[Int], <<[String], <<[String], <<[Int], <<[Boolean], <<?[String], <<[java.sql.Timestamp], <<[java.sql.Timestamp], <<?[java.sql.Timestamp], <<?[java.sql.Timestamp], <<?[Double], <<?[scala.math.BigDecimal]))
+  }
+  class Book(_tableTag: Tag) extends Table[BookRow](_tableTag, "book") {
+    def * = (id, title, languageId, pageCount, isRead, isbn, createdAt, updatedAt, startedReading, finishedReading, rating, price) <> (BookRow.tupled, BookRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (id.?, title.?, languageId.?, pageCount.?, isRead.?, isbn, createdAt.?, updatedAt.?, startedReading, finishedReading, rating, price).shaped.<>({r=>import r._; _1.map(_=> BookRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6, _7.get, _8.get, _9, _10, _11, _12)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    val id: Column[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    val title: Column[String] = column[String]("title", O.Length(128,varying=true))
+    val languageId: Column[String] = column[String]("language_id", O.Length(3,varying=true))
+    val pageCount: Column[Int] = column[Int]("page_count")
+    val isRead: Column[Boolean] = column[Boolean]("is_read")
+    val isbn: Column[Option[String]] = column[Option[String]]("isbn", O.Length(40,varying=true), O.Default(None))
+    val createdAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("created_at")
+    val updatedAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("updated_at")
+    val startedReading: Column[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("started_reading", O.Default(None))
+    val finishedReading: Column[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("finished_reading", O.Default(None))
+    val rating: Column[Option[Double]] = column[Option[Double]]("rating", O.Default(None))
+    val price: Column[Option[scala.math.BigDecimal]] = column[Option[scala.math.BigDecimal]]("price", O.Default(None))
+  }
+  lazy val Book = new TableQuery(tag => new Book(tag))
+
+  case class BookAuthorRow(bookId: Int, authorId: Int)
+  implicit def GetResultBookAuthorRow(implicit e0: GR[Int]): GR[BookAuthorRow] = GR{
+    prs => import prs._
+      BookAuthorRow.tupled((<<[Int], <<[Int]))
+  }
+  class BookAuthor(_tableTag: Tag) extends Table[BookAuthorRow](_tableTag, "book_author") {
+    def * = (bookId, authorId) <> (BookAuthorRow.tupled, BookAuthorRow.unapply)
+    def ? = (bookId.?, authorId.?).shaped.<>({r=>import r._; _1.map(_=> BookAuthorRow.tupled((_1.get, _2.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    val bookId: Column[Int] = column[Int]("book_id")
+    val authorId: Column[Int] = column[Int]("author_id")
+
+    val pk = primaryKey("book_author_PK", (bookId, authorId))
+
+    lazy val authorFk = foreignKey("FK_9478D345F675F31B", authorId, Author)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    lazy val bookFk = foreignKey("FK_9478D34516A2B381", bookId, Book)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+  }
+  lazy val BookAuthor = new TableQuery(tag => new BookAuthor(tag))
+
+
+  case class GenreRow(id: Int, name: String)
+  implicit def GetResultGenreRow(implicit e0: GR[Int], e1: GR[String]): GR[GenreRow] = GR{
+    prs => import prs._
+      GenreRow.tupled((<<[Int], <<[String]))
+  }
+  class Genre(_tableTag: Tag) extends Table[GenreRow](_tableTag, "genre") {
+    def * = (id, name) <> (GenreRow.tupled, GenreRow.unapply)
+    def ? = (id.?, name.?).shaped.<>({r=>import r._; _1.map(_=> GenreRow.tupled((_1.get, _2.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    val id: Column[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    val name: Column[String] = column[String]("name", O.Length(45,varying=true))
+  }
+  lazy val Genre = new TableQuery(tag => new Genre(tag))
+
+  case class XiTagRow(id: Int, name: String, slug: String, createdAt: java.sql.Timestamp, updatedAt: java.sql.Timestamp)
+  implicit def GetResultXiTagRow(implicit e0: GR[Int], e1: GR[String], e2: GR[java.sql.Timestamp]): GR[XiTagRow] = GR{
+    prs => import prs._
+      XiTagRow.tupled((<<[Int], <<[String], <<[String], <<[java.sql.Timestamp], <<[java.sql.Timestamp]))
+  }
+  class XiTag(_tableTag: Tag) extends Table[XiTagRow](_tableTag, "xi_tag") {
+    def * = (id, name, slug, createdAt, updatedAt) <> (XiTagRow.tupled, XiTagRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = (id.?, name.?, slug.?, createdAt.?, updatedAt.?).shaped.<>({r=>import r._; _1.map(_=> XiTagRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    val id: Column[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    val name: Column[String] = column[String]("name", O.Length(50,varying=true))
+    val slug: Column[String] = column[String]("slug", O.Length(50,varying=true))
+    val createdAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("created_at")
+    val updatedAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("updated_at")
+
+    val index1 = index("UNIQ_AD374A565E237E06", name, unique=true)
+    val index2 = index("UNIQ_AD374A56989D9B62", slug, unique=true)
+  }
+  lazy val XiTag = new TableQuery(tag => new XiTag(tag))
+
+  case class XiTaggingRow(id: Int, tagId: Option[Int] = None, resourceType: String, resourceId: String, createdAt: java.sql.Timestamp, updatedAt: java.sql.Timestamp)
+  implicit def GetResultXiTaggingRow(implicit e0: GR[Int], e1: GR[Option[Int]], e2: GR[String], e3: GR[java.sql.Timestamp]): GR[XiTaggingRow] = GR{
+    prs => import prs._
+      XiTaggingRow.tupled((<<[Int], <<?[Int], <<[String], <<[String], <<[java.sql.Timestamp], <<[java.sql.Timestamp]))
+  }
+  class XiTagging(_tableTag: Tag) extends Table[XiTaggingRow](_tableTag, "xi_tagging") {
+    def * = (id, tagId, resourceType, resourceId, createdAt, updatedAt) <> (XiTaggingRow.tupled, XiTaggingRow.unapply)
+    def ? = (id.?, tagId, resourceType.?, resourceId.?, createdAt.?, updatedAt.?).shaped.<>({r=>import r._; _1.map(_=> XiTaggingRow.tupled((_1.get, _2, _3.get, _4.get, _5.get, _6.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    val id: Column[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    val tagId: Column[Option[Int]] = column[Option[Int]]("tag_id", O.Default(None))
+    val resourceType: Column[String] = column[String]("resource_type", O.Length(50,varying=true))
+    val resourceId: Column[String] = column[String]("resource_id", O.Length(50,varying=true))
+    val createdAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("created_at")
+    val updatedAt: Column[java.sql.Timestamp] = column[java.sql.Timestamp]("updated_at")
+
+    lazy val xiTagFk = foreignKey("FK_431075D2BAD26311", tagId, XiTag)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+
+    val index1 = index("tagging_idx", (tagId, resourceType, resourceId), unique=true)
+  }
+  lazy val XiTagging = new TableQuery(tag => new XiTagging(tag))
+
 
 }

@@ -11,6 +11,31 @@ GET         /authenticate/:provider          @controllers.SocialAuthController.a
 POST        /authenticate/credentials        @controllers.CredentialsAuthController.authenticate
 POST        /signUp                          @controllers.SignUpController.signUp
 
+
+POST    /authors					controllers.AuthorController.create
+GET     /authors/search				controllers.AuthorController.searchAuthors(q:Option[String])
+GET		/authors/:authorId			controllers.AuthorController.get(authorId: Int)
+PUT    	/authors/:authorId			controllers.AuthorController.update(authorId: Int)
+GET		/books/:bookId				controllers.BookController.get(bookId: Int)
+POST    /books						controllers.BookController.create
+PUT		/books/:bookId				controllers.BookController.update(bookId: Int)
+GET     /stats                      controllers.StatsController.stats
+GET     /stats/currently-reading    controllers.StatsController.currentlyReading
+GET     /stats/latest-read    		controllers.StatsController.latestRead
+GET     /stats/latest-added    		controllers.StatsController.latestAdded
+GET     /stats/favourite-authors 	controllers.StatsController.favouriteAuthors
+GET     /stats/recently-read		controllers.StatsController.recentlyRead
+GET     /stats/unread				controllers.StatsController.getUnread
+
+# AngularJS templates
+
+GET		/templates/home				@controllers.ApplicationController.homeTemplate
+GET		/templates/about			@controllers.ApplicationController.aboutTemplate
+GET		/templates/login			@controllers.ApplicationController.loginTemplate
+GET 	/templates/author-form		controllers.AuthorController.authorFormTemplate
+GET		/templates/book-form		controllers.BookController.bookFormTemplate
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                    controllers.Assets.at(path="/public", file)
 GET         /webjars/*file                   controllers.WebJarAssets.at(file)

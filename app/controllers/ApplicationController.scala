@@ -130,6 +130,10 @@ class ApplicationController @Inject() (implicit val env: Environment[User, Cache
     Ok(views.html.about(""))
   }
 
+  def bookTemplate = Action {
+    Ok(views.html.book(""))
+  }
+
   def loginTemplate = Action {
     Ok(views.html.loginform(""))
   }

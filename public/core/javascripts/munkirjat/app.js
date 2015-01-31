@@ -80,6 +80,7 @@ app.config(function ($translateProvider) {
 		formAuthorFirstname:	'Firstname',
 		formAuthorLastname:		'Lastname',
 		formAuthorSave:		'Save',
+		bookBy:				'by',
 		formBookTitle:		'Title',
 		formBookPageCount:	'Page count',
 		formBookAuthors:	'Authors',
@@ -97,7 +98,12 @@ app.config(function ($translateProvider) {
 		formBookSave:		'Save',
 		formLoginUsername:	'Username',
 		formLoginPassword:	'Password',
-		formLoginLogin:		'Login'
+		formLoginLogin:		'Login',
+		fi: 				'Finnish',
+		se:					'Swedish',
+		en:					'English',
+		yes:				'Yes',
+		no:					'No'
 	});
 	  
 	$translateProvider.preferredLanguage('en');
@@ -134,8 +140,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
         		url: '/new-book',
                 templateUrl: '/templates/book-form',
                 controller: 'BookController'
-            }).state('edit-book', {
-        		url: '/book/:bookId',
+            }).state('view-book', {
+				url: '/book/:bookId',
+				templateUrl: '/templates/view-book',
+				controller: 'BookController'
+			}).state('edit-book', {
+        		url: '/book/:bookId/edit',
                 templateUrl: '/templates/book-form',
                 controller: 'BookController'
             });
@@ -175,3 +185,30 @@ app.factory('Books', ['$resource', function($resource) {
 			}
 		);
 }]);
+
+
+app.filter('price', function() {
+    var priceFilter = function(input) {
+
+    	numeral.language('en', {
+            delimiters: {
+                thousands: ' ',
+                decimal: ','
+            },
+            abbreviations: {
+                thousand: 'k',
+                million: 'm',
+                billion: 'b',
+                trillion: 't'
+            },
+            currency: {
+                symbol: '€'
+            }
+        });
+
+    	numeral.language('en');
+        return numeral(100.00).format('0.00 $');
+    };
+
+    return priceFilter;
+});

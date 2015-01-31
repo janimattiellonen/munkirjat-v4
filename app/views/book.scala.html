@@ -1,0 +1,11 @@
+@(message: String)
+
+<div id="book-view">
+    <h1>{{book.title}}</h1>
+
+    <p><authors authors="book.authors"></authors></p>
+
+    <p><language language-code="book.languageId"></language> {{ book.price | price }}</p>
+
+    <p>{{ 'formBookIsRead' | translate }}: <yes-no choice="book.isRead"></yes-no></p>
+</div>

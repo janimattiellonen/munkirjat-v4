@@ -64,6 +64,39 @@ app.directive('favouriteAuthors', ['$compile', function($compile) {
 	}
 }]);
 
+app.directive('authors', ['$compile', function($compile) {
+	return {
+		restrict: 'E',
+		scope: {
+              authors: '='
+        },
+		replace: true,
+		template: '<span ng-repeat="author in authors">{{author.firstname}} {{author.lastname}}<span ng-if="!$last">, </span></span>'
+	}
+}]);
+
+app.directive('yesNo', ['$compile', function($compile) {
+	return {
+		restrict: 'E',
+		scope: {
+              choice: '='
+        },
+		replace: true,
+		template: '<span><span ng-if="choice">{{"yes" | translate}}</span><span ng-if="!choice">{{"no" | translate}}</span></span>'
+	}
+}]);
+
+app.directive('language', ['$compile', function($compile) {
+	return {
+		restrict: 'E',
+		scope: {
+              languageCode: '='
+        },
+		replace: true,
+		template: '<span>{{ languageCode | translate }}</span>'
+	}
+}]);
+
 app.directive('recentlyRead', ['$compile', function($compile) {
 	return {
 		restrict: 'E',

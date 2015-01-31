@@ -7,8 +7,56 @@ var app = angular.module('munkirjat', [
    'pascalprecht.translate',
    'ngSanitize',
    'ui.select'
-]);
-	
+]), permissionList;
+
+app.config(function($httpProvider) {
+	$httpProvider.responseInterceptors.push('securityInterceptor');
+}).provider('securityInterceptor', function() {
+	this.$get = function($location, $q) {
+        return function(promise) {
+          	return promise.then(null, function(response) {
+
+            	if(response.status === 403 || response.status === 401) {
+              		$location.path('/login');
+            	}
+            	return $q.reject(response);
+          	});
+        };
+    };
+ });
+
+var permissionList;
+app.run(function(permissions) {
+  permissions.setPermissions(permissionList)
+});
+
+angular.element(document).ready(function() {
+  $.get('/privileges', function(data) {
+    permissionList = data;
+    angular.bootstrap(document, ['munkirjat']);
+  });
+});
+
+angular.module('munkirjat')
+  .factory('permissions', function ($rootScope) {
+    var permissionList;
+    return {
+      setPermissions: function(permissions) {
+        permissionList = permissions;
+
+        $rootScope.$broadcast('permissionsChanged')
+      },
+      hasPermission: function (permission) {
+        permission = permission.trim();
+        return _.some(permissionList, function(item) {
+          if(_.isString(item))
+            return item.trim() === permission
+        });
+      }
+   };
+});
+
+
 app.config(function ($translateProvider) {
 	$translateProvider.translations('en', {
 		bookCount: 			'Books in bookshelf',

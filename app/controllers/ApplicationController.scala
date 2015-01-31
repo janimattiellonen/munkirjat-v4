@@ -7,7 +7,9 @@ import com.mohiva.play.silhouette.core.{Environment, LogoutEvent, Silhouette}
 import forms._
 import models.User
 import play.api._
+import play.api.libs.json.{Json, JsValue}
 import play.api.mvc._
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 import scala.slick.driver.MySQLDriver.simple._
 
@@ -80,6 +82,40 @@ class ApplicationController @Inject() (implicit val env: Environment[User, Cache
   def signOut = SecuredAction.async { implicit request =>
     env.eventBus.publish(LogoutEvent(request.identity, request, request2lang))
     Future.successful(env.authenticatorService.discard(Redirect(routes.ApplicationController.index)))
+  }
+
+  def privileges = UserAwareAction.async { implicit request =>
+    val base:List[String] = List(
+      "author:get",
+      "author:search",
+      "book:get",
+      "stats:stats",
+      "stats:currently-reading",
+      "stats:latest-read",
+      "stats:latest-added",
+      "stats:favourite-authors",
+      "stats:recently-read",
+      "stats:unread",
+      "templates:home",
+      "templates:about",
+      "templates:login"
+    )
+
+    val privileged:List[String] = List(
+      "author:create",
+      "author:update",
+      "author:edit",
+      "book:create",
+      "book:update",
+      "book:edit",
+      "templates:author-form",
+      "templates:book-form"
+    )
+
+    request.identity match {
+      case Some(user) => Future.successful(Ok(Json.toJson(base ++ privileged)))
+      case None => Future.successful(Ok(Json.toJson(base)))
+    }
   }
 
   def homeTemplate = Action {

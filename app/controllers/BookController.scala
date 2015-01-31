@@ -1,6 +1,10 @@
 package controllers
 
-import models.Book
+import javax.inject.Inject
+
+import com.mohiva.play.silhouette.contrib.services.CachedCookieAuthenticator
+import com.mohiva.play.silhouette.core.{Silhouette, Environment}
+import models.{User, Book}
 import models.daos.slick.DBTableDefinitions._
 import models.daos.slick.DBTableDefinitions.{Book => BookTable}
 import play.api.data.Forms._
@@ -9,9 +13,12 @@ import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
 
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.Future
 
-object BookController extends BaseController {
-	def create = Action { implicit request =>
+class BookController @Inject() (implicit val env: Environment[User, CachedCookieAuthenticator])
+	extends Silhouette[User, CachedCookieAuthenticator] with BaseController {
+
+	def create = SecuredAction.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 		val bookForm = createBookForm()
 		
@@ -25,21 +32,21 @@ object BookController extends BaseController {
 		bookForm.bindFromRequest.fold(
 			formWithErrors => {
 	            data += Map("errors" -> Json.toJson(formWithErrors.errors))
-		        	
-		        BadRequest(Json.toJson(data))	
+
+				Future.successful(BadRequest(Json.toJson(data)))
 			},
 			bookData => {
 			    
 			    data += Map(
 			    	"id" -> Json.toJson(getBookService().createBook(bookData))
 			    )
-	    
-				Ok(Json.toJson(data))					 
+
+				Future.successful(Ok(Json.toJson(data)))
 			}
 		)
 	}
 	
-	def update(bookId:Int) = Action { implicit request =>
+	def update(bookId:Int) = SecuredAction.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 	    
 		val bookForm = createBookForm()
@@ -54,14 +61,14 @@ object BookController extends BaseController {
 		bookForm.bindFromRequest.fold(
 			formWithErrors => {
 	            data += Map("errors" -> Json.toJson(formWithErrors.errors))
-		        	
-		        BadRequest(Json.toJson(data))	
+
+				Future.successful(BadRequest(Json.toJson(data)))
 			},
 			bookData => {
 			    
 			    getBookService().updateBook(bookId, bookData)
-			   			    
-				Ok(Json.toJson(data))					 
+
+				Future.successful(Ok(Json.toJson(data)))
 			}
 		)
 	}
@@ -82,7 +89,6 @@ object BookController extends BaseController {
 	            	"firstname" -> Json.toJson(author._2),
 	            	"lastname" -> Json.toJson(author._3)
 	            )
-	            
 	        }
 	        
 	    	data += Map(
@@ -121,7 +127,7 @@ object BookController extends BaseController {
 		return bookForm
 	}
 	
-	def bookFormTemplate = Action {
+	def bookFormTemplate = SecuredAction {
 	    Ok(views.html.bookform(""))
 	}
 }

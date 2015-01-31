@@ -8,9 +8,16 @@ import play.api.mvc._
 import models.daos.slick.DBTableDefinitions._
 import models.daos.slick.DBTableDefinitions.{Author => AuthorTable}
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.Future
+import javax.inject.Inject
+import com.mohiva.play.silhouette.contrib.services.CachedCookieAuthenticator
+import com.mohiva.play.silhouette.core.{Environment, LogoutEvent, Silhouette}
+import models.User
 
-object AuthorController extends BaseController {
-	def create = Action { implicit request =>
+class AuthorController @Inject() (implicit val env: Environment[User, CachedCookieAuthenticator])
+	extends Silhouette[User, CachedCookieAuthenticator] with BaseController {
+
+	def create = SecuredAction.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 		val authorForm = createAuthorForm()
 		
@@ -25,20 +32,20 @@ object AuthorController extends BaseController {
 			formWithErrors => {
 	            data += Map("errors" -> Json.toJson(formWithErrors.errors))
 		        	
-		        BadRequest(Json.toJson(data))	
+		        Future.successful(BadRequest(Json.toJson(data)))
 			},
 			authorData => {
 			    	 
 			    data += Map(
 			    	"id"  -> Json.toJson(getAuthorService().createAuthor(authorData))
 			    )
-			    
-				Ok(Json.toJson(data))					 
+
+				Future.successful(Ok(Json.toJson(data)))
 			}
 		)
 	}
 	
-	def update(authorId: Int) = Action { implicit request =>
+	def update(authorId: Int) = SecuredAction.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 	    
 		val authorForm = createAuthorForm()
@@ -53,14 +60,14 @@ object AuthorController extends BaseController {
 		authorForm.bindFromRequest.fold(
 			formWithErrors => {
 	            data += Map("errors" -> Json.toJson(formWithErrors.errors))
-		        	
-		        BadRequest(Json.toJson(data))	
+
+				Future.successful(BadRequest(Json.toJson(data)))
 			},
 			authorData => {
 			    
 			    getAuthorService().updateAuthor(authorId, authorData)
-			   			    
-				Ok(Json.toJson(data))					 
+
+				Future.successful(Ok(Json.toJson(data)))
 			}
 		)
 	}	
@@ -110,7 +117,7 @@ object AuthorController extends BaseController {
 	    Ok(Json.toJson(data))
 	}
 	
-	def authorFormTemplate = Action {
+	def authorFormTemplate = SecuredAction { implicit request =>
 	    Ok(views.html.authorform(""))
 	}
 }

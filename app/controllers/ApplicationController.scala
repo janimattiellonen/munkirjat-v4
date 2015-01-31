@@ -46,8 +46,7 @@ class ApplicationController @Inject() (implicit val env: Environment[User, Cache
       suppliers += (150, "The High Ground", "100 Coffee Lane", "Meadows", "CA", "93966")
   }
   */
-
-   Ok(views.html.index("s"))
+    Ok(views.html.index(request.identity))
   }
 
   /**

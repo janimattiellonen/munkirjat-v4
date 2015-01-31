@@ -1,3 +1,5 @@
+@(user: Option[models.User] = None)
+
 <div class="container">
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -13,8 +15,12 @@
 			<li><a href="/#">Home</a></li>
 			<li><a href="/#/about">About</a></li>
 			<li><a href="/#books">Books</a></li>
-			<li><a href="/#new-book">New book</a></li>
-			<li><a href="/#new-author">New author</a></li>
+
+			@user.map { u =>
+				<li><a href="/#new-book">New book</a></li>
+				<li><a href="/#new-author">New author</a></li>
+				<li><a href="@routes.ApplicationController.signOut">Sign Out</a></li>
+			}
 		</ul>
 	</div><!--/.nav-collapse -->
 </div>

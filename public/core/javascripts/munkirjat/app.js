@@ -212,3 +212,11 @@ app.filter('price', function() {
 
     return priceFilter;
 });
+
+app.filter('date', function() {
+    var dateFilter = function(input) {
+    	return moment.unix(input).format('DD.MM.YYYY');
+    };
+
+    return dateFilter;
+});

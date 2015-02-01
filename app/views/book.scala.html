@@ -3,9 +3,42 @@
 <div id="book-view">
     <h1>{{book.title}}</h1>
 
-    <p><authors authors="book.authors"></authors></p>
+    <div class="book-info">
 
-    <p><language language-code="book.languageId"></language> {{ book.price | price }}</p>
+        <div class="row">
+            <div class="title">{{ 'formBookAuthors' | translate }}</div>
 
-    <p>{{ 'formBookIsRead' | translate }}: <yes-no choice="book.isRead"></yes-no></p>
+            <div><authors authors="book.authors"></authors></div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookLanguage' | translate }}</div>
+
+            <div><language language-code="book.languageId"></language> </div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookPrice' | translate }}</div>
+
+            <div>{{ book.price | price }}</div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookIsRead' | translate }}</div>
+
+            <div><yes-no choice="book.isRead"></yes-no></div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formStartedReading' | translate }}</div>
+
+            <div>{{ book.startedReading }}</div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formFinishedReading' | translate }}</div>
+
+            <div>{{ book.finishedReading }}</div>
+        </div>
+    </div>
 </div>

@@ -192,6 +192,10 @@ body {
     .box {
     	width: 80%;
     	clear: both;
+
+    	&.h_taller {
+    		height: auto;
+    	}
     }
     
  	.rc_tl, .rc_tr, .rc_br, .rc_bl {
@@ -203,9 +207,7 @@ body {
 	margin-bottom: 15px;
 	float: left;
 	width: 100%;
-	
 
-	
 	p {
 		margin: 10px 0;
 	}
@@ -213,4 +215,22 @@ body {
 
 .errorized-message {
 	color: red;
+}
+
+.book-info {
+    display: table;
+    border-spacing: 0 8px;
+
+    .row {
+        display: table-row;
+
+        div {
+            display: table-cell;
+
+            &.title {
+                width: 10em;
+                font-weight: bold;
+            }
+        }
+    }
 }

@@ -3,7 +3,7 @@
  * @param string elementClass
  * @constructor
  */
-Munkirjat.Errorizer = function($containerElement, elementClass, aliases = null) {
+Munkirjat.Errorizer = function($containerElement, elementClass, aliases) {
     this.$containerElement  = $containerElement;
     this.elementClass       = elementClass;
     this.aliases			= aliases;
@@ -16,14 +16,12 @@ Munkirjat.Errorizer.prototype = (function()
             this.clear();
             var self = this;
             _.each(messages, function(values, key) {
-            	console.log("ssss: " + JSON.stringify(values))
                 self.errorizeElement(values);
             })
         },
 
         errorizeElement: function(error) {
         	
-        	// error = "ssss: {"key":"title","message":"Title is required"}"
         	targetName = this.getMapping(error);
         	
             $(this.$containerElement).addClass('errorized');
@@ -44,16 +42,12 @@ Munkirjat.Errorizer.prototype = (function()
         },
         
         getMapping: function(error) {
-        	console.log("hah: " + JSON.stringify(error));
         	var value = _.filter(this.aliases, function(item) {
-        		console.log("wur: " + JSON.stringify(item), "hah: " + JSON.stringify(error));
-        		
+
         		return item.key === error.key;
         	}, error);
         	
-        	console.log("value: " + JSON.stringify(value) + ", ee: " + error.key);
         	var retVal = value.length === 1 ? value[0].alias : error.key;
-        	console.log("RETVAL: " + retVal);
         	return retVal;
         }
     }

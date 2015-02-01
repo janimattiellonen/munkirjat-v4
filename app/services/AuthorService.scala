@@ -24,13 +24,12 @@ class AuthorService(val authors:TableQuery[AuthorTable], val bookAuthors:TableQu
 	
 	def searchAuthors(term:String):Seq[(Int, String, String)] = {
 	    db.withSession { implicit session =>            
-	        
 	        val query = for {
-			  author <- authors if author.firstname.like(term + "%") || author.lastname.like(term + "%")
-			} yield (author.id, author.firstname, author.lastname)
+			        author <- authors if author.firstname.like(term + "%") || author.lastname.like(term + "%")
+			    } yield (author.id, author.firstname, author.lastname)
 			
-			query.run
-        }
+			    query.run
+      }
 	}
 	
 	def getAuthor(authorId:Int):Option[AuthorRow] = {

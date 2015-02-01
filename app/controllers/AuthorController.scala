@@ -77,18 +77,24 @@ class AuthorController @Inject() (implicit val env: Environment[User, CachedCook
 	    val result:Option[AuthorRow] = getAuthorService().getAuthor(authorId)
 	    
 	    val author:AuthorRow = result.getOrElse(null)
-	    
-	    if (null != author) {
 
-	    	data += Map(
-	    		"id" 			-> Json.toJson(author.id),
-	    		"firstname"		-> Json.toJson(author.firstname),
-	    		"lastname"		-> Json.toJson(author.lastname)
-	    	)  
+	    if (null != author) {
+          val books = getBookService().getBooksFor(authorId)
+
+          data += Map(
+              "id" 			-> Json.toJson(author.id),
+              "firstname"		-> Json.toJson(author.firstname),
+              "lastname"		-> Json.toJson(author.lastname),
+              "books"       -> Json.toJson(mapBooks(books))
+          )
 	    }
 	    
 		Ok(Json.toJson(data))
 	}
+
+  def mapBooks(books:List[(Int, String)]) = {
+      for (book <- books) yield Map("id" -> Json.toJson(book._1), "title" -> Json.toJson(book._2))
+  }
 	
 	def createAuthorForm(): Form[Author] = {
 		val authorForm = Form(
@@ -120,4 +126,8 @@ class AuthorController @Inject() (implicit val env: Environment[User, CachedCook
 	def authorFormTemplate = SecuredAction { implicit request =>
 	    Ok(views.html.authorform(""))
 	}
+
+  def authorTemplate = Action { implicit request =>
+    Ok(views.html.author(""))
+  }
 }

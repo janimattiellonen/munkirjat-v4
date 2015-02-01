@@ -6,14 +6,17 @@ app.controller('AuthorController', ['$rootScope', '$scope', '$stateParams', '$st
         	id:			undefined !== $stateParams.authorId ? $stateParams.authorId : null,
         	firstname: 	"",
         	lastname: 	"",
-
+        	books:       []
         };
         
         $scope.saveAuthor = function() {
         	
         	var method = null !== $scope.author.id ? Authors.update : Authors.save;
-        	
-        	method($scope.author, function(result) {
+
+            var authorCopy = Object.create($scope.author);
+            console.log(authorCopy);
+            authorCopy.books = [];
+        	method(authorCopy, function(result) {
         		$scope.author.id = result[0].id;     	
         	}, function(result) {
         		errorizer.errorize(result.data[0].errors);

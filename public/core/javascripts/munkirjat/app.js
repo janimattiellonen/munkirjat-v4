@@ -133,8 +133,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 templateUrl: '/templates/author-form',
                 controller: 'AuthorController'
             }).state('edit-author', {
-        		url: '/author/:authorId',
+        		url: '/author/:authorId/edit',
                 templateUrl: '/templates/author-form',
+                controller: 'AuthorController'
+            }).state('view-author', {
+                url: '/author/:authorId',
+                templateUrl: '/templates/view-author',
                 controller: 'AuthorController'
             }).state('new-book', {
         		url: '/new-book',

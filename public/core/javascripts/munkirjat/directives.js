@@ -55,7 +55,7 @@ app.directive('favouriteAuthors', ['$compile', function($compile) {
 	return {
 		restrict: 'E',
 		replace: true,
-		template: '<div class="box h_tallest"><h2 translate="favouriteAuthors"></h2><ul><li ng-repeat="item in favouriteAuthors"><a href="#/book/{{ item.id }}">{{ item.firstname }} {{ item.lastname}} ({{ item.amount }})</a></li></ul></div>',
+		template: '<div class="box h_tallest"><h2 translate="favouriteAuthors"></h2><ul><li ng-repeat="item in favouriteAuthors"><a href="#/author/{{ item.id }}">{{ item.firstname }} {{ item.lastname}} ({{ item.amount }})</a></li></ul></div>',
 		controller: function($scope, $element, $attrs, $location, Stats) {
 			Stats.favouriteAuthors({}, function(result) {
 				$scope.favouriteAuthors = result;
@@ -198,9 +198,7 @@ app.directive('authorSelector', ['$compile', function($compile) {
 	                initSelection : function (element, callback) {
 	                    var data = [];
 	                    $(element.val().split(",")).each(function () {
-	                       // data.push("lus");
 	                    });
-	                    //callback({firstname: "f", lastname: "ss"});
 	                }
 				});
 			});

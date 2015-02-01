@@ -1,0 +1,10 @@
+@(message: String)
+
+<div id="author-view">
+    <h1>{{ author.firstname }} {{ author.lastname }}</h1>
+
+    <div class="author-book-list">
+        <div class="book" ng-repeat="book in author.books"><a href="#/book/{{ book.id }}">{{ book.title }}</a></div>
+
+    </div>
+</div>

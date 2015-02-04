@@ -37,12 +37,13 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
         }
     }
 
-    def getBooksFor(authorId:Int): List[(Int, String)] = {
+    def getBooksFor(authorId:Int): List[(Int, String, Boolean)] = {
         db.withSession { implicit session =>
-          val supplierById = Q[Int, (Int, String)] + """
+          val supplierById = Q[Int, (Int, String, Boolean)] + """
               SELECT
                   b.id,
-                  b.title
+                  b.title,
+                  b.is_read AS isRead
               FROM
                   book AS b LEFT JOIN book_author AS ba ON b.id = ba.book_id
               WHERE

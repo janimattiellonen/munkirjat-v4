@@ -26,6 +26,20 @@ app.controller('AuthorController', ['$rootScope', '$scope', '$stateParams', '$st
         $scope.loadAuthorDetails = function(authorId) {
         	Authors.query({authorId: authorId}, function(data) {
         		$scope.author = data[0];
+
+                function chunk(src, chunkSize) {
+                    var arr = [];
+
+                    for (var i = 0; i < src.length; i += chunkSize) {
+                        arr.push(src.slice(i, i + chunkSize));
+                    }
+
+                    return arr;
+                }
+
+                $scope.author.books = chunk($scope.author.books, 25);
+
+
         	}, function(data) {
         		alert("NOT OK: " + JSON.stringify(data));
         	});

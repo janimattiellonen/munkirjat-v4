@@ -70,16 +70,8 @@ body {
 	    position: relative;
 	    
 	    #page {
-			padding: 80px 50px 50px 50px;
+			padding: 80px 50px 75px 50px;
 		}
-	    
-	    div.inner-container {
-	    	width: 85%;
-			float: left;
-			padding-bottom: 50px;
-	    
-	    }
-
     }
     
    	div#main-container:after {
@@ -118,17 +110,24 @@ body {
 	h3 {
 		font-size: 1em;
 	}
-	
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-		li {
-			margin-bottom: 5px;
-		}
-	}
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+        margin-bottom: 5px;
+    }
+}
+
+a.is-read {
+    color: black;
+
+    &:hover {
+        color: #2a6496;
+    }
+}
 
 .h_medium {
 	height: 125px;
@@ -186,23 +185,6 @@ body {
 	display: hidden;
 }
 
-
-@media screen and (max-width: 997px) {
-
-    .box {
-    	width: 80%;
-    	clear: both;
-
-    	&.h_taller {
-    		height: auto;
-    	}
-    }
-    
- 	.rc_tl, .rc_tr, .rc_br, .rc_bl {
-    	border-radius: 0;
-    }
-}
-
 .form-group {
 	margin-bottom: 15px;
 	float: left;
@@ -231,6 +213,37 @@ body {
                 width: 10em;
                 font-weight: bold;
             }
+        }
+    }
+}
+
+.author-book-list {
+    width: 100%;
+    float: left;
+    margin-bottom: 75px;
+
+    div {
+       width: 50%;
+       float: left;
+    }
+}
+
+@media screen and (max-width: 997px) {
+
+    .box {
+    	width: 80%;
+    	clear: both;
+        height: auto;
+    }
+    
+ 	.rc_tl, .rc_tr, .rc_br, .rc_bl {
+    	border-radius: 0;
+    }
+
+    .author-book-list {
+
+        div {
+            width: 100%;
         }
     }
 }

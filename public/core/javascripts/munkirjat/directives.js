@@ -207,29 +207,41 @@ app.directive('authorSelector', ['$compile', function($compile) {
 }]);
 
 app.directive('hasPermission', function(permissions) {
-  return {
-    link: function(scope, element, attrs) {
-      if(!_.isString(attrs.hasPermission)) {
-        throw "hasPermission value must be a string";
-      }
+    return {
+        link: function(scope, element, attrs) {
 
-      var value = attrs.hasPermission.trim();
+            if (!_.isString(attrs.hasPermission)) {
+                throw "hasPermission value must be a string";
+            }
 
-      var notPermissionFlag = value[0] === '!';
-      if(notPermissionFlag) {
-        value = value.slice(1).trim();
-      }
+            var value = attrs.hasPermission.trim();
+            var notPermissionFlag = value[0] === '!';
 
-      function toggleVisibilityBasedOnPermission() {
-        var hasPermission = permissions.hasPermission(value);
+            if (notPermissionFlag) {
+                value = value.slice(1).trim();
+            }
 
-        if(hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag)
-          element.show();
-        else
-          element.hide();
-      }
-      toggleVisibilityBasedOnPermission();
-      scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
-    }
-  };
+            function toggleVisibilityBasedOnPermission() {
+                var hasPermission = permissions.hasPermission(value);
+
+                if (hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag) {
+                    element.show();
+                } else {
+                    element.hide();
+                }
+            }
+
+            toggleVisibilityBasedOnPermission();
+            scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
+        }
+    };
 });
+
+app.directive('books', ['$compile', function($compile) {
+	return {
+		restrict: 'E',
+		scope: true,
+		replace: true,
+		template: '<div ng-repeat="bookArr in author.books"><ul><li ng-repeat="book in bookArr"><a ng-class="{\'is-read\': book.isRead}" href="#/book/{{ book.id }}">{{ book.title }}</a></li></ul></div>'
+	}
+}]);

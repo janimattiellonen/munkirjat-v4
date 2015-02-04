@@ -38,35 +38,6 @@ class SignUpController @Inject() (
    * @return The result to display.
    */
   def signUp = Action.async { implicit request =>
-    SignUpForm.form.bindFromRequest.fold (
-      form => Future.successful(BadRequest(views.html.signUp(form))),
-      data => {
-        val loginInfo = LoginInfo(CredentialsProvider.Credentials, data.email)
-        val authInfo = passwordHasher.hash(data.password)
-        val user = User(
-          userID = UUID.randomUUID(),
-          loginInfo = loginInfo,
-          firstName = Some(data.firstName),
-          lastName = Some(data.lastName),
-          fullName = Some(data.firstName + " " + data.lastName),
-          email = Some(data.email),
-          avatarURL = None
-        )
-        for {
-          avatar <- avatarService.retrieveURL(data.email)
-          user <- userService.save(user.copy(avatarURL = avatar))
-          authInfo <- authInfoService.save(loginInfo, authInfo)
-          maybeAuthenticator <- env.authenticatorService.create(user)
-        } yield {
-          maybeAuthenticator match {
-            case Some(authenticator) =>
-              env.eventBus.publish(SignUpEvent(user, request, request2lang))
-              env.eventBus.publish(LoginEvent(user, request, request2lang))
-              env.authenticatorService.send(authenticator, Redirect(routes.ApplicationController.index))
-            case None => throw new AuthenticationException("Couldn't create an authenticator")
-          }
-        }
-      }
-    )
+    Future.successful(Forbidden("Registration is forbidden"))
   }
 }

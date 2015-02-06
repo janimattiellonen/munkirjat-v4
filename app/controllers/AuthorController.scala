@@ -92,7 +92,7 @@ class AuthorController @Inject() (implicit val env: Environment[User, CachedCook
 		Ok(Json.toJson(data))
 	}
 
-  def mapBooks(books:List[(Int, String, Boolean)]) = {
+  def mapBooks(books:List[(Int, String)]) = {
       for (book <- books) yield Map("id" -> Json.toJson(book._1), "title" -> Json.toJson(book._2), "isRead" -> Json.toJson(book._3))
   }
 	

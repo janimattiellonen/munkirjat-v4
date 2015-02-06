@@ -33,8 +33,11 @@
 	"formBookEnglish":    "English",
 	"formBookSave":    "Save",
     "formBookSaved":    "Book saved",
-    "formBookFailedSaving": "Could not save book",
+    "formBookFailedSaving": "Could not create book",
     "formBookFailedLoading":  "Could not load book details",
+    "formAuthorSaved":    "Author saved",
+    "formAuthorFailedSaving": "Could not create author",
+    "formAuthorFailedLoading":  "Could not load author details",
 	
 	"error": {
 		"real": "Not a valid number",

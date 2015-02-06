@@ -13,13 +13,23 @@ app.controller('AuthorController', ['$rootScope', '$scope', '$stateParams', '$st
         	
         	var method = null !== $scope.author.id ? Authors.update : Authors.save;
 
-            var authorCopy = Object.create($scope.author);
-            console.log(authorCopy);
-            authorCopy.books = [];
-        	method(authorCopy, function(result) {
-        		$scope.author.id = result[0].id;     	
+            var authorData = {
+                id: $scope.author.id,
+                firstname: $scope.author.firstname,
+                lastname: $scope.author.lastname
+            };
+
+        	method(authorData, function(result) {
+        	    if (method == Authors.save ) {
+        	        $scope.author.id = result[0].id;
+        	    }
+                Munkirjat.Notifier.success(i18n.t('formAuthorSaved'));
         	}, function(result) {
         		errorizer.errorize(result.data[0].errors);
+
+                if (result.status == "500") {
+        		    Munkirjat.Notifier.error(i18n.t('formAuthorFailedSaving'));
+                }
         	});
         };
         
@@ -41,7 +51,7 @@ app.controller('AuthorController', ['$rootScope', '$scope', '$stateParams', '$st
 
 
         	}, function(data) {
-        		alert("NOT OK: " + JSON.stringify(data));
+        		Munkirjat.Notifier.error(i18n.t('formAuthorFailedLoading'));
         	});
         }
         

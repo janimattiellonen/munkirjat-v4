@@ -37,8 +37,6 @@ app.controller('BookController', ['$rootScope', '$scope', '$stateParams', '$stat
 
         		if (result.status == "500") {
         		    Munkirjat.Notifier.error(i18n.t('formBookFailedSaving'));
-        		} else {
-        		    Munkirjat.Notifier.information("OK?");
         		}
         	});
         };

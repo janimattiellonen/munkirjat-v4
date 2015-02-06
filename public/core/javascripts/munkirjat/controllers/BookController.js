@@ -1,7 +1,12 @@
 app.controller('BookController', ['$rootScope', '$scope', '$stateParams', '$state', 'Books',
     function BookController($rootScope, $scope, $stateParams, $state, Books) {
-		var errorizer = new Munkirjat.Errorizer($('#book-creation'), 'form-group', [{key: 'authors[0]', alias: 'authors'}, {key: 'languageId', alias: 'language'}]);
-		
+		var errorizer = new Munkirjat.Errorizer(
+		    $('#book-creation'),
+		    'form-group',
+		    [{key: 'authors[0]', alias: 'authors'},
+		    {key: 'languageId', alias: 'language'}]
+		);
+
         $scope.book = {
         	id:					undefined !== $stateParams.bookId ? $stateParams.bookId : null,
         	title: 				'',
@@ -14,18 +19,27 @@ app.controller('BookController', ['$rootScope', '$scope', '$stateParams', '$stat
         	isbn:				'',
         	authors:			[],
         };
-        
+
         $scope.saveBook = function() {
         	
         	$scope.book.authors = $scope.getSelectedAuthors();
-           	alert(JSON.stringify($scope.book));
 
            	var method = null !== $scope.book.id ? Books.update : Books.save;
            	
            	method($scope.book, function(result) {
-           		$scope.book.id = result[0].id;
+           	    if (method == Books.save) {
+           	        $scope.book.id = result[0].id;
+           	    }
+
+           		Munkirjat.Notifier.success(i18n.t('formBookSaved'));
         	}, function(result) {
         		errorizer.errorize(result.data[0].errors);
+
+        		if (result.status == "500") {
+        		    Munkirjat.Notifier.error(i18n.t('formBookFailedSaving'));
+        		} else {
+        		    Munkirjat.Notifier.information("OK?");
+        		}
         	});
         };
         
@@ -64,7 +78,7 @@ app.controller('BookController', ['$rootScope', '$scope', '$stateParams', '$stat
         		
         		$scope.book = book;
         	}, function(data) {
-        		alert("NOT OK: " + JSON.stringify(data));
+        		Munkirjat.Notifier.error(i18n.t('formBookFailedLoading'));
         	});
         }
         

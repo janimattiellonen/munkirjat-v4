@@ -7,9 +7,12 @@ import models.Book
 import models.daos.slick.DBTableDefinitions.{Book => BookTable, _}
 
 import scala.collection.mutable.ListBuffer
+import scala.slick.driver.MySQLDriver
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.StaticQuery.interpolation
 import scala.slick.jdbc.{GetResult, StaticQuery => Q}
+
+import play.Logger
 
 class BookService(val books: TableQuery[BookTable], db: Database, authorService: AuthorService) {
     
@@ -39,7 +42,7 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
 
     def getBooksFor(authorId:Int): List[(Int, String, Boolean)] = {
         db.withSession { implicit session =>
-          val supplierById = Q[Int, (Int, String, Boolean)] + """
+          val booksByAuthorId = Q[Int, (Int, String, Boolean)] + """
               SELECT
                   b.id,
                   b.title,
@@ -49,7 +52,7 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
               WHERE
                   ba.author_id = ?"""
 
-          supplierById(authorId).list
+          booksByAuthorId(authorId).list
         }
     }
     
@@ -68,7 +71,7 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
         db.withSession { implicit session =>
             books.filter(_.id === bookId).update(createBookRowForUpdate(bookId, bookData, getBook(bookId)._1.getOrElse(null)))
 
-            deleteBooks(bookId)
+          deleteAuthors(bookId)
 
             addAuthorsToBook(bookId, bookData.authors);
         }
@@ -85,11 +88,12 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
         }
     }
 
-    def deleteBooks(bookId:Int) = {
+    def deleteAuthors(bookId:Int) = {
         val bookAuthors = TableQuery[BookAuthor]
 
         db.withSession { implicit session =>
-          //bookAuthors.filter(_.bookId === bookId).delete
+          def deleteTheAuthors(id: Int) = sqlu"delete from book_author where book_id = $id".list
+          deleteTheAuthors(bookId)
         }
     }
 

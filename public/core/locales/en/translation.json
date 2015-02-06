@@ -32,6 +32,9 @@
 	"formBookSwedish":    "Swedish",
 	"formBookEnglish":    "English",
 	"formBookSave":    "Save",
+    "formBookSaved":    "Book saved",
+    "formBookFailedSaving": "Could not save book",
+    "formBookFailedLoading":  "Could not load book details",
 	
 	"error": {
 		"real": "Not a valid number",

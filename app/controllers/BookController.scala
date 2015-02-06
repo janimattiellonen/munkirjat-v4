@@ -76,7 +76,7 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 	def get(bookId:Int) = Action {
 	    val data						= new ListBuffer[Map[String, JsValue]]()
 	    val result:(Option[BookRow], List[(Int, String, String)])= getBookService().getBook(bookId)
-	    
+
 	    val book:BookRow = result._1.getOrElse(null)
 	    
 	    if (null != book) {
@@ -84,7 +84,7 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 	        val authors	= new ListBuffer[Map[String, JsValue]]()
 	        
 	        for (author <- result._2) {
-	            authors += Map(
+                authors += Map(
 	            	"id" -> Json.toJson(author._1),
 	            	"firstname" -> Json.toJson(author._2),
 	            	"lastname" -> Json.toJson(author._3)
@@ -104,8 +104,7 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 	    		"authors"			-> Json.toJson(authors)
 	    	)  
 	    }
-	    
-	    
+
 		Ok(Json.toJson(data))
 	}
 	

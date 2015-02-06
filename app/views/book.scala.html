@@ -40,5 +40,7 @@
 
             <div>{{ book.finishedReading }}</div>
         </div>
+
+        <p has-permission="book:edit"><a href="#/book/{{ book.id }}/edit">{{ 'edit' | translate }}</a></p>
     </div>
 </div>

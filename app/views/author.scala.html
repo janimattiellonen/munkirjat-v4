@@ -3,6 +3,8 @@
 <div id="author-view">
     <h1>{{ author.firstname }} {{ author.lastname }}</h1>
 
+    <p has-permission="author:edit"><a href="#/author/{{ author.id }}/edit">{{ 'edit' | translate }}</a></p>
+
     <div class="author-book-list">
         <books books="author.books"></books>
     </div>

@@ -103,7 +103,8 @@ app.config(function ($translateProvider) {
 		se:					'Swedish',
 		en:					'English',
 		yes:				'Yes',
-		no:					'No'
+		no:					'No',
+		edit:               'Edit'
 	});
 	  
 	$translateProvider.preferredLanguage('en');

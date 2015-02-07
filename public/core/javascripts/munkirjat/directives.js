@@ -239,9 +239,11 @@ app.directive('hasPermission', function(permissions) {
 
 app.directive('books', ['$compile', function($compile) {
 	return {
-		restrict: 'E',
-		scope: true,
+		restrict: 'EA',
+		scope: {
+		    books: "="
+		},
 		replace: true,
-		template: '<div ng-repeat="bookArr in author.books"><ul><li ng-repeat="book in bookArr"><a ng-class="{\'is-read\': book.isRead}" href="#/book/{{ book.id }}">{{ book.title }}</a></li></ul></div>'
+		template: '<div ng-repeat="bookArr in books"><ul><li ng-repeat="book in bookArr"><a ng-class="{\'is-read\': book.isRead}" href="#/book/{{ book.id }}">{{ book.title }}</a></li></ul></div>'
 	}
 }]);

@@ -16,7 +16,7 @@ POST    /authors					@controllers.AuthorController.create
 GET     /authors/search				@controllers.AuthorController.searchAuthors(q:Option[String])
 GET		/authors/:authorId			@controllers.AuthorController.get(authorId: Int)
 PUT    	/authors/:authorId			@controllers.AuthorController.update(authorId: Int)
-GET     /books                      @controllers.BookController.listBooks
+GET     /books                      @controllers.BookController.listBooks(mode ?= "both")
 GET		/books/:bookId				@controllers.BookController.get(bookId: Int)
 POST    /books						@controllers.BookController.create
 PUT		/books/:bookId				@controllers.BookController.update(bookId: Int)

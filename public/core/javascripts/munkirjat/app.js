@@ -155,6 +155,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
                 controller: 'BookController'
             }).state('books', {
                 url: '/books',
+                controller: 'BooksController',
+                template: '<div class="book-list"><h1 translate="books"></h1><books books="books"></books></div>'
+            }).state('books-state', {
+                url: '/books/:state',
                  controller: 'BooksController',
                  template: '<div class="book-list"><h1 translate="books"></h1><books books="books"></books></div>'
             });

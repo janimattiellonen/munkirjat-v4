@@ -22,7 +22,33 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
         }, getAuthorsForBook(bookId))
     }
 
-    def listBooks():List[(Int, String, Boolean)] = {
+    def listBooks(mode: String):List[(Int, String, Boolean)] = {
+        mode match {
+            case "read" => listReadBooks()
+            case "unread" => listUnreadBooks()
+            case _ => listAllBooks()
+        }
+    }
+
+    def listReadBooks():List[(Int, String, Boolean)] = {
+        db.withSession { implicit session =>
+          books
+            .filter(b => b.isRead === true && b.finishedReading.isDefined)
+            .sortBy(b => b.title.asc)
+            .map(b => (b.id, b.title, b.isRead)).list
+        }
+    }
+
+    def listUnreadBooks():List[(Int, String, Boolean)] = {
+        db.withSession { implicit session =>
+            books
+              .filter(b => b.isRead === false)
+              .sortBy(b => b.title.asc)
+              .map(b => (b.id, b.title, b.isRead)).list
+        }
+    }
+
+    def listAllBooks():List[(Int, String, Boolean)] = {
         db.withSession { implicit session =>
             books
               .sortBy(b => b.title.asc)

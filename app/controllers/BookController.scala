@@ -108,10 +108,10 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 		Ok(Json.toJson(data))
 	}
 
-  def listBooks() = Action.async {
+  def listBooks(mode:String) = Action.async {
       val data = new ListBuffer[Map[String, JsValue]]()
 
-      val books:List[(Int, String, Boolean)] = getBookService().listBooks()
+      val books:List[(Int, String, Boolean)] = getBookService().listBooks(mode)
 
       for (book <- books) {
           data += Map(

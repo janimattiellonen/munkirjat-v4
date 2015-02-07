@@ -44,3 +44,20 @@ Munkirjat.Notifier = (function() {
   return Notifier;
 
 })();
+
+Munkirjat.ArrayUtils = (function() {
+    function ArrayUtils() {}
+
+    ArrayUtils.chunk = function(src, chunkSize) {
+        var arr = [];
+
+        for (var i = 0; i < src.length; i += chunkSize) {
+            arr.push(src.slice(i, i + chunkSize));
+        }
+
+        return arr;
+    }
+
+    return ArrayUtils;
+
+})();

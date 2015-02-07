@@ -21,6 +21,14 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
         	books.filter{ _.id === bookId }.firstOption
         }, getAuthorsForBook(bookId))
     }
+
+    def listBooks():List[(Int, String, Boolean)] = {
+        db.withSession { implicit session =>
+            books
+              .sortBy(b => b.title.asc)
+              .map(b => (b.id, b.title, b.isRead)).list
+        }
+    }
     
     def getAuthorsForBook(bookId: Int):List[(Int, String, String)] = {
         

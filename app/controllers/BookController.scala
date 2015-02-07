@@ -107,6 +107,22 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 
 		Ok(Json.toJson(data))
 	}
+
+  def listBooks() = Action.async {
+      val data = new ListBuffer[Map[String, JsValue]]()
+
+      val books:List[(Int, String, Boolean)] = getBookService().listBooks()
+
+      for (book <- books) {
+          data += Map(
+              "id" -> Json.toJson(book._1),
+              "title" -> Json.toJson(book._2),
+              "isRead" -> Json.toJson(book._3)
+          )
+      }
+
+      Future.successful(Ok(Json.toJson(data)))
+  }
 	
 	def createBookForm(): Form[Book] = {
 		val bookForm = Form(

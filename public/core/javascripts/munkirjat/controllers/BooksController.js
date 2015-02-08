@@ -1,5 +1,5 @@
-app.controller('BooksController', ['$rootScope', '$scope', '$stateParams', '$state', '$route', '$location', 'Books',
-    function BooksController($rootScope, $scope, $stateParams, $state, $route, $location, Books) {
+app.controller('BooksController', ['$rootScope', '$scope', '$stateParams', '$state', '$route', 'Books',
+    function BooksController($rootScope, $scope, $stateParams, $state, $route, Books) {
         Books.query({
             mode: $stateParams.state,
         }, function(books) {

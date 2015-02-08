@@ -64,7 +64,11 @@ app.config(function ($translateProvider) {
 		fastestReadTime: 	'Fastest read time',
 		pageCount: 			'Pages in the bookshelf',
 		moneySpent: 		'money spent on books',
-		books:				"Books",
+		home:               'Home',
+		about:              'About',
+		books:				'Books',
+		newAuthor:          'New author',
+		authors:            'Authors',
 		avgBookPrice: 		'Average book price',
 		avgReadTime: 		'Average read time',
 		timeToReadAll: 		'Estimated time to read all unread books',
@@ -80,6 +84,7 @@ app.config(function ($translateProvider) {
 		formAuthorFirstname:	'Firstname',
 		formAuthorLastname:		'Lastname',
 		formAuthorSave:		'Save',
+		newBook:            'New book',
 		bookBy:				'by',
 		formBookTitle:		'Title',
 		formBookPageCount:	'Page count',
@@ -105,7 +110,8 @@ app.config(function ($translateProvider) {
 		yes:				'Yes',
 		no:					'No',
 		edit:               'Edit',
-		more:               'More'
+		more:               'More',
+		signOut:            'Sign out'
 	});
 	  
 	$translateProvider.preferredLanguage('en');

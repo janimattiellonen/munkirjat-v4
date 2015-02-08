@@ -114,7 +114,7 @@ app.directive('unread', ['$compile', function($compile) {
 	return {
 		restrict: 'E',
 		replace: true,
-		template: '<div class="box h_tallest"><h2 translate="unread"></h2><ul><li ng-repeat="item in unreadBooks"><a href="#/book/{{ item.id }}">{{ item.title }}</a></li></ul></div>',
+		template: '<div class="box h_tallest"><h2 translate="unread"></h2><ul><li ng-repeat="item in unreadBooks"><a href="#/book/{{ item.id }}">{{ item.title }}</a></li></ul><p class="more"><a href="#/books/unread">{{ \'more\' | translate }}</a></p></div>',
 		controller: function($scope, $element, $attrs, $location, Stats) {
 			Stats.unread({}, function(result) {
 				$scope.unreadBooks = result;

@@ -64,7 +64,7 @@ app.config(function ($translateProvider) {
 		fastestReadTime: 	'Fastest read time',
 		pageCount: 			'Pages in the bookshelf',
 		moneySpent: 		'money spent on books',
-		books:				"{{books}} books",
+		books:				"Books",
 		avgBookPrice: 		'Average book price',
 		avgReadTime: 		'Average read time',
 		timeToReadAll: 		'Estimated time to read all unread books',
@@ -104,7 +104,8 @@ app.config(function ($translateProvider) {
 		en:					'English',
 		yes:				'Yes',
 		no:					'No',
-		edit:               'Edit'
+		edit:               'Edit',
+		more:               'More'
 	});
 	  
 	$translateProvider.preferredLanguage('en');
@@ -156,11 +157,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             }).state('books', {
                 url: '/books',
                 controller: 'BooksController',
-                template: '<div class="book-list"><h1 translate="books"></h1><books books="books"></books></div>'
+                template: '<div class="book-list"><h1>{{ \'books\'|translate }}</h1><books books="books"></books></div>'
             }).state('books-state', {
                 url: '/books/:state',
                  controller: 'BooksController',
-                 template: '<div class="book-list"><h1 translate="books"></h1><books books="books"></books></div>'
+                 template: '<div class="book-list"><h1>{{ \'unread\'|translate }}</h1><books books="books"></books></div>'
             });
 }]);
 

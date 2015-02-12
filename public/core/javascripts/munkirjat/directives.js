@@ -64,7 +64,7 @@ app.directive('favouriteAuthors', ['$compile', function($compile) {
 	}
 }]);
 
-app.directive('authors', ['$compile', function($compile) {
+app.directive('book-authors', ['$compile', function($compile) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -245,5 +245,16 @@ app.directive('books', ['$compile', function($compile) {
 		},
 		replace: true,
 		template: '<div ng-repeat="bookArr in books"><ul><li ng-repeat="book in bookArr"><a ng-class="{\'is-read\': book.isRead}" href="#/book/{{ book.id }}">{{ book.title }}</a></li></ul></div>'
+	}
+}]);
+
+app.directive('authors', ['$compile', function($compile) {
+	return {
+		restrict: 'EA',
+		scope: {
+		    authors: "="
+		},
+		replace: true,
+		template: '<div class="authors  " ng-repeat="authorArr in authors"><ul><li ng-repeat="author in authorArr"><a href="#/author/{{ author.id }}">{{ author.firstname }} {{ author.lastname }} ({{ author.amount }})</a></li></ul></div>'
 	}
 }]);

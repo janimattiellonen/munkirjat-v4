@@ -140,6 +140,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
         		url: '/new-author',
                 templateUrl: '/templates/author-form',
                 controller: 'AuthorController'
+            }).state('authors', {
+                url: '/authors',
+                controller: 'AuthorsController',
+                template: '<div class="author-list"><h1>AUTHORS</h1><authors authors="authors"></authors></div>'
             }).state('edit-author', {
         		url: '/author/:authorId/edit',
                 templateUrl: '/templates/author-form',
@@ -190,6 +194,7 @@ app.factory('Authors', ['$resource', function($resource) {
 	return $resource('/authors/:authorId', 
 			{authorId: '@id'},
 			{
+			    query: { method: 'GET', isArray: true },
 				save: { method: 'POST', isArray: true},
 				update: { method: 'PUT', params: {authorId: '@id'}, isArray: true},
 			}

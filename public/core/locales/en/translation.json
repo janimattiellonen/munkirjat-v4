@@ -38,6 +38,7 @@
     "formAuthorSaved":    "Author saved",
     "formAuthorFailedSaving": "Could not create author",
     "formAuthorFailedLoading":  "Could not load author details",
+    "formAuthorsFailedLoading": "Could not load authors",
 	
 	"error": {
 		"real": "Not a valid number",

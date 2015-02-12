@@ -66,7 +66,7 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
             for (bookAuthorRow <- authorList) {
                 
                 val author = authorService.getAuthor(bookAuthorRow.authorId).getOrElse(null)
-                val tuple = (author.id, author.firstname, author.lastname);
+                val tuple = (author.id, author.firstname, author.lastname)
                 data += tuple
             }	
             

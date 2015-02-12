@@ -3,6 +3,6 @@ app.controller('BooksController', ['$rootScope', '$scope', '$stateParams', '$sta
         Books.query({
             mode: $stateParams.state,
         }, function(books) {
-            $scope.books = Munkirjat.ArrayUtils.chunk(books, 25);
+            $scope.books = Munkirjat.ArrayUtils.chunk(books, Math.ceil(books.length / 2) );
         });
     }]);

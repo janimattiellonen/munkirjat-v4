@@ -64,7 +64,7 @@ app.directive('favouriteAuthors', ['$compile', function($compile) {
 	}
 }]);
 
-app.directive('book-authors', ['$compile', function($compile) {
+app.directive('bookAuthors', ['$compile', function($compile) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -239,7 +239,7 @@ app.directive('hasPermission', function(permissions) {
 
 app.directive('books', ['$compile', function($compile) {
 	return {
-		restrict: 'EA',
+		restrict: 'E',
 		scope: {
 		    books: "="
 		},
@@ -250,7 +250,7 @@ app.directive('books', ['$compile', function($compile) {
 
 app.directive('authors', ['$compile', function($compile) {
 	return {
-		restrict: 'EA',
+		restrict: 'E',
 		scope: {
 		    authors: "="
 		},

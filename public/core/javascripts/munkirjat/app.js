@@ -232,7 +232,7 @@ app.filter('price', function() {
         });
 
     	numeral.language('en');
-        return numeral(100.00).format('0.00 $');
+        return numeral(input).format('0.00 $');
     };
 
     return priceFilter;

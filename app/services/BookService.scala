@@ -154,7 +154,7 @@ class BookService(val books: TableQuery[BookTable], db: Database, authorService:
             bookData.languageId,
             bookData.pageCount,
             bookData.isRead.getOrElse(false),
-            Some(bookData.isbn),
+            Some(bookData.isbn.getOrElse("")),
             createdAt,
             updatedAt,
             startedReadingTs,

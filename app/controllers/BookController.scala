@@ -135,7 +135,7 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 		        "isRead"			-> optional(boolean),
 		        "startedReading" 	-> optional(text),
 		        "finishedReading" 	-> optional(text),
-		        "isbn"				-> text
+		        "isbn"				-> optional(text)
 		    )(Book.apply)(Book.unapply)
 		)
 		

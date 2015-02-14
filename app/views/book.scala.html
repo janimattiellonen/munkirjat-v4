@@ -1,0 +1,46 @@
+@(message: String)
+
+<div id="book-view">
+    <h1>{{book.title}}</h1>
+
+    <div class="book-info">
+
+        <div class="row">
+            <div class="title">{{ 'formBookAuthors' | translate }}</div>
+
+            <div><book-authors authors="book.authors"></book-authors></div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookLanguage' | translate }}</div>
+
+            <div><language language-code="book.languageId"></language> </div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookPrice' | translate }}</div>
+
+            <div>{{ book.price | price }}</div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formBookIsRead' | translate }}</div>
+
+            <div><yes-no choice="book.isRead"></yes-no></div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formStartedReading' | translate }}</div>
+
+            <div>{{ book.startedReading }}</div>
+        </div>
+
+        <div class="row">
+            <div class="title">{{ 'formFinishedReading' | translate }}</div>
+
+            <div>{{ book.finishedReading }}</div>
+        </div>
+
+        <p has-permission="book:edit"><a href="#/book/{{ book.id }}/edit">{{ 'edit' | translate }}</a></p>
+    </div>
+</div>

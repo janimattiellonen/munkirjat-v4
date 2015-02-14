@@ -1,0 +1,5 @@
+db.default.slick.driver=scala.slick.driver.MySQLDriver
+db.default.driver=com.mysql.jdbc.Driver
+db.default.url="jdbc:mysql://localhost/munkirjat-silhouette?user=root&password=&characterEncoding=UTF-8"
+db.default.user="root"
+db.default.password=""

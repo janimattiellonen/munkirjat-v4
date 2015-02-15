@@ -1,9 +1,8 @@
-var React = require('react');
-var Immutable = require('immutable');
-var StatsItem = require('./StatsItem');
+var React 		= require('react');
+var Immutable 	= require('immutable');
+var StatsItem 	= require('./StatsItem');
 
 var $ = require('jquery');
-console.log("Lus233444");
 
 var SecondaryStats = React.createClass({
 

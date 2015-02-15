@@ -1,5 +1,5 @@
 var counterpart = require('counterpart');
-var React = require('react');
+var React 		= require('react');
 var Translate   = require('react-translate-component');
 
 var StatsItem = React.createClass({

@@ -15,3 +15,6 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+front/node_modules
+front/npm-debug.log
+public/core/javascripts/munkirjat/react/app.js

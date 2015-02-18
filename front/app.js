@@ -10,7 +10,7 @@ counterpart.registerTranslations('en', {
 	"readPageCount": "Pages read so far",
 	"fastestReadTime": "Fastest read time",
 	"pageCount": "Pages in the bookshelf",
-	"moneySpent": "money spent on books",
+	"moneySpent": "Money spent on books",
 	"books":    "{{books}} books",
 	"avgBookPrice": "Average book price",
 	"avgReadTime": "Average read time",
@@ -46,7 +46,9 @@ counterpart.registerTranslations('en', {
     "formAuthorFailedSaving": "Could not create author",
     "formAuthorFailedLoading":  "Could not load author details",
     "formAuthorsFailedLoading": "Could not load authors",
-	
+	"daysRead": "days",
+	"latestReadBook": "Latest read book",
+
 	"error": {
 		"real": "Not a valid number",
 		"number": "Not a valid number"

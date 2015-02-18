@@ -39,6 +39,7 @@
     "formAuthorFailedSaving": "Could not create author",
     "formAuthorFailedLoading":  "Could not load author details",
     "formAuthorsFailedLoading": "Could not load authors",
+    "daysRead": "days"
 	
 	"error": {
 		"real": "Not a valid number",

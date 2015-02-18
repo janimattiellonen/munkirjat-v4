@@ -1,13 +1,13 @@
 var React 				= require('react');
-var CurrentlyReading 	= require('./CurrentlyReading');
-
+var StatsBox 			= require('./StatsBox');
+var Translate   		= require('react-translate-component');
 
 var PrimaryStats = React.createClass({
 	render: function() {
 		return (
 			<div className="stats-main">
-				<CurrentlyReading />
-
+				<StatsBox title="currentlyReading" url="/stats/currently-reading" />
+				<StatsBox title="latestReadBook" url="/stats/latest-read" />
 			</div>
 		);
 	}

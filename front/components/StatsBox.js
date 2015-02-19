@@ -30,22 +30,30 @@ var StatsBox = React.createClass({
 
 				<ul>
 					{ this.state.items.map(function(item) {
-						console.log("sssss");
-						return self.renderLi(item);
+						return self.renderLi(item, self.props.hrefCallback);
 					}).toArray()}
 				</ul>
 			</div>
 		);
 	},
 
-	renderLi: function(item) {
-		console.log("dsfgdfg: " + JSON.stringify(item));
+	renderLi: function(item, hrefCallback) {
+		console.log("112345467567567: " + JSON.stringify(item));
+
+		var callback = hrefCallback ? hrefCallback : this.renderA;
+
 		return (
 			<li>
-				<a href="#/book/{item.id}">
-					{item.title}<br/><ReadingTime item={item} showDuration="true" />
-				</a>
+				{callback(item)}
 			</li>
+		);
+	},
+
+	renderA: function(item) {
+		return (
+			<a href={"#/book/" + item.id}>
+				{item.title}<br/><ReadingTime item={item} showDuration="true" />
+			</a>	
 		)
 	}
 });

@@ -48,6 +48,7 @@ counterpart.registerTranslations('en', {
     "formAuthorsFailedLoading": "Could not load authors",
 	"daysRead": "days",
 	"latestReadBook": "Latest read book",
+	"latestAddedBooks": "Latest added books",
 
 	"error": {
 		"real": "Not a valid number",

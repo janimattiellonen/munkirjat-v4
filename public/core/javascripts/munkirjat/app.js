@@ -124,56 +124,6 @@ app.controller('Ctrl', function ($scope, $translate) {
 	  };
 	});
 
-app.config(['$stateProvider', '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
-    	$stateProvider
-	    	.state('home', {
-	    		url: '',
-	            templateUrl: '/templates/home'
-	        }).state('about', {
-        		url: '/about',
-                templateUrl: '/templates/about'
-            }).state('login', {
-        		url: '/login',
-                templateUrl: '/templates/login'
-            }).state('new-author', {
-        		url: '/new-author',
-                templateUrl: '/templates/author-form',
-                controller: 'AuthorController'
-            }).state('authors', {
-                url: '/authors',
-                controller: 'AuthorsController',
-                template: '<div class="author-list"><h1>AUTHORS</h1><authors authors="authors"></authors></div>'
-            }).state('edit-author', {
-        		url: '/author/:authorId/edit',
-                templateUrl: '/templates/author-form',
-                controller: 'AuthorController'
-            }).state('view-author', {
-                url: '/author/:authorId',
-                templateUrl: '/templates/view-author',
-                controller: 'AuthorController'
-            }).state('new-book', {
-        		url: '/new-book',
-                templateUrl: '/templates/book-form',
-                controller: 'BookController'
-            }).state('view-book', {
-				url: '/book/:bookId',
-				templateUrl: '/templates/view-book',
-				controller: 'BookController'
-			}).state('edit-book', {
-        		url: '/book/:bookId/edit',
-                templateUrl: '/templates/book-form',
-                controller: 'BookController'
-            }).state('books', {
-                url: '/books',
-                controller: 'BooksController',
-                template: '<div class="book-list"><h1>{{ \'books\'|translate }}</h1><books books="books"></books></div>'
-            }).state('books-state', {
-                url: '/books/:state',
-                 controller: 'BooksController',
-                 template: '<div class="book-list"><h1>{{ \'unread\'|translate }}</h1><books books="books"></books></div>'
-            });
-}]);
 
 app.factory('Stats', ['$resource', function($resource) {
     return $resource('/stats', 

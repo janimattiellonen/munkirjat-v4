@@ -1,9 +1,11 @@
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-
-var counterpart = require('counterpart');
-var Translate   = require('react-translate-component');
+var React 			= require('react');
+var Router 			= require('react-router');
+var Route 			= Router.Route;
+var DefaultRoute 	= Router.DefaultRoute;
+var AuthorForm		= require('./components/AuthorForm');
+var Home			= require('./components/Home');
+var counterpart 	= require('counterpart');
+var Translate   	= require('react-translate-component');
 
 counterpart.registerTranslations('en', {
   	"bookCount": "Books in bookshelf",
@@ -42,6 +44,8 @@ counterpart.registerTranslations('en', {
     "formBookSaved":    "Book saved",
     "formBookFailedSaving": "Could not create book",
     "formBookFailedLoading":  "Could not load book details",
+    "formAuthorFirstname": "Fistname",
+	"formAuthorLastname": "Lastname",
     "formAuthorSaved":    "Author saved",
     "formAuthorFailedSaving": "Could not create author",
     "formAuthorFailedLoading":  "Could not load author details",
@@ -56,14 +60,22 @@ counterpart.registerTranslations('en', {
 	}
 });
 
-var MunkirjatApp = require('./components/MunkirjatApp.js');
+var MunkirjatApp = require('./components/MunkirjatApp');
 
 var routes = (
 	<Route handler={MunkirjatApp} path="/">
-		
+		<DefaultRoute handler={Home}/>
+		<Route name="editAuthor" path="/author/:id/edit" handler={AuthorForm} />
 	</Route>
 );
 
 Router.run(routes, function (Handler) {
 	React.render(<Handler />, document.getElementById('page'));
 });
+
+
+/*
+Router.run(routes, Router.HistoryLocation, function (Handler) {
+  React.render(<Handler/>, document.getElementById('page'));
+});
+*/

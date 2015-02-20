@@ -13,9 +13,8 @@ var StatsBox = React.createClass({
 
 	componentDidMount: function() {
 		var self = this;
-		console.log("url: " + this.props.url);
+		
 		$.get(this.props.url).done(function(data) {
-			console.log("data: " + JSON.stringify(data));
 			self.setState({
 				'items': Immutable.List(data)
 			});
@@ -25,7 +24,7 @@ var StatsBox = React.createClass({
 	render: function() {
 		var self = this;
 		return (
-			<div className="box h_taller">
+			<div className={"box " + this.props.class}>
 				<h2><Translate content={this.props.title} /></h2>
 
 				<ul>
@@ -38,8 +37,6 @@ var StatsBox = React.createClass({
 	},
 
 	renderLi: function(item, hrefCallback) {
-		console.log("112345467567567: " + JSON.stringify(item));
-
 		var callback = hrefCallback ? hrefCallback : this.renderA;
 
 		return (

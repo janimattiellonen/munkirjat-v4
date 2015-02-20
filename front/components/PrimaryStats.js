@@ -2,8 +2,13 @@ var React 				= require('react');
 var StatsBox 			= require('./StatsBox');
 var Translate   		= require('react-translate-component');
 var DateValue			= require('./DateValue');
+var Router 				= require('react-router');
+
+var Link = Router.Link;
 
 var PrimaryStats = React.createClass({
+	mixins: [Router.State],
+
 	render: function() {
 
 		var hrefCallback = function(item) {
@@ -14,12 +19,29 @@ var PrimaryStats = React.createClass({
 			)
 		};
 
+		var authorACallback = function(item) {
+			return (
+				<a href={"#/author/" + item.id}>
+					{item.firstname} {item.lastname} ({item.amount}) 
+				</a>
+			)
+		};
+
 		return (
 			<div className="stats-main">
-				<StatsBox title="currentlyReading" url="/stats/currently-reading" />
-				<StatsBox title="latestReadBook" url="/stats/latest-read" />
+				<p>Hello</p>
+				<a href="/#/author/12/edit">Bar</a>
 
-				<StatsBox title="latestAddedBooks" url="/stats/latest-added" hrefCallback={hrefCallback} />
+				<StatsBox class="h_taller" title="currentlyReading" url="/stats/currently-reading" />
+				<StatsBox class="h_taller" title="latestReadBook" url="/stats/latest-read" />
+
+				<StatsBox class="h_tallest" title="latestAddedBooks" url="/stats/latest-added" hrefCallback={hrefCallback} />
+				<StatsBox class="h_tallest" title="favouriteAuthors" url="/stats/favourite-authors" hrefCallback={authorACallback} />
+
+				<StatsBox class="h_tallest" title="recentlyRead" url="/stats/recently-read" />
+				<StatsBox class="h_tallest" title="unread" url="/stats/unread" />
+
+				
 			</div>
 		);
 	}

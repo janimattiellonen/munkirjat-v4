@@ -25,7 +25,7 @@ var StatsBox = React.createClass({
 	render: function() {
 		var self = this;
 		return (
-			<div className="box h_taller">
+			<div className={"box " + this.props.class}>
 				<h2><Translate content={this.props.title} /></h2>
 
 				<ul>

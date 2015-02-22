@@ -27,7 +27,7 @@ var AuthorForm = React.createClass({
 				    
 				    <div className="form-group">
 				    	<div className="col-sm-offset-3 col-sm-9">
-				    		<button type="button" className="btn btn-primary"></button>	
+				    		<button type="button" className="btn btn-primary"><Translate content="formAuthorSave" /></button>	
 				    	</div>
 				    </div>	    
 				</form>

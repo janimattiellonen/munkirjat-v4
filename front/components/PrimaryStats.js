@@ -31,7 +31,7 @@ var PrimaryStats = React.createClass({
 			<div className="stats-main">
 				<p>Hello</p>
 				<a href="/#/author/12/edit">Bar</a>
-
+				
 				<StatsBox class="h_taller" title="currentlyReading" url="/stats/currently-reading" />
 				<StatsBox class="h_taller" title="latestReadBook" url="/stats/latest-read" />
 
@@ -41,7 +41,6 @@ var PrimaryStats = React.createClass({
 				<StatsBox class="h_tallest" title="recentlyRead" url="/stats/recently-read" />
 				<StatsBox class="h_tallest" title="unread" url="/stats/unread" />
 
-				
 			</div>
 		);
 	}

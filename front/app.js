@@ -6,6 +6,7 @@ var AuthorForm		= require('./components/AuthorForm');
 var Home			= require('./components/Home');
 var counterpart 	= require('counterpart');
 var Translate   	= require('react-translate-component');
+var flux 			= require('./flux');
 
 counterpart.registerTranslations('en', {
   	"bookCount": "Books in bookshelf",
@@ -71,7 +72,7 @@ var routes = (
 );
 
 Router.run(routes, function (Handler) {
-	React.render(<Handler />, document.getElementById('page'));
+	React.render(<Handler flux={flux}/>, document.getElementById('page'));
 });
 
 

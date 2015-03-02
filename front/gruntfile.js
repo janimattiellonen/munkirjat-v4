@@ -41,7 +41,7 @@ module.exports = function(grunt) {
             },
 
             jsx: {
-                files: ['components/**/*.js', 'app.js'],
+                files: ['components/**/*.js', 'app.js', 'actions.js', 'constants.js', 'flux.js', 'stores/*.js'],
                 tasks: ['browserify'],
                 options: {
                     spawn: false

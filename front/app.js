@@ -71,7 +71,8 @@ var routes = (
 	</Route>
 );
 
-Router.run(routes, function (Handler) {
+Router.run(routes, function (Handler, state) {
+	console.log("params: " + JSON.stringify(state.params));
 	React.render(<Handler flux={flux}/>, document.getElementById('page'));
 });
 

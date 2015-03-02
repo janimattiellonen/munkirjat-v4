@@ -2,3 +2,13 @@
 scala.slick.codegen.SourceCodeGenerator.main(
 	Array("scala.slick.driver.MySQLDriver", "com.mysql.jdbc.Driver", "jdbc:mysql://localhost/munkirjat_scala?user=root&password=&characterEncoding=UTF-8", "models", "model", "root", "")
 )
+
+
+
+## Front
+
+Referenes:
+
+- http://fluxxor.com/examples/react-router.html#/recipe/1
+- https://github.com/BinaryMuse/fluxxor/tree/master/examples/react-router
+- https://github.com/BinaryMuse/fluxxor/tree/master/examples

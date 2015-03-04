@@ -9,32 +9,33 @@ var AuthorForm = React.createClass({
 	mixins: [Router.State, FluxMixin, StoreWatchMixin("AuthorStore")],
 
 	getInitialState: function() {
-
 		return {
 			id: undefined,
-			firstname: "",
-			lastname: ""
+			firstname: "s",
+			lastname: "s"
 		};
 	},
 
 	getStateFromFlux: function() {
-		console.log("getStateFromFlux called");
-		var flux = this.getFlux();	
-
-		var state2 = flux.store("AuthorStore").getState()
-
-		console.log("STATE: " + JSON.stringify(state2));
-		return state2;
+		return this.getFlux().store("AuthorStore").getState()
 	},
 
 	componentDidMount: function() {
+		this.setState({
+			author: {
+				id: undefined,
+				firstname: undefined,
+				lastname: undefined
+			}
+		})
 		var authorId = this.getParams().id;
 
-		this.getFlux().actions.author.loadAuthor(authorId);
+		if(authorId != undefined) {
+			this.getFlux().actions.author.loadAuthor(authorId);
+		}
 	},
 
 	render: function() {
-		console.log("Rendering AuthorForm");
 		return (
 
 			<div id="author-creation">

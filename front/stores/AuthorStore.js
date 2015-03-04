@@ -6,7 +6,12 @@ var constants = require('../constants');
 var AuthorStore = Fluxxor.createStore({
   
   	initialize: function() {
-    		this.author = {};
+    		this.author = {
+            id: undefined,
+            firstname: undefined,
+            lastname: undefined,
+            books: Immutable.List([])
+        };
 
     		this.bindActions(
     			 constants.SAVE_AUTHOR, this.onSaveAuthor,
@@ -22,7 +27,8 @@ var AuthorStore = Fluxxor.createStore({
     onLoadAuthor: function(author) {
         console.log("Loaded author: " + JSON.stringify(author));
         this.author = author;
-        this.firstname = "Jussi";
+        this.author.books = Immutable.List(this.author.books);
+
         this.emit("change");
     },
 

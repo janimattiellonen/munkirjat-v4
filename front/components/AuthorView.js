@@ -39,10 +39,9 @@ var AuthorView = React.createClass({
 	},
 
 	render: function() {
-		console.log("wuttt: " + JSON.stringify(this.state));
 		return (
 			<div>
-				<h1>{this.state.author.firstname}  {this.state.author.lastname}</h1>
+				<h1>{this.state.author.firstname + " " + this.state.author.lastname}</h1>
 
 				<BookList books={this.state.author.books} />
 			</div>

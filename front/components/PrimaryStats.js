@@ -28,10 +28,7 @@ var PrimaryStats = React.createClass({
 		};
 
 		return (
-			<div className="stats-main">
-				<p>Hello</p>
-				<a href="/#/author/12/edit">Bar</a>
-				
+			<div className="stats-main">				
 				<StatsBox class="h_taller" title="currentlyReading" url="/stats/currently-reading" />
 				<StatsBox class="h_taller" title="latestReadBook" url="/stats/latest-read" />
 

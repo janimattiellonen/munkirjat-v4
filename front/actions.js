@@ -66,6 +66,22 @@ var actions = {
 
 			});
 		}
+	},
+
+	book: {
+		loadBooks: function() {
+			var self = this;
+
+			$.ajax({
+				method: 'GET',
+				url: '/books',
+				dataType: 'json',
+			}).done(function(data) {
+				self.dispatch(constants.BOOKS_LOADED, data);
+			}).error(function(error) {
+
+			});
+		}
 	}
 };
 

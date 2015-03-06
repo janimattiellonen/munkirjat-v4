@@ -6,9 +6,7 @@ var BookColumn	= require('./BookColumn');
 var BookList = React.createClass({
 
 	render: function() {
-
-		var books = this.props.books.toArray();
-
+		var books = this.props.books.toArray();		
 		var booksSplit  = ArrayUtils.chunk(books, Math.ceil(books.length / 2));
 
 		return (

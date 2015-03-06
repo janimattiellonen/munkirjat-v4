@@ -4,6 +4,7 @@ var Route 			= Router.Route;
 var DefaultRoute 	= Router.DefaultRoute;
 var AuthorForm		= require('./components/AuthorForm');
 var AuthorView		= require('./components/AuthorView');
+var AuthorsView		= require('./components/AuthorsView');
 var Home			= require('./components/Home');
 var translations 	= require('./translations');
 var Translate   	= require('react-translate-component');
@@ -19,6 +20,7 @@ var routes = (
 		<Route name="newAuthor" path="/new-author" handler={AuthorForm} />
 		<Route name="editAuthor" path="/author/:id/edit" handler={AuthorForm} />
 		<Route name="viewAuthor" path="/author/:id" handler={AuthorView} />
+		<Route name="listAuthors" path="/authors" handler={AuthorsView} />
 	</Route>
 );
 

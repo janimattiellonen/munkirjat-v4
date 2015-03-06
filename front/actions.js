@@ -51,6 +51,20 @@ var actions = {
 			}).error(function(error) {
 
 			});
+		},
+
+		loadAuthors: function() {
+			var self = this;
+
+			$.ajax({
+				method: 'GET',
+				url: '/authors',
+				dataType: 'json',
+			}).done(function(data) {
+				self.dispatch(constants.AUTHORS_LOADED, data);
+			}).error(function(error) {
+
+			});
 		}
 	}
 };

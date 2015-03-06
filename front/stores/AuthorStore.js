@@ -13,9 +13,12 @@ var AuthorStore = Fluxxor.createStore({
             books: Immutable.List([])
         };
 
+        this.authors = Immutable.List([]);
+
     		this.bindActions(
     			 constants.SAVE_AUTHOR, this.onSaveAuthor,
-           constants.AUTHOR_LOADED, this.onLoadAuthor
+           constants.AUTHOR_LOADED, this.onLoadAuthor,
+           constants.AUTHORS_LOADED, this.onLoadAuthors
     		);
   	},
 
@@ -25,16 +28,21 @@ var AuthorStore = Fluxxor.createStore({
   	},
 
     onLoadAuthor: function(author) {
-        console.log("Loaded author: " + JSON.stringify(author));
         this.author = author;
         this.author.books = Immutable.List(this.author.books);
 
         this.emit("change");
     },
 
+    onLoadAuthors: function(authors) {
+        this.authors = Immutable.List(authors);
+        this.emit("change");
+    },
+
   	getState: function() {
         return {
-            author: this.author
+            author: this.author,
+            authors: this.authors
   		  }
   	}
 });

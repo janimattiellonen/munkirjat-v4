@@ -50,6 +50,7 @@ var translations = {
 			"daysRead": "days",
 			"latestReadBook": "Latest read book",
 			"latestAddedBooks": "Latest added books",
+			"authors": "Authors",
 
 			"error": {
 				"real": "Not a valid number",

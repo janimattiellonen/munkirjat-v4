@@ -1,5 +1,7 @@
 var constants = require('./constants');
 
+var BookClient = require('./components/BookClient');
+
 var actions = {
 
 	author: {
@@ -69,17 +71,17 @@ var actions = {
 	},
 
 	book: {
-		loadBooks: function() {
+		loadAllBooks: function() {
 			var self = this;
-
-			$.ajax({
-				method: 'GET',
-				url: '/books',
-				dataType: 'json',
-			}).done(function(data) {
+			BookClient.loadAllBooks(function(data) {
 				self.dispatch(constants.BOOKS_LOADED, data);
-			}).error(function(error) {
+			});
+		},
 
+		loadUnreadBooks: function() {
+			var self = this;
+			BookClient.loadUnreadBooks(function(data) {
+				self.dispatch(constants.BOOKS_LOADED, data);
 			});
 		}
 	}

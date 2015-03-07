@@ -23,6 +23,7 @@ var routes = (
 		<Route name="viewAuthor" path="/author/:id" handler={AuthorView} />
 		<Route name="listAuthors" path="/authors" handler={AuthorsView} />
 		<Route name="listBooks" path="/books" handler={BooksView} />
+        <Route name="listUnreadBooks" path="/books/unread" handler={BooksView} />
 	</Route>
 );
 

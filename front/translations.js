@@ -17,6 +17,7 @@ var translations = {
 			"slowestReadTime": "Slowest read time",
 			"authorCount": "Authors in bookshelf",
 			"unreadBookCount":    "Unread books",
+			"unreadBooks":    "Unread books",
 			"currentlyReading":    "Currently reading",
 			"latestRead":    "Latest read book",
 			"latestAdded":    "Latest added books",

@@ -22,17 +22,28 @@ var BooksView = React.createClass({
 	},
 
 	componentDidMount: function() {
-		this.getFlux().actions.book.loadBooks();
+		var path = this.getPathname();
+
+		if (path == "/books") {
+			this.getFlux().actions.book.loadAllBooks();
+			this.title = "books";
+		} else if (path == "/books/unread") {
+			this.getFlux().actions.book.loadUnreadBooks();
+			this.title = "unreadBooks";
+		}
 	},
 
 	render: function() {
+		var path = this.getPathname();
+		var title = null;
+
 		return (
 			<div>
-				<h1><Translate content="books" /></h1>
+				<h1><Translate content={this.title} /></h1>
 				<BookList books={this.state.books} />
 			</div>
 		);
-	}
+	},
 });
 
 module.exports = BooksView;

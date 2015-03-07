@@ -2,6 +2,7 @@ var React 			= require('react');
 var Router 			= require('react-router');
 var Route 			= Router.Route;
 var DefaultRoute 	= Router.DefaultRoute;
+var AboutView       = require('./components/AboutView');
 var AuthorForm		= require('./components/AuthorForm');
 var AuthorView		= require('./components/AuthorView');
 var AuthorsView		= require('./components/AuthorsView');
@@ -18,6 +19,7 @@ var MunkirjatApp = require('./components/MunkirjatApp');
 var routes = (
 	<Route handler={MunkirjatApp} path="/">
 		<DefaultRoute handler={Home}/>
+        <Route name="about" path="/about" handler={AboutView} />
 		<Route name="newAuthor" path="/new-author" handler={AuthorForm} />
 		<Route name="editAuthor" path="/author/:id/edit" handler={AuthorForm} />
 		<Route name="viewAuthor" path="/author/:id" handler={AuthorView} />

@@ -35,7 +35,6 @@ var BooksView = React.createClass({
 
 	render: function() {
 		var path = this.getPathname();
-		var title = null;
 
 		return (
 			<div>

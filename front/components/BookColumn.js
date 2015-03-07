@@ -8,7 +8,9 @@ var BookColumn = React.createClass({
 			<div>
 				<ul>
 					{this.props.books.map(function(book) {
-						return <li><a href={"#/book/" + book.id }>{book.title}</a></li>
+						var className = book.isRead ? "is-read" : "";
+
+						return <li><a className={className} href={"#/book/" + book.id }>{book.title}</a></li>
 					})}
 				</ul>
 			</div>

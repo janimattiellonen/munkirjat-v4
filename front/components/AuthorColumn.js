@@ -8,7 +8,7 @@ var AuthorColumn = React.createClass({
 			<div>
 				<ul>
 					{this.props.authors.map(function(author) {
-						return <li><a href={"#/author/" + author.id }>{author.firstname + " " + author.lastname}</a></li>
+						return <li><a href={"#/author/" + author.id }>{author.firstname + " " + author.lastname + " (" + author.amount + ")"}</a></li>
 					})}
 				</ul>
 			</div>

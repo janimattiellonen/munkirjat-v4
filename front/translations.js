@@ -53,6 +53,12 @@ var translations = {
 			"latestReadBook": "Latest read book",
 			"latestAddedBooks": "Latest added books",
 			"authors": "Authors",
+			"edit": "Edit",
+			"fi": "Finnish",
+			"se": "Swedish",
+			"en": "English",
+			"yes": "Yes",
+			"no": "No",
 
 			"error": {
 				"real": "Not a valid number",

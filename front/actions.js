@@ -29,8 +29,6 @@ var actions = {
 					lastname: 	author.lastname
 				}
 			}).done(function(data) {
-				alert("DONE22: " + JSON.stringify(data[0]));
-
 				if (method == 'POST') {
 					author.id = data[0].id;
 				}
@@ -71,6 +69,13 @@ var actions = {
 	},
 
 	book: {
+		loadBook: function(bookId) {
+			var self = this;
+			BookClient.loadBook(bookId, function(data) {
+				self.dispatch(constants.BOOK_LOADED, data[0]);
+			});
+		},
+
 		loadAllBooks: function() {
 			var self = this;
 			BookClient.loadAllBooks(function(data) {

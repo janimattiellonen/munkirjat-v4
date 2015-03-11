@@ -1,5 +1,4 @@
 var React 				= require('react');
-var StatsBox 			= require('./StatsBox');
 var Translate   		= require('react-translate-component');
 
 var DateValue = React.createClass({

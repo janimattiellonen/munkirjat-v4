@@ -6,6 +6,7 @@ var AboutView       = require('./components/AboutView');
 var AuthorForm		= require('./components/AuthorForm');
 var AuthorView		= require('./components/AuthorView');
 var AuthorsView		= require('./components/AuthorsView');
+var BookView		= require('./components/BookView');
 var BooksView		= require('./components/BooksView');
 var Home			= require('./components/Home');
 var translations 	= require('./translations');
@@ -24,6 +25,7 @@ var routes = (
 		<Route name="editAuthor" path="/author/:id/edit" handler={AuthorForm} />
 		<Route name="viewAuthor" path="/author/:id" handler={AuthorView} />
 		<Route name="listAuthors" path="/authors" handler={AuthorsView} />
+		<Route name="viewBook" path="/book/:id" handler={BookView} />
 		<Route name="listBooks" path="/books" handler={BooksView} />
         <Route name="listUnreadBooks" path="/books/unread" handler={BooksView} />
 	</Route>

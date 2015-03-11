@@ -1,14 +1,18 @@
 var BookClient = {
 
+    loadBook: function(bookId, successCallback) {
+        this.load('/books/' + bookId, successCallback);
+    },
+    
     loadAllBooks: function(successCallback) {
-        this.loadBooks('/books', successCallback);
+        this.load('/books', successCallback);
     },
 
     loadUnreadBooks: function(successCallback) {
-        this.loadBooks('/books?mode=unread', successCallback);
+        this.load('/books?mode=unread', successCallback);
     },
 
-    loadBooks: function(url, successCallback) {
+    load: function(url, successCallback) {
         var self = this;
 
         $.ajax({
@@ -18,7 +22,7 @@ var BookClient = {
         }).done(function(data) {
             successCallback(data);
         }).error(function(error) {
-            alert("Failed to load books");
+            alert("Failed to load data");
         });
     }
 };

@@ -26,8 +26,8 @@ var AuthorView = React.createClass({
 		this.setState({
 			author: {
 				id: undefined,
-				firstname: undefined,
-				lastname: undefined,
+				firstname: "",
+				lastname: "",
 				books: Immutable.List([])
 			}
 		})

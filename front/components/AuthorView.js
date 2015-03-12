@@ -6,6 +6,7 @@ var FluxMixin 			= Fluxxor.FluxMixin(React);
 var StoreWatchMixin 	= Fluxxor.StoreWatchMixin;
 var BookList			= require('./BookList');
 var Immutable 			= require('Immutable');
+var Translate   		= require('react-translate-component');
 
 var AuthorView = React.createClass({
 	mixins: [Router.State, FluxMixin, StoreWatchMixin("AuthorStore")],
@@ -42,6 +43,8 @@ var AuthorView = React.createClass({
 		return (
 			<div>
 				<h1>{this.state.author.firstname + " " + this.state.author.lastname}</h1>
+
+				<p><a href={"#/author/" + this.state.author.id + "/edit"}><Translate content="edit" /></a></p>
 
 				<BookList books={this.state.author.books} />
 			</div>

@@ -23,6 +23,8 @@ var SecondaryStats = React.createClass({
 	},
 
 	render: function() {
+		var self = this;
+
 		return (
 			<div className="stats">
 				<h2>Statistics</h2>

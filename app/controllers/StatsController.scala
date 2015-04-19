@@ -20,8 +20,7 @@ object StatsController extends BaseController {
 		    case(key, value:(Int, BigDecimal)) 
 		    	=> data += Map(
 	    	        "title" -> Json.toJson(key.toString()), 
-	    	        "value" -> Json.toJson(Map("title" ->value._1.toString(), 
-	    	        "value" -> round(value._2, 2).toString())))
+	    	        "value" -> Json.toJson(Map("title" ->value._1.toString(), "value" -> round(value._2, 2).toString())))
 		    case(key, value:BigDecimal) => data += Map("title" -> Json.toJson(key), "value" -> Json.toJson(round(value, 2)))
 		    case(key, value:Int) => data += Map("title" -> Json.toJson(key), "value" -> Json.toJson(value))
 		}

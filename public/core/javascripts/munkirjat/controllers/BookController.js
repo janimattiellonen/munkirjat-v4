@@ -42,7 +42,8 @@ app.controller('BookController', ['$rootScope', '$scope', '$stateParams', '$stat
         };
         
         $scope.getSelectedAuthors = function() {
-        	return $('#authors').val().split(',');
+        	return $('#authors').val().split(',')
+        	;
         }
         
         $scope.setSelectedAuthors = function(authors) {

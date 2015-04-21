@@ -13,9 +13,10 @@ var BookForm = React.createClass({
 			book: {
 				id: undefined,
 				title: "",
+				language: undefined,
 				authors: [],
-				pageCount: 0,
-				price: 0,
+				pageCount: undefined,
+				price: undefined,
 				 
 			}
 		};
@@ -32,9 +33,10 @@ var BookForm = React.createClass({
 			book: {
 				id: undefined,
 				title: undefined,
+				language: undefined,
 				authors: [],
-				pageCount: 0,
-				price: 0
+				pageCount: undefined,
+				price: undefined
 			}
 		});
 
@@ -70,7 +72,7 @@ var BookForm = React.createClass({
                 });
             }
 		}).on("change", function(e) {
-			self.handleAuthorsChange(e);
+			self.handleFieldChange(e);
 		});
 	},
 
@@ -80,29 +82,22 @@ var BookForm = React.createClass({
 		alert("wut: " + JSON.stringify(this.state.book));
 	},
 
-	handleTitleChange: function(e) {
+	handleFieldChange: function(e) {
 		var state = this.state;
-		state.book.title = e.target.value;
+		var fieldName = e.target.getAttribute('name');
+		var value = null;
+
+		if (fieldName == 'authors') {
+			value = String(e.target.value).split(",");
+		} else {
+			value = e.target.value;
+		}
+
+		state.book[fieldName] = e.target.value;
+
 		this.setState(state);
 	},
 
-	handleAuthorsChange: function(e) {
-		var state = this.state;
-		state.book.authors = String(e.target.value).split(",");
-		this.setState(state);
-	},
-
-	handlePageCountChange: function(e) {
-		var state = this.state;
-		state.book.pageCount = e.target.value;
-		this.setState(state);
-	},
-
-	handlePriceChange: function(e) {
-		var state = this.state;
-		state.book.price = e.target.value;
-		this.setState(state);
-	},
 
 	render: function() {
 		return (
@@ -116,7 +111,7 @@ var BookForm = React.createClass({
 				          			className="form-control" 
 				          			id="inputTitle" 				          			
 				          			value={this.state.book.title} 
-				          			onChange={this.handleTitleChange} />
+				          			onChange={this.handleFieldChange} />
 				        </div>
 				    </div>
 
@@ -125,13 +120,13 @@ var BookForm = React.createClass({
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option1" value="fi" autoComplete="off"> <Translate content="formBookFinnish" /></input>
+						    	<input type="radio" name="language" id="option1" value="fi" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookFinnish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off"> <Translate content="formBookSwedish" /></input>
+						    	<input type="radio" name="language" id="option2" value="se" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookSwedish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option3" value="en" autoComplete="off"> <Translate content="formBookEnglish" /></input>
+						    	<input type="radio" name="language" id="option3" value="en" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookEnglish" /></input>
 						  	</label>
 						</div>	    
 				    </div>
@@ -150,7 +145,7 @@ var BookForm = React.createClass({
 				          			className="form-control" 
 				          			id="inputPageCount" 
 				          			value={this.state.book.pageCount} 
-				          			onChange={this.handlePageCountChange}  />
+				          			onChange={this.handleFieldChange}  />
 				        </div>
 				    </div>
 				    
@@ -162,7 +157,7 @@ var BookForm = React.createClass({
 				          			className="form-control" 
 				          			id="inputPrice" 
 				          			value={this.state.book.price}
-				          			onChange={this.handlePriceChange} />
+				          			onChange={this.handleFieldChange} />
 				        </div>
 				    </div>
 

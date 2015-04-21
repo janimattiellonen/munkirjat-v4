@@ -13,10 +13,16 @@ var BookStore = Fluxxor.createStore({
         }
 
     		this.bindActions(
-           constants.BOOKS_LOADED, this.onLoadBooks,
-           constants.BOOK_LOADED, this.onLoadBook
+            constants.SAVE_BOOK, this.onSaveBook,
+            constants.BOOKS_LOADED, this.onLoadBooks,
+            constants.BOOK_LOADED, this.onLoadBook
     		);
   	},
+
+    onSaveBook: function(book) {
+        this.book = book;
+        this.emit("change");
+    },
 
     onLoadBook: function(book) {
       book.authors = Immutable.List(book.authors);

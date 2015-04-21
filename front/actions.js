@@ -69,6 +69,36 @@ var actions = {
 	},
 
 	book: {
+		saveBook: function(book) {
+			var self = this;
+			var method, url;
+
+			if (undefined !== book.id) {
+				method = "PUT",
+				url = '/books/' + book.id;
+			} else {
+				method = "POST";
+				url = '/books';
+			}
+
+			$.ajax({
+				method: method,
+				url: url,
+				dataType: 'json',
+				data: {
+					
+				}
+			}).done(function(data) {
+				if (method == 'POST') {
+					author.id = data[0].id;
+				}
+
+				self.dispatch(constants.SAVE_BOOK, book);
+			}).error(function(error) {
+				alert("ERROR: " + JSON.stringify(error));
+			});
+		},
+
 		loadBook: function(bookId) {
 			var self = this;
 			BookClient.loadBook(bookId, function(data) {

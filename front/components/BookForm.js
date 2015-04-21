@@ -12,7 +12,11 @@ var BookForm = React.createClass({
 		return {
 			book: {
 				id: undefined,
-				title: ""
+				title: "",
+				authors: [],
+				pageCount: 0,
+				price: 0,
+				 
 			}
 		};
 	},
@@ -22,11 +26,15 @@ var BookForm = React.createClass({
 	},
 
 	componentDidMount: function() {
+		var self = this;
 
 		this.setState({
 			book: {
 				id: undefined,
-				title: undefined
+				title: undefined,
+				authors: [],
+				pageCount: 0,
+				price: 0
 			}
 		});
 
@@ -61,18 +69,38 @@ var BookForm = React.createClass({
                 $(element.val().split(",")).each(function () {
                 });
             }
+		}).on("change", function(e) {
+			self.handleAuthorsChange(e);
 		});
 	},
 
 	saveBook: function(e) {
 		e.preventDefault();
 
-		alert($(this.refs.authors.getDOMNode()).val().split(",") + ", " + this.state.book.title);
+		alert("wut: " + JSON.stringify(this.state.book));
 	},
 
 	handleTitleChange: function(e) {
 		var state = this.state;
 		state.book.title = e.target.value;
+		this.setState(state);
+	},
+
+	handleAuthorsChange: function(e) {
+		var state = this.state;
+		state.book.authors = String(e.target.value).split(",");
+		this.setState(state);
+	},
+
+	handlePageCountChange: function(e) {
+		var state = this.state;
+		state.book.pageCount = e.target.value;
+		this.setState(state);
+	},
+
+	handlePriceChange: function(e) {
+		var state = this.state;
+		state.book.price = e.target.value;
 		this.setState(state);
 	},
 
@@ -117,14 +145,24 @@ var BookForm = React.createClass({
 				   	<div className="form-group">
 				        <label htmlFor="inputPageCount" className="col-sm-3 control-label"><Translate content="formBookPageCount" /></label>
 				        <div className="col-sm-9">
-				          	<input type="text" name="pageCount" className="form-control" id="inputPageCount" />
+				          	<input 	type="text" 
+				          			name="pageCount" 
+				          			className="form-control" 
+				          			id="inputPageCount" 
+				          			value={this.state.book.pageCount} 
+				          			onChange={this.handlePageCountChange}  />
 				        </div>
 				    </div>
 				    
 				   	<div className="form-group">
 				        <label htmlFor="inputPrice" className="col-sm-3 control-label"><Translate content="formBookPrice" /></label>
 				        <div className="col-sm-9">
-				          	<input type="text" name="price" className="form-control" id="inputPrice" />
+				          	<input 	type="text" 
+				          			name="price" 
+				          			className="form-control" 
+				          			id="inputPrice" 
+				          			value={this.state.book.price}
+				          			onChange={this.handlePriceChange} />
 				        </div>
 				    </div>
 

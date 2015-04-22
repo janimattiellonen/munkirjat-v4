@@ -70,6 +70,7 @@ var actions = {
 
 	book: {
 		saveBook: function(book) {
+			console.log("saving book: " + JSON.stringify(book));
 			var self = this;
 			var method, url;
 

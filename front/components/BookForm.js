@@ -4,23 +4,11 @@ var Router 				= require('react-router');
 var Fluxxor 			= require('Fluxxor');
 var FluxMixin 			= Fluxxor.FluxMixin(React);
 var StoreWatchMixin 	= Fluxxor.StoreWatchMixin;
-
+var _					= require('underscore');
+var DatePicker 			= require('react-datepicker');
 
 var BookForm = React.createClass({
-
-	getInitialState: function() {
-		return {
-			book: {
-				id: undefined,
-				title: "",
-				language: undefined,
-				authors: [],
-				pageCount: undefined,
-				price: undefined,
-				 
-			}
-		};
-	},
+	mixins: [Router.State, FluxMixin, StoreWatchMixin("BookStore")],
 
 	getStateFromFlux: function() {
 		return this.getFlux().store("BookStore").getState()
@@ -36,7 +24,11 @@ var BookForm = React.createClass({
 				language: undefined,
 				authors: [],
 				pageCount: undefined,
-				price: undefined
+				price: undefined,
+				isRead: false,
+				startedReading: undefined,
+				finishedReading: undefined,
+				isbn: undefined
 			}
 		});
 
@@ -79,7 +71,46 @@ var BookForm = React.createClass({
 	saveBook: function(e) {
 		e.preventDefault();
 
-		alert("wut: " + JSON.stringify(this.state.book));
+		var bookData = _.clone(this.state.book);
+
+		bookData.id = this.state.book.id != undefined ? this.state.book.id : undefined;
+
+		if (bookData.startedReading != undefined) {
+			bookData.startedReading = moment(bookData.startedReading).format('DD.MM.YYYY');
+		}
+
+		if (bookData.finishedReading != undefined) {
+			bookData.finishedReading = moment(bookData.finishedReading).format('DD.MM.YYYY');
+		}
+		
+		alert("wut: " + JSON.stringify(bookData));
+
+		this.getFlux().actions.book.saveBook({bookData});
+	},
+
+	handleStartingDate: function(date) {
+		var state = this.state;
+		state.book.startedReading = date;
+		this.setState(state);
+	},
+
+	clearFinishingDate: function() {
+		this.handleFinishingDate(undefined, false);
+
+		var state = this.state;
+		state.book.isRead = false;
+		this.setState(state);
+	},
+
+	handleFinishingDate: function(date, markAsRead) {
+		var state = this.state;
+		state.book.finishedReading = date;
+
+		if (markAsRead) {
+			state.book.isRead = true;
+		}
+
+		this.setState(state);
 	},
 
 	handleFieldChange: function(e) {
@@ -89,15 +120,16 @@ var BookForm = React.createClass({
 
 		if (fieldName == 'authors') {
 			value = String(e.target.value).split(",");
+		} else if (fieldName == 'isRead') {
+			value = e.target.checked;
 		} else {
 			value = e.target.value;
 		}
 
-		state.book[fieldName] = e.target.value;
+		state.book[fieldName] = value;
 
 		this.setState(state);
 	},
-
 
 	render: function() {
 		return (
@@ -165,7 +197,13 @@ var BookForm = React.createClass({
 				    	<div className="col-sm-offset-3 col-sm-9">
 					   	   	<div className="checkbox">
 						        <label>
-						          <input type="checkbox" name="isRead"/><Translate content="formBookIsRead" />
+						          	<input 	type="checkbox" 
+						          			name="isRead" 
+						          			checked={this.state.book.isRead}
+						          			defaultChecked={this.state.book.isRead}
+						          			ref="isRead" 
+						          			value={this.state.book.isRead}
+						          			onChange={this.handleFieldChange}/><Translate content="formBookIsRead" />
 						        </label>
 						    </div>
 						</div>    
@@ -173,28 +211,59 @@ var BookForm = React.createClass({
 
 				   	<div className="form-group">
 				        <label htmlFor="inputStartedReading" className="col-sm-3 control-label"><Translate content="formStartedReading" /></label>
-				        <div className="col-sm-9">
-				          	<input type="text" name="startedReading" className="form-control datepicker" id="inputStartedReading" datepicker />
+				        <div className="col-sm-9 date-component">
+
+				        	<DatePicker
+						        key="startedReading"
+						        dateFormat="DD.MM.YYYY"
+						        weekStart="1"
+						        selected={this.state.book.startedReading}
+						        onChange={this.handleStartingDate}
+						        placeholderText="Click to select a date" 
+						    />
+
+						    <button type="button" className="btn btn-default btn-clear" onClick={this.handleStartingDate.bind(this, null)}>Clear</button>
+
 				          	<p>
-				          		<button type="button" className="btn btn-default"><Translate content="formStartReading" /></button>
+				          		<button type="button" className="btn btn-default btn-clear" onClick={this.handleStartingDate.bind(this, moment())}>
+				          			<Translate content="formStartReading" />
+				          		</button>
 				          	</p>
 				        </div>
 				    </div>      	
 			      	
 				   	<div className="form-group">
 				        <label htmlFor="inputFinishedReading" className="col-sm-3 control-label"><Translate content="formFinishedReading" /></label>
-				        <div className="col-sm-9">
-				          	<input type="text" name="finishedReading" className="form-control datepicker" id="inputFinishedReading" datepicker />
-				          	<p>
-				          		<button type="button" className="btn btn-default"><Translate content="formFinishReading" /></button>
+				        <div className="col-sm-9 date-component">
+				        	<DatePicker
+						        key="finishedReading"
+						        dateFormat="DD.MM.YYYY"
+						        weekStart="1"
+						        selected={this.state.book.finishedReading}
+						        onChange={this.handleFinishingDate}
+						        placeholderText="Click to select a date" 
+						    />
+
+						    <button type="button" className="btn btn-default btn-clear" onClick={this.clearFinishingDate}>Clear</button>  
+
+						    <p>
+				          		<button type="button" className="btn btn-default" onClick={this.handleFinishingDate.bind(this, moment(), true)}>
+				          			<Translate content="formFinishReading" />
+				          		</button>
 				          	</p>
 				        </div>
 				    </div>     
-			      	
+							      	
 				   	<div className="form-group">
 				        <label htmlFor="inputIsbn" className="col-sm-3 control-label"><Translate content="formBookIsbn" /></label>
 				        <div className="col-sm-9">
-				          	<input type="text" name="isbn" className="form-control" id="inputIsbn" />
+				          	<input 	type="text" 
+				          			name="isbn" 
+				          			className="form-control" 
+				          			id="inputIsbn" 
+				          			value={this.state.book.isbn}
+				          			onChange={this.handleFieldChange}
+				          	/>
 				        </div>
 				    </div>      
 				    

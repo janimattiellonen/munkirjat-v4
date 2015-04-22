@@ -9,8 +9,14 @@ var BookStore = Fluxxor.createStore({
         this.book = {
             id: undefined,
             title: undefined,
-            authors: Immutable.List([])
-        }
+            authors: Immutable.List([]),
+            pageCount: undefined,
+            price: undefined,
+            isRead: false,
+            startedReading: undefined,
+            finishedReading: undefined,
+            isbn: undefined
+        };
 
     		this.bindActions(
             constants.SAVE_BOOK, this.onSaveBook,

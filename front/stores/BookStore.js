@@ -9,6 +9,7 @@ var BookStore = Fluxxor.createStore({
         this.book = {
             id: undefined,
             title: undefined,
+            languageId: undefined,
             authors: Immutable.List([]),
             pageCount: undefined,
             price: undefined,

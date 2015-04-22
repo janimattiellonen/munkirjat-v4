@@ -86,9 +86,7 @@ var actions = {
 				method: method,
 				url: url,
 				dataType: 'json',
-				data: {
-					
-				}
+				data: book
 			}).done(function(data) {
 				if (method == 'POST') {
 					author.id = data[0].id;

@@ -21,7 +21,7 @@ var BookForm = React.createClass({
 			book: {
 				id: undefined,
 				title: undefined,
-				language: undefined,
+				languageId: undefined,
 				authors: [],
 				pageCount: undefined,
 				price: undefined,
@@ -85,7 +85,7 @@ var BookForm = React.createClass({
 		
 		alert("wut: " + JSON.stringify(bookData));
 
-		this.getFlux().actions.book.saveBook({bookData});
+		this.getFlux().actions.book.saveBook(bookData);
 	},
 
 	handleStartingDate: function(date) {
@@ -152,13 +152,13 @@ var BookForm = React.createClass({
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option1" value="fi" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookFinnish" /></input>
+						    	<input type="radio" name="languageId" id="option1" value="fi" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookFinnish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option2" value="se" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookSwedish" /></input>
+						    	<input type="radio" name="languageId" id="option2" value="se" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookSwedish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option3" value="en" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookEnglish" /></input>
+						    	<input type="radio" name="languageId" id="option3" value="en" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookEnglish" /></input>
 						  	</label>
 						</div>	    
 				    </div>

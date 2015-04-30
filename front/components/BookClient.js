@@ -22,7 +22,7 @@ var BookClient = {
         }).done(function(data) {
             successCallback(data);
         }).error(function(error) {
-            alert("Failed to load data");
+            Munkirjat.Notifier.error("Could not book(s).");
         });
     }
 };

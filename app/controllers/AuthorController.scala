@@ -17,16 +17,16 @@ import models.User
 class AuthorController @Inject() (implicit val env: Environment[User, CachedCookieAuthenticator])
     extends Silhouette[User, CachedCookieAuthenticator] with BaseController {
 
+    implicit val errorWrites = new Writes[FormError] {
+        def writes(formError: FormError) = Json.obj(
+            "key" -> formError.key,
+            "message" -> formError.message
+        )
+    }
+
     def create = SecuredAction.async { implicit request =>
         val data	 = new ListBuffer[Map[String, JsValue]]()
         val authorForm = createAuthorForm()
-
-        implicit val errorWrites = new Writes[FormError] {
-            def writes(formError: FormError) = Json.obj(
-                "key" -> formError.key,
-                "message" -> formError.message
-            )
-        }
 
         authorForm.bindFromRequest.fold(
             formWithErrors => {
@@ -49,13 +49,6 @@ class AuthorController @Inject() (implicit val env: Environment[User, CachedCook
         val data	 = new ListBuffer[Map[String, JsValue]]()
 
         val authorForm = createAuthorForm()
-
-        implicit val errorWrites = new Writes[FormError] {
-            def writes(formError: FormError) = Json.obj(
-                "key" -> formError.key,
-                "message" -> formError.message
-            )
-        }
 
         authorForm.bindFromRequest.fold(
             formWithErrors => {

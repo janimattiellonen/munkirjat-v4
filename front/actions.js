@@ -2,6 +2,9 @@ var constants = require('./constants');
 
 var BookClient = require('./components/BookClient');
 
+
+
+
 var actions = {
 
 	author: {
@@ -11,6 +14,8 @@ var actions = {
 			// depending on call success status, call appropriate dispatcher event
 			var self = this;
 			var method, url;
+
+			var errorizer = new Munkirjat.Errorizer($('#author-creation'), 'form-group', []);
 
 			if (undefined !== author.id) {
 				method = "PUT",
@@ -25,8 +30,8 @@ var actions = {
 				url: url,
 				dataType: 'json',
 				data: {
-					firstname: 	author.firstname,
-					lastname: 	author.lastname
+					firstname: 	(author.firstname != undefined ? author.firstname : ""),
+					lastname: 	(author.lastname != undefined ? author.lastname : "")
 				}
 			}).done(function(data) {
 				if (method == 'POST') {
@@ -34,8 +39,12 @@ var actions = {
 				}
 
 				self.dispatch(constants.SAVE_AUTHOR, author);
+				errorizer.clear();
+				Munkirjat.Notifier.success("Author was saved");
 			}).error(function(error) {
-				alert("ERROR: " + JSON.stringify(error));
+				error.responseJSON.map(function(errors) {
+					errorizer.errorize(errors.errors);
+				});
 			});
 		},
 
@@ -49,7 +58,7 @@ var actions = {
 			}).done(function(data) {
 				self.dispatch(constants.AUTHOR_LOADED, data[0]);
 			}).error(function(error) {
-
+				Munkirjat.Notifier.error("Could not load author");
 			});
 		},
 
@@ -63,7 +72,7 @@ var actions = {
 			}).done(function(data) {
 				self.dispatch(constants.AUTHORS_LOADED, data);
 			}).error(function(error) {
-
+				Munkirjat.Notifier.error("Could not load authors");
 			});
 		}
 	},
@@ -93,8 +102,9 @@ var actions = {
 				}
 
 				self.dispatch(constants.SAVE_BOOK, book);
+				Munkirjat.Notifier.success("Book was saved");
 			}).error(function(error) {
-				alert("ERROR: " + JSON.stringify(error));
+				Munkirjat.Notifier.error("Could not save book");
 			});
 		},
 

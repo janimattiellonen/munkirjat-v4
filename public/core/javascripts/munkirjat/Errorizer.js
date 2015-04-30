@@ -21,13 +21,11 @@ Munkirjat.Errorizer.prototype = (function()
         },
 
         errorizeElement: function(error) {
-        	
         	targetName = this.getMapping(error);
-        	
             $(this.$containerElement).addClass('errorized');
             $errorDiv = $('<div class="col-sm-offset-3 col-sm-9"></div>').addClass('errorized-message');
             $ul = $('<ul></ul>');
-            $ul.append($('<li></li>').text(i18n.t(error.message)));
+            $ul.append($('<li></li>').text(error.message));
 
             $errorDiv.html($ul);
             	

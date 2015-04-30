@@ -35,8 +35,6 @@ GET		/templates/home				@controllers.ApplicationController.homeTemplate
 GET		/templates/about			@controllers.ApplicationController.aboutTemplate
 GET		/templates/view-book		@controllers.ApplicationController.bookTemplate
 GET		/templates/login			@controllers.ApplicationController.loginTemplate
-GET 	/templates/view-author   	@controllers.AuthorController.authorTemplate
-GET 	/templates/author-form		@controllers.AuthorController.authorFormTemplate
 GET		/templates/book-form		@controllers.BookController.bookFormTemplate
 
 

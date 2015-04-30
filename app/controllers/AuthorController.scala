@@ -131,12 +131,4 @@ class AuthorController @Inject() (implicit val env: Environment[User, CachedCook
 
         Ok(Json.toJson(data))
     }
-
-    def authorFormTemplate = SecuredAction { implicit request =>
-        Ok(views.html.authorform(""))
-    }
-
-    def authorTemplate = Action { implicit request =>
-        Ok(views.html.author(""))
-    }
 }

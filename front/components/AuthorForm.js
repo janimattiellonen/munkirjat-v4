@@ -10,9 +10,9 @@ var AuthorForm = React.createClass({
 
 	getInitialState: function() {
 		return {
-			id: undefined,
-			firstname: "s",
-			lastname: "s"
+			id: null,
+			firstname: "",
+			lastname: ""
 		};
 	},
 
@@ -23,16 +23,19 @@ var AuthorForm = React.createClass({
 	componentDidMount: function() {
 		this.setState({
 			author: {
-				id: undefined,
-				firstname: undefined,
-				lastname: undefined
+				id: null,
+				firstname: null,
+				lastname: null
 			}
 		})
 		var authorId = this.getParams().id;
 
-		if(authorId != undefined) {
+		if(authorId != null) {
 			this.getFlux().actions.author.loadAuthor(authorId);
 		}
+
+		var errorizer = new Munkirjat.Errorizer($('#author-creation'), 'form-group', []);
+		errorizer.errorize(result.data[0].errors);
 	},
 
 	render: function() {

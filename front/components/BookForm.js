@@ -19,16 +19,16 @@ var BookForm = React.createClass({
 
 		this.setState({
 			book: {
-				id: undefined,
-				title: undefined,
-				languageId: undefined,
+				id: null,
+				title: null,
+				languageId: null,
 				authors: [],
-				pageCount: undefined,
-				price: undefined,
+				pageCount: null,
+				price: null,
 				isRead: false,
-				startedReading: undefined,
-				finishedReading: undefined,
-				isbn: undefined
+				startedReading: null,
+				finishedReading: null,
+				isbn: null
 			}
 		});
 
@@ -70,16 +70,16 @@ var BookForm = React.createClass({
 
 	saveBook: function(e) {
 		e.preventDefault();
-
+		console.log("book data: " + JSON.stringify(this.state.book));
 		var bookData = _.clone(this.state.book);
 
-		bookData.id = this.state.book.id != undefined ? this.state.book.id : undefined;
+		bookData.id = this.state.book.id != null ? this.state.book.id : null;
 
-		if (bookData.startedReading != undefined) {
+		if (bookData.startedReading != null) {
 			bookData.startedReading = moment(bookData.startedReading).format('DD.MM.YYYY');
 		}
 
-		if (bookData.finishedReading != undefined) {
+		if (bookData.finishedReading != null) {
 			bookData.finishedReading = moment(bookData.finishedReading).format('DD.MM.YYYY');
 		}
 		
@@ -95,7 +95,7 @@ var BookForm = React.createClass({
 	},
 
 	clearFinishingDate: function() {
-		this.handleFinishingDate(undefined, false);
+		this.handleFinishingDate(null, false);
 
 		var state = this.state;
 		state.book.isRead = false;

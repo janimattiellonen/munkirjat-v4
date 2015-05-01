@@ -7,16 +7,16 @@ var BookStore = Fluxxor.createStore({
   	initialize: function() {
     		this.books = Immutable.List([]);
         this.book = {
-            id: undefined,
-            title: undefined,
-            languageId: undefined,
+            id: null,
+            title: null,
+            languageId: null,
             authors: Immutable.List([]),
-            pageCount: undefined,
-            price: undefined,
+            pageCount: null,
+            price: null,
             isRead: false,
-            startedReading: undefined,
-            finishedReading: undefined,
-            isbn: undefined
+            startedReading: null,
+            finishedReading: null,
+            isbn: null
         };
 
     		this.bindActions(

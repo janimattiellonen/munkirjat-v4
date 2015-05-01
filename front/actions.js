@@ -17,7 +17,7 @@ var actions = {
 
 			var errorizer = new Munkirjat.Errorizer($('#author-creation'), 'form-group', []);
 
-			if (undefined !== author.id) {
+			if (null != author.id) {
 				method = "PUT",
 				url = '/authors/' + author.id;
 			} else {
@@ -30,8 +30,8 @@ var actions = {
 				url: url,
 				dataType: 'json',
 				data: {
-					firstname: 	(author.firstname != undefined ? author.firstname : ""),
-					lastname: 	(author.lastname != undefined ? author.lastname : "")
+					firstname: 	author.firstname,
+					lastname: 	author.lastname
 				}
 			}).done(function(data) {
 				if (method == 'POST') {
@@ -83,14 +83,14 @@ var actions = {
 			var self = this;
 			var method, url;
 
-			if (undefined !== book.id) {
+			if (null != book.id) {
 				method = "PUT",
 				url = '/books/' + book.id;
 			} else {
 				method = "POST";
 				url = '/books';
 			}
-
+			console.log(JSON.stringify(book));
 			$.ajax({
 				method: method,
 				url: url,

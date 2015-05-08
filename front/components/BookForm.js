@@ -23,14 +23,20 @@ var BookForm = React.createClass({
 				title: null,
 				languageId: null,
 				authors: [],
-				pageCount: null,
-				price: null,
+				pageCount: 0,
+				price: 0,
 				isRead: false,
 				startedReading: null,
 				finishedReading: null,
 				isbn: null
 			}
 		});
+
+		var bookId = this.getParams().id;
+
+		if(bookId != null) {
+			this.getFlux().actions.book.loadBook(bookId);
+		}
 
 		$(this.refs.authors.getDOMNode()).select2({
 			width: "300px",
@@ -83,8 +89,6 @@ var BookForm = React.createClass({
 			bookData.finishedReading = moment(bookData.finishedReading).format('DD.MM.YYYY');
 		}
 		
-		alert("wut: " + JSON.stringify(bookData));
-
 		this.getFlux().actions.book.saveBook(bookData);
 	},
 

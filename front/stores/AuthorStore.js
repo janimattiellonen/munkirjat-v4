@@ -6,9 +6,9 @@ var AuthorStore = Fluxxor.createStore({
   
   	initialize: function() {
     		this.author = {
-            id: undefined,
-            firstname: undefined,
-            lastname: undefined,
+            id: null,
+            firstname: null,
+            lastname: null,
             books: Immutable.List([])
         };
 

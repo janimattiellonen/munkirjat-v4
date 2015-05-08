@@ -18,7 +18,8 @@ import scala.concurrent.Future
 class BookController @Inject() (implicit val env: Environment[User, CachedCookieAuthenticator])
 	extends Silhouette[User, CachedCookieAuthenticator] with BaseController {
 
-	def create = SecuredAction.async { implicit request =>
+    // todo: use SecuredAction.async
+	def create = Action.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 		val bookForm = createBookForm()
 		
@@ -45,8 +46,9 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 			}
 		)
 	}
-	
-	def update(bookId:Int) = SecuredAction.async { implicit request =>
+
+    // todo: use SecuredAction.async
+	def update(bookId:Int) = Action.async { implicit request =>
 	    val data	 = new ListBuffer[Map[String, JsValue]]()
 	    
 		val bookForm = createBookForm()
@@ -108,7 +110,7 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 		Ok(Json.toJson(data))
 	}
 
-  def listBooks(mode:String) = Action.async {
+    def listBooks(mode:String) = Action.async {
       val data = new ListBuffer[Map[String, JsValue]]()
 
       val books:List[(Int, String, Boolean)] = getBookService().listBooks(mode)
@@ -122,25 +124,34 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
       }
 
       Future.successful(Ok(Json.toJson(data)))
-  }
-	
-	def createBookForm(): Form[Book] = {
-		val bookForm = Form(
-			mapping(
-		        "title" 			-> text.verifying("Title is required", {!_.isEmpty}),
-		        "authors" 			-> list(number).verifying("foo", e => e.size >= 1),
-		        "price"  			-> bigDecimal.verifying("The price cannot be negative", {_ >= 0.0}),
-		        "languageId" 		-> text.verifying("Language is required", {!_.isEmpty}),
-		        "pageCount"			-> number.verifying("A book must have at least 1 page", {_ >= 1}),
-		        "isRead"			-> optional(boolean),
-		        "startedReading" 	-> optional(text),
-		        "finishedReading" 	-> optional(text),
-		        "isbn"				-> optional(text)
-		    )(Book.apply)(Book.unapply)
-		)
-		
-		return bookForm
-	}
+    }
+
+    def isNumeric(input: String): Boolean = {
+        try {
+            java.lang.Double.parseDouble(input)
+            true
+        } catch {
+            case e: Exception => false
+        }
+    }
+
+    def createBookForm(): Form[Book] = {
+        val bookForm = Form(
+            mapping(
+                "title" 			-> text.verifying("Title is required", {!_.isEmpty}),
+                "authors" 			-> list(number).verifying("At least one author is required", e => e.size >= 1),
+                "price"  			-> bigDecimal.verifying("The price cannot be negative", {_ >= 0.0}),
+                "languageId" 		-> text.verifying("Language is required", {!_.isEmpty}),
+                "pageCount"			-> number.verifying("A book must have at least 1 page", {_ >= 1}),
+                "isRead"			-> optional(boolean),
+                "startedReading" 	-> optional(text),
+                "finishedReading" 	-> optional(text),
+                "isbn"				-> optional(text)
+            )(Book.apply)(Book.unapply)
+        )
+
+        return bookForm
+    }
 	
 	def bookFormTemplate = SecuredAction {
 	    Ok(views.html.bookform(""))

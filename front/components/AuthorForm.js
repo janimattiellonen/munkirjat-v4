@@ -33,9 +33,6 @@ var AuthorForm = React.createClass({
 		if(authorId != null) {
 			this.getFlux().actions.author.loadAuthor(authorId);
 		}
-
-		var errorizer = new Munkirjat.Errorizer($('#author-creation'), 'form-group', []);
-		errorizer.errorize(result.data[0].errors);
 	},
 
 	render: function() {
@@ -95,7 +92,7 @@ var AuthorForm = React.createClass({
 		e.preventDefault();
 
 		this.getFlux().actions.author.saveAuthor({
-			id: 		this.state.author.id != undefined ? this.state.author.id : undefined,
+			id: 		this.state.author.id != null ? this.state.author.id : null,
 			firstname: 	this.state.author.firstname,
 			lastname: 	this.state.author.lastname
 		});

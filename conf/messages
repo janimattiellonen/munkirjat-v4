@@ -1,3 +1,4 @@
 error.email = Valid email required
 error.required = This field is required
 access.denied = Access denied!
+error.number = Not a valid number

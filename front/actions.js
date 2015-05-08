@@ -79,9 +79,9 @@ var actions = {
 
 	book: {
 		saveBook: function(book) {
-			console.log("saving book: " + JSON.stringify(book));
 			var self = this;
 			var method, url;
+			var errorizer = new Munkirjat.Errorizer($('#book-creation'), 'form-group', []);
 
 			if (null != book.id) {
 				method = "PUT",
@@ -97,14 +97,19 @@ var actions = {
 				dataType: 'json',
 				data: book
 			}).done(function(data) {
+				console.log("DONE saveing book");
 				if (method == 'POST') {
-					author.id = data[0].id;
+					console.log(JSON.stringify(data));
+					console.log("book id: " + data[0].id);
+					book.id = data[0].id;
 				}
 
 				self.dispatch(constants.SAVE_BOOK, book);
 				Munkirjat.Notifier.success("Book was saved");
 			}).error(function(error) {
-				Munkirjat.Notifier.error("Could not save book");
+				error.responseJSON.map(function(errors) {
+					errorizer.errorize(errors.errors);
+				});
 			});
 		},
 

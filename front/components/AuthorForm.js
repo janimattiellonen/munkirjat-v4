@@ -6,7 +6,12 @@ var FluxMixin 			= Fluxxor.FluxMixin(React);
 var StoreWatchMixin 	= Fluxxor.StoreWatchMixin;
 
 var AuthorForm = React.createClass({
-	mixins: [Router.State, FluxMixin, StoreWatchMixin("AuthorStore")],
+	mixins: [FluxMixin, StoreWatchMixin("AuthorStore")],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
+  	
 
 	getInitialState: function() {
 		return {

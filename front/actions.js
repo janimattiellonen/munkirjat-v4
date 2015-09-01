@@ -116,6 +116,7 @@ var actions = {
 		loadBook: function(bookId) {
 			var self = this;
 			BookClient.loadBook(bookId, function(data) {
+				console.log("LOADING BOOK: " + JSON.stringify(data));
 				self.dispatch(constants.BOOK_LOADED, data[0]);
 			});
 		},

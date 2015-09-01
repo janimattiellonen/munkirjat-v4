@@ -6,15 +6,11 @@ var FluxMixin 		= Fluxxor.FluxMixin(React);
 var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var MunkirjatApp = React.createClass({
-	mixins: [FluxMixin, Router.State],
+	mixins: [FluxMixin],
 
-	getHandlerKey: function () {
-	    var childDepth = 1; // assuming App is top-level route
-	    var key = this.getRoutes()[childDepth].name;
-	    var id = this.getParams().id;
-	    if (id) { key += id; }
-	    return key;
-	},
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	getInitialState: function() {
 		return {
@@ -24,7 +20,7 @@ var MunkirjatApp = React.createClass({
 
 	render: function() {
 		return (
-			<RouteHandler key={this.getHandlerKey()} {...this.props} />
+			<RouteHandler {...this.props} />
 		);
 	}
 });

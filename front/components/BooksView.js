@@ -9,7 +9,11 @@ var Immutable 			= require('Immutable');
 var Translate   		= require('react-translate-component');
 
 var BooksView = React.createClass({
-	mixins: [Router.State, FluxMixin, StoreWatchMixin("BookStore")],
+	mixins: [FluxMixin, StoreWatchMixin("BookStore")],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	getInitialState: function() {
 		return {
@@ -22,6 +26,9 @@ var BooksView = React.createClass({
 	},
 
 	componentDidMount: function() {
+
+		console.log("luss");
+return;
 		var path = this.getPathname();
 
 		if (path == "/books") {
@@ -34,8 +41,6 @@ var BooksView = React.createClass({
 	},
 
 	render: function() {
-		var path = this.getPathname();
-
 		return (
 			<div>
 				<h1><Translate content={this.title} /></h1>

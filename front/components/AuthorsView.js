@@ -9,7 +9,11 @@ var Immutable 			= require('Immutable');
 var Translate   		= require('react-translate-component');
 
 var AuthorsView = React.createClass({
-	mixins: [Router.State, FluxMixin, StoreWatchMixin("AuthorStore")],
+	mixins: [FluxMixin, StoreWatchMixin("AuthorStore")],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	getInitialState: function() {
 		return {

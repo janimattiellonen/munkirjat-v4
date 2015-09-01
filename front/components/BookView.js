@@ -12,7 +12,11 @@ var ChoiceValue			= require('./ChoiceValue');
 var DateValue			= require('./DateValue');
 
 var BookView = React.createClass({
-	mixins: [Router.State, FluxMixin, StoreWatchMixin("BookStore")],
+	mixins: [FluxMixin, StoreWatchMixin("BookStore")],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	getInitialState: function() {
 		return {

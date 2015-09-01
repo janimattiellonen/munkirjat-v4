@@ -5,8 +5,12 @@ var PrimaryStats 	= require('./PrimaryStats');
 var SecondaryStats 	= require('./SecondaryStats');
 
 var Home = React.createClass({
-	mixins: [Router.State],
+	mixins: [],
 	
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
+
 	render: function() {
 		return (
 			<div>

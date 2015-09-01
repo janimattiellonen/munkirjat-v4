@@ -100,8 +100,10 @@ class BookController @Inject() (implicit val env: Environment[User, CachedCookie
 	    		"pageCount"			-> Json.toJson(book.pageCount),
 	    		"price"				-> Json.toJson(book.price),
 	    		"isRead"			-> Json.toJson(book.isRead),
-	    		"startedReading"	-> Json.toJson(book.startedReading),
-	    		"finishedReading"	-> Json.toJson(book.finishedReading),
+	    		//"startedReading"	-> Json.toJson(book.startedReading),
+	    		//"finishedReading"	-> Json.toJson(book.finishedReading),
+                "startedReading"	-> Json.toJson("10.03.2015"),
+                "finishedReading"	-> Json.toJson("12.04.2015"),
 	    		"isbn"				-> Json.toJson(book.isbn),
 	    		"authors"			-> Json.toJson(authors)
 	    	)  

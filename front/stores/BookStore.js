@@ -32,7 +32,8 @@ var BookStore = Fluxxor.createStore({
     },
 
     onLoadBook: function(book) {
-      book.authors = Immutable.List(book.authors);
+        console.log("BookStore.onLoadBook()");
+        book.authors = Immutable.List(book.authors);
         this.book = book;
         this.emit("change");
     },

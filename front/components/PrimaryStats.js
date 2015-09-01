@@ -7,7 +7,11 @@ var Router 				= require('react-router');
 var Link = Router.Link;
 
 var PrimaryStats = React.createClass({
-	mixins: [Router.State],
+	mixins: [],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	render: function() {
 

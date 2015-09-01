@@ -8,7 +8,11 @@ var _					= require('underscore');
 var DatePicker 			= require('react-datepicker');
 
 var BookForm = React.createClass({
-	mixins: [Router.State, FluxMixin, StoreWatchMixin("BookStore")],
+	mixins: [FluxMixin, StoreWatchMixin("BookStore")],
+
+	contextTypes: {
+    	router: React.PropTypes.func
+  	},
 
 	getStateFromFlux: function() {
 		return this.getFlux().store("BookStore").getState()
@@ -35,7 +39,9 @@ var BookForm = React.createClass({
 		var bookId = this.getParams().id;
 
 		if(bookId != null) {
+			console.log("BookForm.componentDidMount():1");
 			this.getFlux().actions.book.loadBook(bookId);
+			console.log("BookForm.componentDidMount():2");
 		}
 
 		$(this.refs.authors.getDOMNode()).select2({
@@ -156,13 +162,13 @@ var BookForm = React.createClass({
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option1" value="fi" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookFinnish" /></input>
+						    	<input type="radio" name="languageId" id="option1" checked={this.state.book.languageId === "fi"} value="fi" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookFinnish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option2" value="se" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookSwedish" /></input>
+						    	<input type="radio" name="languageId" id="option2" checked={this.state.book.languageId === "se"} value="se" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookSwedish" /></input>
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option3" value="en" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookEnglish" /></input>
+						    	<input type="radio" name="languageId" id="option3" checked={this.state.book.languageId === "en"}  value="en" onChange={this.handleFieldChange} autoComplete="off"> <Translate content="formBookEnglish" /></input>
 						  	</label>
 						</div>	    
 				    </div>

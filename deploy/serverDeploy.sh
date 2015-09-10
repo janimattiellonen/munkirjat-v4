@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /var/www/beta.munkirjat.com/
+cd /var/www/munkirjat.com/
 
 echo "Stopping server.."
 test -f play-silhouette-seed-1.0/RUNNING_PID && kill `cat play-silhouette-seed-1.0/RUNNING_PID` && sleep 5 && rm play-silhouette-seed-1.0/RUNNING_PID;

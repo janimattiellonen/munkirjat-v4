@@ -1,7 +1,7 @@
 #!/bin/bash
 
-REMOTE=jme@176.31.54.203
-REMOTE_APP=/var/www/beta.munkirjat.com/
+REMOTE=jme@51.254.35.83
+REMOTE_APP=/var/www/munkirjat.com/
 
 activator clean compile dist || exit 1;
 

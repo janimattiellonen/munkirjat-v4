@@ -1,24 +1,8 @@
-munkirjat-v3
-============
+Munkirjat V4...V5
 
-Munkirjat.com using Scala and Play Framework
+## Installation & running
 
-##Technology used
-* Scala
-* Play Framework
-* Less
-* JavaScript
-* Bootstrap
-* AngularJS
-
-##Installation
-
-1) `git@github.com:janimattiellonen/munkirjat-v3.git`
-
-2) `munkirjat-v3`
-
-3) `sbt`
-
-4) `run`
-
-5) browse to http://localhost:9000
+* `cp config.js.dist to config.js`
+* `npm install`
+* `npm run start`
+* Visit http://localhost:5688 

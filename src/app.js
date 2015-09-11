@@ -8,6 +8,9 @@ import { Router, Route, Redirect } from 'react-router';
 import { history } from 'react-router/lib/HashHistory';
 import MunkirjatApp from "./components/MunkirjatApp";
 import About from "./components/AboutView";
+import BooksView from "./components/BooksView";
+
+
 import GameView from "./components/GameView";
 import PlayerSelectionView from "./components/Game/PlayerSelectionView";
 import ConfirmSelectionsView from "./components/Game/ConfirmSelectionsView";
@@ -34,10 +37,7 @@ React.render(
 		        <Redirect from="/" to="/about" />
 		        <Route component={MunkirjatApp} path="/">
 		            <Route name="about" path="about" component={About}/>
-		            <Route name="game" path="new-game" component={GameView}/>
-		            <Route name="select-players" path="select-players" component={PlayerSelectionView}/>
-		            <Route name="confirm-selections" path="confirm-selections" component={ConfirmSelectionsView}/>
-		            <Route name="game-play" path="game" component={GamePlayView}/>
+					<Route name="listBooks" path="/books" component={BooksView} />
 		        </Route>
 		    </Router>	
 		}

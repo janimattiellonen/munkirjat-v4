@@ -2,17 +2,14 @@ import React from 'react';
 import BookList	from './BookList';
 import Immutable from 'immutable';
 import Translate from 'react-translate-component';
-//import Router from 'react-router';
 
 export default class BooksView extends React.Component {
 
 	constructor(props, context){
     	super(props);
-    	console.log("CTOR: " + context.router); // will work
     	this.context = context;
     	this.state = props;
     	this.props = props;
-    	console.log(JSON.stringify(props));
   	}
 
 	componentDidMount() {

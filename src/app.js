@@ -26,8 +26,8 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(crea
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
 
-require('./app.less');
 require('bootstrap/dist/css/bootstrap.css');
+require('./app.less');
 require('bootstrap/dist/js/bootstrap.js');
 
 React.render(

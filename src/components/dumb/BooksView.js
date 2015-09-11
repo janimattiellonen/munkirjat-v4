@@ -10,9 +10,11 @@ export default class BooksView extends React.Component {
 			<div>
 				<h1>Books</h1>
 
-				{this.props.books.map(book => {
-					return(<div>{book.title}<br/></div>)
-				})}
+				<ul>
+					{this.props.books.map(book => {
+						return(<li key={book.id}><a href="#">{book.title}</a></li>)
+					})}
+				</ul>
 			</div>
 		);
 	}

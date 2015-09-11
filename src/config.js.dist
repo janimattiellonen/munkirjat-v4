@@ -4,5 +4,13 @@ module.exports = {
     'server': {
         'port': port,
         'url': 'http://localhost:' + port
+    },
+    'db': {
+    	'host': 'localhost',
+    	'user': '',
+    	'password': '',
+    	'database': ''
     }
 };
+
+

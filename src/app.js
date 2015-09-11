@@ -6,9 +6,9 @@ window.$ = window.jQuery;
 import React from "react";
 import { Router, Route, Redirect } from 'react-router';
 import { history } from 'react-router/lib/HashHistory';
-import MunkirjatApp from "./components/MunkirjatApp";
+import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
-import BooksView from "./components/BooksView";
+import BooksViewContainer from "./components/smart/BooksViewContainer";
 
 
 import GameView from "./components/GameView";
@@ -35,9 +35,9 @@ React.render(
 		{	() =>
 			<Router history={history}>
 		        <Redirect from="/" to="/about" />
-		        <Route component={MunkirjatApp} path="/">
+		        <Route component={MunkirjatAppContainer} path="/">
 		            <Route name="about" path="about" component={About}/>
-					<Route name="listBooks" path="/books" component={BooksView} />
+					<Route name="listBooks" path="/books" component={BooksViewContainer} />
 		        </Route>
 		    </Router>	
 		}

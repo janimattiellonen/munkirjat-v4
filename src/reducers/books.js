@@ -4,7 +4,7 @@ import moment from 'moment';
 
 export default handleActions({
 
-	SET_BOOKS: (state, action) => {
+	BOOKS_FETCH: (state, action) => {
 		return {
 			...state,
 			books: action.books

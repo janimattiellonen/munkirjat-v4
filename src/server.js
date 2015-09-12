@@ -12,25 +12,14 @@ server.use(restify.bodyParser({ mapParams: true }));
 let bookService = new BookService(mysql);
 
 server.get('/books', function (req, res) {
-    let connection = getConnection();
-
-    bookService.prepare(connection, function(err, result) {
-        connection.end();
-        res.charSet('utf8');
-        res.send(200, result);
-    });
+    prepare(req, res);
 
     bookService.getAllBooks();
 });
 
 server.get('/books/:mode', function (req, res) {
-    let connection = getConnection();
 
-    bookService.prepare(connection, function(err, result) {
-        connection.end();
-        res.charSet('utf8');
-        res.send(200, result);
-    });
+    prepare(req, res);
 
     let mode = req.params.mode;
     
@@ -39,11 +28,6 @@ server.get('/books/:mode', function (req, res) {
     } else {
         bookService.getUnreadBooks();
     }
-});
-
-
-server.listen(config.server.port, function() {
-    console.log('%s listening at %s', server.name, server.url);
 });
 
 function getConnection() {
@@ -58,6 +42,23 @@ function getConnection() {
 
     return connection;
 }
+
+function prepare(req, res) {
+    let connection = getConnection();
+
+    bookService.prepare(connection, function(err, result) {
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    });
+}
+
+
+server.listen(config.server.port, function() {
+    console.log('%s listening at %s', server.name, server.url);
+});
+
+
 
 
 export default server;

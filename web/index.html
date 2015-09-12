@@ -40,7 +40,9 @@
         </div>       
     </div>
 
-	 <div id="app"></div>
+	 <div id="app">
+        <div id="page">   
+     </div>
 	 
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>

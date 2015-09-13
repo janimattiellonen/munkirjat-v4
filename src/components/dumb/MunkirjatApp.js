@@ -24,8 +24,4 @@ export default class MunkirjatApp extends React.Component {
             </div>
         );
     } 
-
-    componentDidMount() {
-       // this.props.fetchBooks();
-    }
-};
+}

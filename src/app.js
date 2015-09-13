@@ -5,7 +5,7 @@ window.$ = window.jQuery;
 
 import React from "react";
 import { Router, Route, Redirect } from 'react-router';
-import { history } from 'react-router/lib/HashHistory';
+import { history } from 'react-router/lib/History';
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
 import BooksViewContainer from "./components/smart/BooksViewContainer";

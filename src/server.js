@@ -11,24 +11,24 @@ server.use(restify.bodyParser({ mapParams: true }));
 
 let bookService = new BookService(mysql);
 
-server.get('/books', function (req, res) {
-    prepare(req, res);
-
-    bookService.getAllBooks();
-});
-
 server.get('/books/:mode', function (req, res) {
 
     prepare(req, res);
 
     let mode = req.params.mode;
-    
+    console.log("MODE: " + mode);
+
+
     if (mode == 'read') {
         bookService.getReadBooks();
-    } else {
+    } else if (mode == 'unread') {
         bookService.getUnreadBooks();
+    } else {
+        bookService.getAllBooks();
     }
 });
+
+
 
 function getConnection() {
     var connection = mysql.createConnection({
@@ -57,8 +57,6 @@ function prepare(req, res) {
 server.listen(config.server.port, function() {
     console.log('%s listening at %s', server.name, server.url);
 });
-
-
 
 
 export default server;

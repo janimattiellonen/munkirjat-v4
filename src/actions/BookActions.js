@@ -8,9 +8,9 @@ export function setBooks(books) {
 }
 
 
-export function fetchBooks() {
+export function fetchBooks(mode = null) {
 	return function(dispatch, getState) {
-		api.getBooks("").then(books => {
+		api.getBooks(mode).then(books => {
 			dispatch(setBooks(books));
 		});
 	};

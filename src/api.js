@@ -3,7 +3,7 @@ import axios from 'axios';
 import { List } from 'immutable';
 
 export default {
-    getBooks: (term) => {
-    	return axios.get('/books?term=' + term).then(res => List(res.data));
+    getBooks: (mode = null) => {
+    	return axios.get('/books/' + mode).then(res => List(res.data));
     }
 };

@@ -28,28 +28,21 @@ export default React.createClass({
 
 
 	componentDidUpdate(prevProps, prevState) {
-		
-		console.log("luss: " + this.props.params.mode);
-		console.log("SIZE: " + this.props.books.size);
-		console.log("state. " + this.state.mode);
-		console.log("prevState. " + prevState.mode);
+		console.log("componentDidUpdate() called");
+	},
 
-		console.log("uu: " + (undefined == this.state.mode));
-				/*
-		if (this.state.mode != prevState.mode || this.props.books.size == 0) {
-			this.props.fetchBooks(this.props.params.mode);
-				this.setState({
-					mode: this.props.params.mode
-				});
+	componentWillReceiveProps(nextProps) {
+		console.log("componentWillReceiveProps() called");
+	},
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.props.params.mode != nextProps.params.mode;
+	},
+
+	componentWillUpdate(nextProps, nextState) {
+		if (this.props.params.mode != nextProps.params.mode) {
+			this.props.fetchBooks(nextProps.params.mode);
 		}
-		*/
-
-
-/*
-		this.setState({
-			mode: this.props.params.mode
-		});
-*/
 	},
 
 	componentDidMount() {

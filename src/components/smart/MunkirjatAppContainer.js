@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 export default connect(
     function(state) {
         return {
-            books: state.books.books
+            books: state.books.books,
+            mode: state.books.mode
         }
     },
     function mapDispatchToProps(dispatch) {

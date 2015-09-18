@@ -7,8 +7,9 @@ export default handleActions({
 	BOOKS_FETCH: (state, action) => {
 		return {
 			...state,
-			books: action.books
+			books: action.books,
+			mode: state.mode
 		};
 	},
 
-}, {books: List(), d: moment()});
+}, {books: List(), d: moment(), mode: undefined});

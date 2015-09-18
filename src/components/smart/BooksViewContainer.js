@@ -6,7 +6,8 @@ import BooksView from '../dumb/BooksView';
 export default connect(
     function(state) {
         return {
-            books: state.books.books
+            books: state.books.books,
+            mode: state.books.mode
         };
     },
     BookActions

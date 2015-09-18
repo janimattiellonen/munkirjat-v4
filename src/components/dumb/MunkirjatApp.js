@@ -23,5 +23,5 @@ export default class MunkirjatApp extends React.Component {
                 )}
             </div>
         );
-    } 
+    }
 }

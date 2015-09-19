@@ -13,7 +13,7 @@ export default class MunkirjatApp extends React.Component {
     render() {
 
         return (
-            <div id="page">
+            <div id="page-inner">
                 {this.props.children && React.cloneElement(
                     this.props.children,
                     {

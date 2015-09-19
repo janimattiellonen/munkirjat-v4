@@ -18,20 +18,18 @@ export default React.createClass({
 		return (
 			<div>
 				<h1>Books</h1>
-
-				{books.map(set => {
-					console.log("size of set: " + set.length);
-					return (
-						<div className="col-md-6">
-							<ul>
+				<div className="book-list">
+					{books.map(set => {
+						return (
+							<ul className="lefty">
 								{set.map(book => {
 									return(<li key={book.id}><a href="#">{book.title}</a></li>)
 								})}
 							</ul>
-						</div>
-					)
+						)
 
-				})}
+					})}
+				</div>
 			</div>
 		);
 	},

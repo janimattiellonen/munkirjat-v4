@@ -42,5 +42,5 @@ React.render(
 		    </Router>	
 		}
 	</Provider>,
-	document.getElementById('app')
+	document.getElementById('page')
 );

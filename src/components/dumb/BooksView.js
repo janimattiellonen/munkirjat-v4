@@ -18,10 +18,10 @@ export default React.createClass({
 		return (
 			<div>
 				<h1>Books</h1>
-				<div className="book-list">
+				<div className="data-list">
 					{books.map(set => {
 						return (
-							<ul className="lefty">
+							<ul>
 								{set.map(book => {
 									return(<li key={book.id}><a href="#">{book.title}</a></li>)
 								})}

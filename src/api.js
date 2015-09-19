@@ -5,5 +5,9 @@ import { List } from 'immutable';
 export default {
     getBooks: (mode = null) => {
     	return axios.get('/books/' + mode).then(res => List(res.data));
+    },
+
+    getAuthors() {
+    	return axios.get('/authors').then(res => List(res.data));
     }
 };

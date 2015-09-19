@@ -4,20 +4,20 @@ var http 	= require('follow-redirects').http;
 var uuid 	= require('node-uuid');
 var server 	= restify.createServer();
 var mysql 	= require('mysql');
+var AuthorService = require('./components/service/AuthorService');
 var BookService = require('./components/service/BookService');
 
 server.use(restify.CORS());
 server.use(restify.bodyParser({ mapParams: true }));
 
-let bookService = new BookService(mysql);
+let authorService = new AuthorService();
+let bookService = new BookService();
 
 server.get('/books/:mode', function (req, res) {
 
-    prepare(req, res);
+   prepare(req, res, bookService);
 
     let mode = req.params.mode;
-    console.log("MODE: " + mode);
-
 
     if (mode == 'read') {
         bookService.getReadBooks();
@@ -28,6 +28,11 @@ server.get('/books/:mode', function (req, res) {
     }
 });
 
+server.get('/authors', function(req, res) {
+    prepare(req, res, authorService)
+
+    authorService.getAllAuthors();
+});
 
 
 function getConnection() {
@@ -43,14 +48,23 @@ function getConnection() {
     return connection;
 }
 
-function prepare(req, res) {
+function prepare(req, res, service) {
     let connection = getConnection();
 
-    bookService.prepare(connection, function(err, result) {
+    service.prepare(connection, function(err, result) {
         connection.end();
         res.charSet('utf8');
         res.send(200, result);
     });
+}
+
+function prepare_nonworking(connection, req, res) {
+
+    return function(err, result) {
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    };
 }
 
 

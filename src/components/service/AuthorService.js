@@ -11,7 +11,7 @@ export default class AuthorService {
         this.callback = callback;
     }
 
-    getAllAuthors(callback) {
+    getAllAuthors() {
         this.connection.query(
             this.createGetAuthorsQuery(),
             this.callback

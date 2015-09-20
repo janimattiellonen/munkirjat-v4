@@ -29,8 +29,36 @@ server.get('/books/:mode', function (req, res) {
 });
 
 server.get('/author/:id', function(req, res) {
-    console.log("Loading author details: " + req.params.id);
-    prepare(req, res, authorService);
+    prepare(req, res, authorService, function(result) {
+
+        if (!result) {
+            return null;
+        }
+
+        let author = {};
+
+        result.map(row => {
+            if (null == author.id) {
+                author.id = row['id'];
+                author.firstname = row['firstname'];
+                author.lastname = row['lastname'];
+                author.name = row['name'];
+            }
+
+            if (null == author.books) {
+                author.books = [];
+            }
+
+            author.books.push({
+                id: row['book_id'],
+                title: row['title'],
+                is_read: row['is_read'],
+            });
+        });
+        
+        return author;
+        
+    });
     
     authorService.getAuthor(req.params.id);
 
@@ -68,10 +96,16 @@ function getConnection() {
     return connection;
 }
 
-function prepare(req, res, service) {
+function prepare(req, res, service, resultDataProcessor = null) {
     let connection = getConnection();
 
     service.prepare(connection, function(err, result) {
+
+        if (null !== resultDataProcessor) {
+            console.log("has resultDataProcessor...");
+            result = resultDataProcessor(result);
+        }
+
         connection.end();
         res.charSet('utf8');
         res.send(200, result);

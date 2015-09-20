@@ -5,7 +5,7 @@ import { List } from 'immutable';
 export default {
 
 	getAuthor(id) {
-		return axios.get('/author/' + id).then(res => List(res.data));
+		return axios.get('/author/' + id).then(res => res.data);
 	},
 
 	getAuthors() {

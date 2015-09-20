@@ -6,7 +6,7 @@ import AuthorView from '../dumb/AuthorView';
 export default connect(
     function(state) {
         return {
-            
+            author: state.authors.author
         };
     },
     AuthorActions

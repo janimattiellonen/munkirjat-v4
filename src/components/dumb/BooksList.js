@@ -2,7 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import Translate from 'react-translate-component';
 import _ from 'lodash';
-
+import classNames from 'classnames';
 
 export default React.createClass({
 
@@ -24,7 +24,7 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(book => {
-									return(<li key={book.id}><a href="#">{book.title}</a></li>)
+									return(<li key={book.id}><a className={classNames({'is-read': book.is_read})} href="#">{book.title}</a></li>)
 								})}
 							</ul>
 						)
@@ -33,5 +33,7 @@ export default React.createClass({
 				</div>
 			</div>
 		);
-	}
+	},
+
+
 });

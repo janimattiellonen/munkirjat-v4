@@ -16,7 +16,29 @@ export default class AuthorService {
             this.createGetAuthorsQuery(),
             this.callback
         );
-    }s
+    }
+
+    // @TODO: we need to hydate the results
+    getAuthor(id) {
+        this.connection.query(
+            `SELECT
+                a.id,
+                a.firstname,
+                a.lastname,
+                CONCAT(firstname, ' ', lastname) AS name,
+                b.id AS book_id,
+                b.title,
+                b.is_read
+            FROM 
+                book AS b
+                JOIN book_author AS ba ON b.id = ba.book_id
+                JOIN author AS a ON a.id = ba.author_id
+            WHERE
+                a.id = :id`,
+            {id: id},
+            this.callback
+        );
+    }  
 
     createGetAuthorsQuery() {
         let query = `SELECT

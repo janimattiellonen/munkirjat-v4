@@ -53,7 +53,6 @@ export default class BookService {
         }
 
         query += ' ORDER BY b.title ASC';
-        console.log("query: " + query);
         
         return query;
     }

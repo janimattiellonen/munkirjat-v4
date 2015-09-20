@@ -28,12 +28,19 @@ server.get('/books/:mode', function (req, res) {
     }
 });
 
+server.get('/author/:id', function(req, res) {
+    console.log("Loading author details: " + req.params.id);
+    prepare(req, res, authorService);
+    
+    authorService.getAuthor(req.params.id);
+
+});
+
 server.get('/authors', function(req, res) {
     prepare(req, res, authorService)
 
     authorService.getAllAuthors();
 });
-
 
 function getConnection() {
     var connection = mysql.createConnection({
@@ -42,6 +49,19 @@ function getConnection() {
         password: config.db.password,
         database: config.db.database
     });
+
+    connection.config.queryFormat = function (query, values) {
+        if (!values) return query;
+        return query.replace(/\:(\w+)/g, function (txt, key) {
+
+            if (values.hasOwnProperty(key)) {
+                return this.escape(values[key]);
+            }
+
+            return txt;
+        }.bind(this));
+    };
+
 
     connection.connect();
 

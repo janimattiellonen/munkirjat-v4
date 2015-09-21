@@ -2,8 +2,9 @@ import React from 'react';
 import Router, {RouteHandler} from 'react-router';
 import { connect } from 'react-redux';
 
-import * as BookActions from '../../actions/BookActions';
-import { bindActionCreators } from 'redux';
+//import * as AuthorActions from '../../actions/AuthorActions';
+//import * as BookActions from '../../actions/BookActions';
+//import { bindActionCreators } from 'redux';
 
 export default class MunkirjatApp extends React.Component {
     static contextTypes = {
@@ -18,7 +19,8 @@ export default class MunkirjatApp extends React.Component {
                     this.props.children,
                     {
                        // books: this.props.books,
-                        //bookActions: this.props.bookActions
+                       // bookActions: this.props.bookActions,
+                        //authorActions: this.props.authorActions
                     }
                 )}
             </div>

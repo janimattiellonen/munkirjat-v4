@@ -4,6 +4,13 @@ import moment from 'moment';
 
 export default handleActions({
 
+	BOOK_INFO_FETCH: (state, action) => {
+		return {
+			...state,
+			book: action.book
+		};
+	},
+
 	BOOKS_FETCH: (state, action) => {
 		return {
 			...state,

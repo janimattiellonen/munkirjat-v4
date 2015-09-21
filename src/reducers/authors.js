@@ -17,4 +17,13 @@ export default handleActions({
 		};
 	},
 
-}, {authors: List(), author: {}, books: List()});
+	BOOK_INFO_FETCH: (state, action) => {
+		console.log("authors: here: " + action.book.id);
+		return {
+			...state,
+			book: action.book,
+			showBookInfo: action.book.id != undefined
+		};
+	},	
+
+}, {authors: List(), author: {}, books: List(), book: {}});

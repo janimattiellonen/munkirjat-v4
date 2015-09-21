@@ -3,32 +3,50 @@ import Immutable from 'immutable';
 import Translate from 'react-translate-component';
 import _ from "lodash";
 import BooksList from './BooksList';
+import BookInfoView from './BookInfoView';
 
 export default React.createClass({
+
+	getInitialState: function() {
+        return { showBookInfo: false };
+    },
 
 	getDefaultProps() {
 		return {
 			author: {
-				brf: 2,
-				books: Immutable.List([])
+				books: Immutable.List([]),
+				book: undefined
 			}	
 		}
 
 	},
 
 	render() {
+		console.log("authorActions is null: " + (null == this.props.authorActions));
+		console.log("bookActions is null: " + (null == this.props.bookActions));
 		return (
+
 			<div>
+				{this.props.children && React.cloneElement(
+                    this.props.children,
+                    {
+                        authorActions: this.props.authorActions,
+                        userActions: this.props.userActions,
+                        bookActions: this.props.bookActions
+                    }
+                )}
 				<h1>Author</h1>
 				{this.props.author.name}
 				<h2>Books</h2>
 
-				<BooksList books={this.props.author.books} />
+				<BooksList books={this.props.author.books} {...this.props}/>
+				
+                { this.props.book ? <BookInfoView book={this.props.book} {...this.props}/> : null }
 			</div>
 		);
 	},
 
 	componentDidMount() {
-		this.props.fetchAuthor(this.props.params.id);
+		this.props.authorActions.fetchAuthor(this.props.params.id);
 	},
 });

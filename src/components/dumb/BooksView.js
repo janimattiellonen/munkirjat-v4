@@ -28,6 +28,7 @@ export default React.createClass({
 	},
 
 	shouldComponentUpdate(nextProps, nextState) {
+		this.props.fooks();
 		if (this.props.params.mode != nextProps.params.mode) {
 			this.props.fetchBooks(nextProps.params.mode);
 		}

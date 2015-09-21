@@ -1,4 +1,5 @@
 import MunkirjatApp from '../dumb/MunkirjatApp';
+import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,6 +12,9 @@ export default connect(
         }
     },
     function mapDispatchToProps(dispatch) {
-        return { bookActions: bindActionCreators(BookActions, dispatch) };
+        return { 
+        	authorActions: bindActionCreators(AuthorActions, dispatch), 
+        	bookActions: bindActionCreators(BookActions, dispatch) 
+        };
     }
 )(MunkirjatApp);

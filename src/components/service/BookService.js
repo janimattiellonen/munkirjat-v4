@@ -24,8 +24,8 @@ export default class BookService {
                 b.updated_at,
                 b.started_reading,
                 b.finished_reading,
-                rating,
-                price
+                b.rating,
+                b.price
             FROM 
                 book AS b
             WHERE

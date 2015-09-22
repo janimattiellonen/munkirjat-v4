@@ -31,7 +31,7 @@ export default React.createClass({
 				
 				<div className="row">
 					<div className="title">Price</div>
-					<div>{book.price}</div>
+					<div>{utils.money(book.price)}</div>
 				</div>
 				
 				<div className="row">

@@ -33,3 +33,7 @@ export function language(languageCode) {
 
 	return language;
 }
+
+export function yes_no(value) {
+	return value ? 'Yes' : 'No';
+}

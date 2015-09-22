@@ -21,20 +21,36 @@ export default React.createClass({
 		const {book} = this.props;
 
 		return (
-			<div>
-				<h1>Book</h1>
+			<div className="book-info">
+				<h2>{book.title}</h2>
 
-				{book.title}
+				<div className="row2">
+					<div className="title">Language</div>
+					<div>{utils.language(book.language_id)}</div>
+				</div>
+				
+				<div className="row2">
+					<div className="title">Price</div>
+					<div>{book.price}</div>
+				</div>
+				
+				<div className="row2">
+					<div className="title">Is read</div>
+					<div>{utils.yes_no(book.is_read)}</div>
+				</div>
 
-				{utils.language(book.language_id)}
 
-				{book.price}
+				<div className="row2">
+					<div className="title">Started reading</div>
+					<div>{utils.date_format(book.started_reading)}</div>
+				</div>
 
-				{book.is_read}
-				<br/>
-				{utils.date_format(book.started_reading)}
-<br/>
-				{utils.date_format(book.finished_reading)}
+				<div className="row2">
+					<div className="title">Finished reading</div>
+					<div>{utils.date_format(book.finished_reading)}</div>
+				</div>
+				
+				
 			</div>
 		);
 	},

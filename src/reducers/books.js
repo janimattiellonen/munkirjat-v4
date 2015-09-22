@@ -19,4 +19,4 @@ export default handleActions({
 		};
 	},
 
-}, {books: List(), d: moment(), mode: undefined});
+}, {books: List(), d: moment(), mode: undefined, book: undefined});

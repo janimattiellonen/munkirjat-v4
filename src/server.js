@@ -13,9 +13,17 @@ server.use(restify.bodyParser({ mapParams: true }));
 let authorService = new AuthorService();
 let bookService = new BookService();
 
+server.get('/book/:id', function(req, res) {
+    prepare(req, res, bookService);
+
+    let id = req.params.id;
+
+    bookService.getBook(id);
+});
+
 server.get('/books/:mode', function (req, res) {
 
-   prepare(req, res, bookService);
+    prepare(req, res, bookService);
 
     let mode = req.params.mode;
 
@@ -61,7 +69,6 @@ server.get('/author/:id', function(req, res) {
     });
     
     authorService.getAuthor(req.params.id);
-
 });
 
 server.get('/authors', function(req, res) {
@@ -102,7 +109,6 @@ function prepare(req, res, service, resultDataProcessor = null) {
     service.prepare(connection, function(err, result) {
 
         if (null !== resultDataProcessor) {
-            console.log("has resultDataProcessor...");
             result = resultDataProcessor(result);
         }
 
@@ -111,16 +117,6 @@ function prepare(req, res, service, resultDataProcessor = null) {
         res.send(200, result);
     });
 }
-
-function prepare_nonworking(connection, req, res) {
-
-    return function(err, result) {
-        connection.end();
-        res.charSet('utf8');
-        res.send(200, result);
-    };
-}
-
 
 server.listen(config.server.port, function() {
     console.log('%s listening at %s', server.name, server.url);

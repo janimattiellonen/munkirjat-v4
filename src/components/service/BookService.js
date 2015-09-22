@@ -11,6 +11,30 @@ export default class BookService {
         this.callback = callback;
     }
 
+    getBook(id) {
+        this.connection.query(
+            `SELECT
+                b.id,
+                b.title,
+                b.language_id,
+                b.page_count,
+                b.is_read,
+                b.isbn,
+                b.created_at,
+                b.updated_at,
+                b.started_reading,
+                b.finished_reading,
+                rating,
+                price
+            FROM 
+                book AS b
+            WHERE
+                b.id = :id`,
+            {id: id},
+            this.callback
+        );
+    }
+
     getAllBooks() {
         this.connection.query(
             this.createGetBooksQuery(),

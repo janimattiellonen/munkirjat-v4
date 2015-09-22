@@ -17,36 +17,18 @@ export function setBookInfo(book) {
 }
 
 export function fetchBookInfo(bookId) {
-	console.log("fetchBookInfo");
 	return function(dispatch, getState) {
-		console.log("fetchBookInfo:dispatch");
-		let book = {
-			id: Math.floor((Math.random() * 100) + 1),
-			title: 'Heh' + Math.floor((Math.random() * 1000) + 1),
-			is_read: false
-		};
-
-		dispatch(setBookInfo(book));
-
-		/*
-		api.getBooks(mode).then(books => {
-			dispatch(setBookInfo(books, mode));
+		api.getBook(bookId).then(book => {
+			console.log("BOOK: " + JSON.stringify(book));
+			dispatch(setBookInfo(book.length == 1 ? book[0] : null));
 		});
-	*/
 	};
 }
 
 export function fetchBooks(mode = null) {
-	console.log("BookActions::fetchBooks()");
 	return function(dispatch, getState) {
 		api.getBooks(mode).then(books => {
 			dispatch(setBooks(books, mode));
 		});
-	};
-}
-
-export function fooks() {
-	return function(dispatch, getState) {
-		console.log("fooks");
 	};
 }

@@ -22,8 +22,6 @@ export default React.createClass({
 	},
 
 	render() {
-		console.log("authorActions is null: " + (null == this.props.authorActions));
-		console.log("bookActions is null: " + (null == this.props.bookActions));
 		return (
 
 			<div>

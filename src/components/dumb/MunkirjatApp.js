@@ -2,6 +2,8 @@ import React from 'react';
 import Router, {RouteHandler} from 'react-router';
 import { connect } from 'react-redux';
 
+import StatisticsView from './StatisticsView';
+
 //import * as AuthorActions from '../../actions/AuthorActions';
 //import * as BookActions from '../../actions/BookActions';
 //import { bindActionCreators } from 'redux';
@@ -23,6 +25,9 @@ export default class MunkirjatApp extends React.Component {
                         //authorActions: this.props.authorActions
                     }
                 )}
+
+                <StatisticsView />
+
             </div>
         );
     }

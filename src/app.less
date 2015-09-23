@@ -75,7 +75,19 @@ body {
 	    position: relative;
 	    
 	    #page {
+	    	float: left;
+	    	width: 100%;
 			padding: 80px 50px 75px 50px;
+
+			#page-inner {
+				float: left;
+				width: 100%;
+
+				div:first-child {
+					float: left;
+					width: 80%;
+				}
+			}
 		}
     }
     
@@ -168,8 +180,8 @@ a.is-read {
 }
 
 .stats-main {
-	float: left;
-	width: 75%;
+	float: right;
+	width: 20%;
 	
 	.row {
 		width: 100%;

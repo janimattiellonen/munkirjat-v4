@@ -10,7 +10,6 @@ import Api from "../../api";
 export default class ConfirmSelectionsView extends React.Component {
 	constructor(props, context){
     	super(props);
-    	console.log("CTOR: " + context.router); // will work
     	this.context = context;
   	}
 

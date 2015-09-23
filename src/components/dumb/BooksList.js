@@ -36,7 +36,6 @@ export default React.createClass({
 	},
 
 	loadBookInfo(bookId, e) {
-		console.log("ssssss");
 		e.preventDefault();
 
 		this.props.bookActions.fetchBookInfo(bookId);

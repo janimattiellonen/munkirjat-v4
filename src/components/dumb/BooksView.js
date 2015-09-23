@@ -19,8 +19,31 @@ export default React.createClass({
 
 	render() {
 		return (
-			<BooksList books={this.props.books} />
+			<div>
+				<h1>{this.getTitle()}</h1>
+				<BooksList books={this.props.books} />
+			</div>
 		);
+	},
+
+	getTitle() {
+		let title = null;
+
+		switch(this.props.params.mode) {
+			case 'read': {
+				title = 'Read books';
+				break;
+			}
+			case 'unread': {
+				title = 'Unread books';
+				break;
+			}
+			default: {
+				title = 'Books';
+			}
+		}
+
+		return title;
 	},
 
 	componentDidMount() {

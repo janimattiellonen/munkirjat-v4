@@ -8,7 +8,6 @@ import Select from "react-select";
 export default React.createClass({
 
 	render() {
-		console.log("PlayerSelectionView.render()");
 		let self = this;
 
 		let getOptions = function(input, callback) {	
@@ -16,10 +15,6 @@ export default React.createClass({
 		    	self.loadPlayers(input, callback);
 		    }, 500);
 		};		
-
-		console.log("PlayerSelectionView.render() joined: " + this.props.selectedPlayersJoined);
-
-		console.log("PlayerSelectionView.render(), selected players: " + JSON.stringify(this.props.selectedPlayers));
 
 		return (
 			<div>

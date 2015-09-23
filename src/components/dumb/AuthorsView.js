@@ -17,11 +17,10 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a></li>)
+									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name} ({author.amount})</a></li>)
 								})}
 							</ul>
 						)
-
 					})}
 				</div>
 			</div>
@@ -30,16 +29,5 @@ export default React.createClass({
 
 	componentDidMount() {
 		this.props.fetchAuthors();
-	},
-
-	shouldComponentUpdate2(nextProps, nextState) {
-		console.log("shouldComponentUpdate: " + (this.props.params.mode != nextProps.params.mode));
-		console.log("shouldComponentUpdate: " + (this.state.mode == undefined));
-
-		if (this.props.params.mode != nextProps.params.mode) {
-			this.props.fetchBooks(nextProps.params.mode);
-		}
-
-		return this.props.params.mode != nextProps.params.mode || this.state.mode == undefined;
 	}
 });

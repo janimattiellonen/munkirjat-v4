@@ -6,7 +6,6 @@ export function date_format(date, format = "D.M.YYYY") {
 }
 
 export function language(languageCode) {
-	console.log("LANG: " + languageCode);
 	var language = '';
 
 	switch(languageCode) {

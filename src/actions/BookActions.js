@@ -27,8 +27,19 @@ export function fetchBookInfo(bookId) {
 
 export function fetchBooks(mode = null) {
 	return function(dispatch, getState) {
-		api.getBooks(mode).then(books => {
-			dispatch(setBooks(books, mode));
-		});
+
+		let books = getState().books.books;
+
+		console.log("ooo: " + JSON.stringify(books));
+
+		if (!books || books.length == 0) {
+			console.log("fetchBooks:A");
+			api.getBooks(null).then(books => {
+				dispatch(setBooks(books, mode));
+			});	
+		} else {
+			console.log("fetchBooks:B " + books.length);
+			dispatch(setBooks(books, mode));		
+		}
 	};
 }

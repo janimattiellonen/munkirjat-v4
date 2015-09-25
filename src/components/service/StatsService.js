@@ -15,7 +15,14 @@ export default class StatsService {
 	        	"avgReadTime"		: this.getAverageReadTime(),
 	        	"timeToReadAll"		: this.getEstimatedTimeToReadAllUnreadBooks()
 	    }
+	},
 
+	function getAuthorCount() {
+		let query = "SELECT COUNT(*) AS author_count FROM authors";
+	},
+
+	function getBookCount() {
+		let query = "SELECT COUNT(*) AS book_count FROM books";
 	}
 }
 

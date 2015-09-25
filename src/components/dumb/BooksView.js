@@ -18,10 +18,23 @@ export default React.createClass({
 	},
 
 	render() {
+
+		let mode = this.props.params.mode;
+		let books = null;
+		let allBooks = this.props.books;
+
+		if (mode == 'unread') {
+			books = allBooks.filter(n => n.is_read == 0);
+		} else if (mode == 'read') {
+			books = allBooks.filter(n => n.is_read == 1);
+		} else {
+			books = allBooks;
+		}
+
 		return (
 			<div>
 				<h1>{this.getTitle()}</h1>
-				<BooksList books={this.props.books} />
+				<BooksList books={books} />
 			</div>
 		);
 	},

@@ -4,17 +4,25 @@ import numeral from 'numeral';
 export default class Stats {
 
 	static getUnreadBookCount(books) {
-		return books.filter(n => n.is_read == 0).count()
+		return this.getUnreadBooks(books).count()
 	}
 
 	static getReadBookCount(books) {
-		return books.filter(n => n.is_read == 1).count();
+		return this.getReadBooks(books).count();
+	}
+
+	static getReadBooks(books) {
+		return books.filter(n => n.is_read == 1);
+	}
+
+	static getUnreadBooks(books) {
+		return books.filter(n => n.is_read == 0);
 	}
 
 	static getSlowestReadTime(books) {
 		let readTime = null;
 
-		books.filter(n => n.is_read == 1).map(book => {
+		this.getReadBooks(books).map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
 				let startDate = moment(book.started_reading);
 				let endDate = moment(book.finished_reading);
@@ -31,7 +39,7 @@ export default class Stats {
 	static getFastestReadTime(books) {
 		let readTime = null;
 
-		books.filter(n => n.is_read == 1).map(book => {
+		this.getReadBooks(books).map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
 				let startDate = moment(book.started_reading);
 				let endDate = moment(book.finished_reading);
@@ -47,8 +55,8 @@ export default class Stats {
 
 	static getAverageReadTime(books) {
 		let readTime = 0;
+		let readBooks = this.getReadBooks(books);
 
-		let readBooks = books.filter(n => n.is_read == 1);
 		readBooks.map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
 
@@ -59,6 +67,11 @@ export default class Stats {
 		});
 
 		return readTime > 0 ? readTime / 1000 / 86400 / readBooks.count() : 0;
+	}
+
+	static getTimeTakenToReadAllUnreadBooks(books) {
+
+		return this.getAverageReadTime(books) * this.getUnreadBookCount(books);
 	}
 }
 

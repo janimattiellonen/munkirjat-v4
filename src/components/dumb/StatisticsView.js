@@ -46,7 +46,7 @@ export default React.createClass({
 
 				<h3>Estimated time to read all unread books</h3>
 
-				<p>{numeral(this.getTimeTakenToReadAllUnreadBooks()).format("0.0[00]")}</p>
+				<p>{this.getTimeTakenToReadAllUnreadBooks()}</p>
 			</div>	
 		);
 	},
@@ -72,16 +72,10 @@ export default React.createClass({
 	},
 
 	getTimeTakenToReadAllUnreadBooks() {
-		let readTime = null;
-
-		this.props.books.filter(n => n.is_read == 0).map(book => {
-
-			
-
-		});
+		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books) / 365).format("0.00") + " year(s)";
 	},
 
 	formatDays(days) {
 		return days > 1 ? days + " days" : days + " day";
-	},			
+	}		
 });

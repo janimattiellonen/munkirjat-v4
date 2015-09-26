@@ -75,7 +75,6 @@ export default class Stats {
 		let booksWithPrice = books.filter(book => book.price > 0);
 
 		booksWithPrice.map(book => {
-			console.log("price: " + book.price);
 			price += book.price;
 		});
 

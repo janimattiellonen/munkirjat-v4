@@ -80,8 +80,8 @@ export default React.createClass({
 	},
 
 	getAverageBookPrice(books) {
-		return Stats.getAverageBookPrice(this.props.books);
-		//return numeral(Stats.getAverageBookPrice(this.props.books)).format("0.00") + "€";
+		let avg = Stats.getAverageBookPrice(this.props.books);
+		return avg > 0 ? numeral(avg).format("0.00") + "€" : "0€";
 	},
 
 	formatDays(days) {

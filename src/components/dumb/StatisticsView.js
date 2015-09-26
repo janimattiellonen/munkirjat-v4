@@ -2,6 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import moment from 'moment';
 import numeral from 'numeral';
+import Stats from '../Stats';
 
 export default React.createClass({
 
@@ -10,6 +11,7 @@ export default React.createClass({
 	},
 
 	render() {
+		console.log("STATS");
 		return (
             <div className="stats-main">
 				<h2>Statistics</h2>
@@ -40,7 +42,7 @@ export default React.createClass({
 
 				<h3>Average read time</h3>		
 
-				<p>{numeral(this.getAverageReadTime()).format("0.0")}</p>					
+				<p>{this.getAverageReadTime()}</p>					
 
 				<h3>Estimated time to read all unread books</h3>
 
@@ -50,61 +52,23 @@ export default React.createClass({
 	},
 
 	getUnreadBookCount() {
-		return this.props.books.filter(n => n.is_read == 0).count();
+		return Stats.getUnreadBookCount(this.props.books);
 	},
 
 	getReadBookCount() {
-		return this.props.books.filter(n => n.is_read == 1).count();
+		return Stats.getReadBookCount(this.props.books);
 	},
 
 	getSlowestReadTime() {
-		let readTime = null;
-
-		this.props.books.filter(n => n.is_read == 1).map(book => {
-			if (null != book.started_reading && null != book.finished_reading) {
-				let startDate = moment(book.started_reading);
-				let endDate = moment(book.finished_reading);
-				
-				if (null == readTime || endDate.diff(startDate) > readTime) {
-					readTime = endDate.diff(startDate);
-				}
-			}
-		});
-
-		return this.formatDays(readTime / 1000 / 86400);
+		return this.formatDays(Stats.getSlowestReadTime(this.props.books));
 	},	
 
 	getFastestReadTime() {
-		let readTime = null;
-
-		this.props.books.filter(n => n.is_read == 1).map(book => {
-			if (null != book.started_reading && null != book.finished_reading) {
-				let startDate = moment(book.started_reading);
-				let endDate = moment(book.finished_reading);
-				
-				if (null == readTime || endDate.diff(startDate) < readTime) {
-					readTime = endDate.diff(startDate);
-				}
-			}
-		});
-
-		return this.formatDays(readTime / 1000 / 86400);
+		return this.formatDays(Stats.getFastestReadTime(this.props.books));
 	},
 
 	getAverageReadTime() {
-		let readTime = 0;
-
-		let readBooks = this.props.books.filter(n => n.is_read == 1);
-		readBooks.map(book => {
-			if (null != book.started_reading && null != book.finished_reading) {
-
-				let startDate = moment(book.started_reading);
-				let endDate = moment(book.finished_reading);
-				readTime += endDate.diff(startDate);
-			}
-		});
-
-		return readTime > 0 ? readTime / 1000 / 86400 / readBooks.count() : 0;
+		return this.formatDays(numeral(Stats.getAverageReadTime(this.props.books)).format("0.0"));
 	},
 
 	getTimeTakenToReadAllUnreadBooks() {

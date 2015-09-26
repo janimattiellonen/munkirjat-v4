@@ -55,22 +55,18 @@ export default class Stats {
 
 	static getAverageReadTime(books) {
 		let readTime = 0;
-		let readBooks = this.getReadBooks(books);
+		let readBooks = this.getReadBooks(books).filter(book => null != book.started_reading && null != book.finished_reading);
 
 		readBooks.map(book => {
-			if (null != book.started_reading && null != book.finished_reading) {
-				let startDate = moment(book.started_reading);
-				let endDate = moment(book.finished_reading);
-				readTime += endDate.diff(startDate);
-			}
+			let startDate = moment(book.started_reading);
+			let endDate = moment(book.finished_reading);
+			readTime += endDate.diff(startDate)/ 1000 / 86400;
 		});
 
-		return readTime > 0 ? readTime / 1000 / 86400 / readBooks.count() : 0;
+		return readTime > 0 ? readTime / readBooks.count() : 0;
 	}
 
 	static getTimeTakenToReadAllUnreadBooks(books) {
-		console.log("a: " + this.getAverageReadTime(books));
-		console.log("b: " + this.getUnreadBookCount(books));
 		return this.getAverageReadTime(books) * this.getUnreadBookCount(books) / 365;
 	}
 }

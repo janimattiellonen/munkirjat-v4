@@ -8,6 +8,7 @@ export default connect(
     function(state) {
         return {
             books: state.books.books,
+            authors: state.authors.authors,
             mode: state.books.mode
         }
     },

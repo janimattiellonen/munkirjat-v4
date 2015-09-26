@@ -14,7 +14,7 @@ export default class MunkirjatApp extends React.Component {
     }
 
     render() {
-
+        console.log("MunkirjatApp::render()");
         return (
             <div id="page-inner">
                 {this.props.children && React.cloneElement(
@@ -26,9 +26,14 @@ export default class MunkirjatApp extends React.Component {
                     }
                 )}
 
-                <StatisticsView books={this.props.books} />
+                <StatisticsView books={this.props.books} authors={this.props.authors} />
 
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.props.bookActions.fetchBooks();
+        this.props.authorActions.fetchAuthors();
     }
 }

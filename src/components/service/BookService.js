@@ -64,7 +64,9 @@ export default class BookService {
         let query = `SELECT
             b.id,
             b.title,
-            b.is_read
+            b.is_read,
+            b.started_reading,
+            b.finished_reading
         FROM 
             book AS b`;
 

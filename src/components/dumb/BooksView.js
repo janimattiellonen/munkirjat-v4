@@ -59,10 +59,6 @@ export default React.createClass({
 		return title;
 	},
 
-	componentDidMount() {
-		this.props.fetchBooks(this.props.params.mode);
-	},
-
 	shouldComponentUpdate(nextProps, nextState) {
 		if (this.props.params.mode != nextProps.params.mode) {
 			this.props.fetchBooks(nextProps.params.mode);

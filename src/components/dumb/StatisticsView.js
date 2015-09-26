@@ -47,6 +47,10 @@ export default React.createClass({
 				<h3>Estimated time to read all unread books</h3>
 
 				<p>{this.getTimeTakenToReadAllUnreadBooks()}</p>
+
+				<h3>Average book price</h3>
+
+				<p>{this.getAverageBookPrice()}</p>
 			</div>	
 		);
 	},
@@ -73,6 +77,11 @@ export default React.createClass({
 
 	getTimeTakenToReadAllUnreadBooks() {
 		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books)).format("0.00") + " year(s)";
+	},
+
+	getAverageBookPrice(books) {
+		return Stats.getAverageBookPrice(this.props.books);
+		//return numeral(Stats.getAverageBookPrice(this.props.books)).format("0.00") + "€";
 	},
 
 	formatDays(days) {

@@ -69,6 +69,18 @@ export default class Stats {
 	static getTimeTakenToReadAllUnreadBooks(books) {
 		return this.getAverageReadTime(books) * this.getUnreadBookCount(books) / 365;
 	}
+
+	static getAverageBookPrice(books) {
+		let price = 0.0;
+		let booksWithPrice = books.filter(book => book.price > 0);
+
+		booksWithPrice.map(book => {
+			console.log("price: " + book.price);
+			price += book.price;
+		});
+
+		return price / booksWithPrice.count();
+	}
 }
 
 

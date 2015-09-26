@@ -72,7 +72,7 @@ export default React.createClass({
 	},
 
 	getTimeTakenToReadAllUnreadBooks() {
-		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books) / 365).format("0.00") + " year(s)";
+		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books)).format("0.00") + " year(s)";
 	},
 
 	formatDays(days) {

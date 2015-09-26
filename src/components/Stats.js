@@ -59,7 +59,6 @@ export default class Stats {
 
 		readBooks.map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
-
 				let startDate = moment(book.started_reading);
 				let endDate = moment(book.finished_reading);
 				readTime += endDate.diff(startDate);
@@ -70,8 +69,9 @@ export default class Stats {
 	}
 
 	static getTimeTakenToReadAllUnreadBooks(books) {
-
-		return this.getAverageReadTime(books) * this.getUnreadBookCount(books);
+		console.log("a: " + this.getAverageReadTime(books));
+		console.log("b: " + this.getUnreadBookCount(books));
+		return this.getAverageReadTime(books) * this.getUnreadBookCount(books) / 365;
 	}
 }
 

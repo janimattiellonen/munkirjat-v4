@@ -26,7 +26,7 @@ export default class MunkirjatApp extends React.Component {
                     }
                 )}
 
-                <StatisticsView />
+                <StatisticsView books={this.props.books} />
 
             </div>
         );

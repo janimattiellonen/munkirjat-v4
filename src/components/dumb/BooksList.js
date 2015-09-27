@@ -16,8 +16,9 @@ export default React.createClass({
 	render() {
 	
 		let books = _.chunk(this.props.books.toArray(), Math.ceil(this.props.books.count() / 2));
-
+		console.log("BooksList::render(): " + this.props.books.count());
 		return (
+
 			<div>
 				<div className="data-list">
 					{books.map(set => {
@@ -37,7 +38,7 @@ export default React.createClass({
 
 	loadBookInfo(bookId, e) {
 		this.props.bookActions.fetchBookInfo(bookId);	
-		
+
 		console.log("loadBookInfo()");
 		if (this.props.enableEvent) {
 			e.preventDefault();

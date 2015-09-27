@@ -25,7 +25,7 @@ export function fetchBookInfo(bookId) {
 
 export function fetchBooks(mode = null) {
 	return function(dispatch, getState) {
-
+		console.log("fetchBooks, mode: " + mode);
 		let books = getState().books.books;
 
 		if (!books || books.length == 0) {
@@ -33,6 +33,7 @@ export function fetchBooks(mode = null) {
 				dispatch(setBooks(books, mode));
 			});	
 		} else {
+			console.log("Fetching from state");
 			dispatch(setBooks(books, mode));		
 		}
 	};

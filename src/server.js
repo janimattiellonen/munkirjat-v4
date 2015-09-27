@@ -6,6 +6,7 @@ var server 	= restify.createServer();
 var mysql 	= require('mysql');
 var AuthorService = require('./components/service/AuthorService');
 var BookService = require('./components/service/BookService');
+var Immutable = require('immutable');
 
 server.use(restify.CORS());
 server.use(restify.bodyParser({ mapParams: true }));
@@ -23,7 +24,49 @@ server.get('/book/:id', function(req, res) {
 
 server.get('/books/:mode', function (req, res) {
 
-    prepare(req, res, bookService);
+    prepare(req, res, bookService, function(result) {
+        if (!result) {
+            return null;
+        }
+
+        let books = Immutable.Map();
+
+        result.map(row => {
+            let book = books.get(row.id)
+
+            if (!book) {
+                book = {
+                    id: row.id,
+                    title: row.title,
+                    language_id: row.language_id,
+                    page_count: row.page_count,
+                    is_read: row.is_read,
+                    isbn: row.isbn,
+                    created_at: row.created_at,
+                    updated_at: row.updated_at,
+                    started_reading: row.started_reading,
+                    finished_reading: row.finished_reading,
+                    rating: row.rating,
+                    price: row.price,
+                    authors: [{
+                        firstname: row.firstname,
+                        lastname: row.lastname,
+                        author_name: row.author_name
+                    }]
+                };
+            } else {
+                book.authors.push({
+                    firstname: row.firstname,
+                    lastname: row.lastname,
+                    author_name: row.author_name
+                });
+            }
+
+            books = books.set(row.id, book);
+        });
+
+        return books.toArray();
+    });
 
     let mode = req.params.mode;
 
@@ -111,6 +154,8 @@ function prepare(req, res, service, resultDataProcessor = null) {
         if (null !== resultDataProcessor) {
             result = resultDataProcessor(result);
         }
+
+        console.log(result);
 
         connection.end();
         res.charSet('utf8');

@@ -62,15 +62,26 @@ export default class BookService {
 
     createGetBooksQuery(isRead = null) {
         let query = `SELECT
-            b.id,
-            b.title,
-            b.is_read,
-            b.started_reading,
-            b.finished_reading,
-            b.price,
-            b.page_count
+                b.id,
+                b.title,
+                b.language_id,
+                b.page_count,
+                b.is_read,
+                b.isbn,
+                b.created_at,
+                b.updated_at,
+                b.started_reading,
+                b.finished_reading,
+                b.rating,
+                b.price,
+                a.firstname,
+                a.lastname,
+                CONCAT(firstname, ' ', lastname) AS author_name
         FROM 
-            book AS b`;
+            book AS b
+            LEFT JOIN book_author AS ba ON ba.book_id = b.id
+            LEFT JOIN author AS a ON ba.author_id = a.id
+        `;
 
         if (null !== isRead) {
             if(isRead) {

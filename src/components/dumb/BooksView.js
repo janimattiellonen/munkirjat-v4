@@ -30,7 +30,7 @@ export default React.createClass({
 		} else {
 			books = allBooks;
 		}
-
+		console.log("BooksView.render(), mode: " + mode + ", count: " + books.count());
 		return (
 			<div className="component">
 					{this.props.children && React.cloneElement(
@@ -42,7 +42,7 @@ export default React.createClass({
                     }
                 )}
 				<h1>{this.getTitle()}</h1>
-				<BooksList books={books} {...this.props} />
+				<BooksList {...this.props} books={books} />
 			</div>
 		);
 	},
@@ -69,7 +69,7 @@ export default React.createClass({
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (this.props.params.mode != nextProps.params.mode) {
-			this.props.fetchBooks(nextProps.params.mode);
+			this.props.bookActions.fetchBooks(nextProps.params.mode);
 		}
 
 		return this.props.params.mode != nextProps.params.mode || this.state.mode == undefined;

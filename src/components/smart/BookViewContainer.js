@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
-import BooksView from '../dumb/BooksView';
+import BookView from '../dumb/BookView';
 
 export default connect(
     function(state) {
         return {
-            books: state.books.books,
-            mode: state.books.mode
+            book: state.books.book
         };
     },
     function mapDispatchToProps(dispatch) {
@@ -18,4 +17,4 @@ export default connect(
         	bookActions: bindActionCreators(BookActions, dispatch) 
         };
     }
-)(BooksView);
+)(BookView);

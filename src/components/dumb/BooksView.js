@@ -33,8 +33,16 @@ export default React.createClass({
 
 		return (
 			<div className="component">
+					{this.props.children && React.cloneElement(
+                    this.props.children,
+                    {
+                        authorActions: this.props.authorActions,
+                        userActions: this.props.userActions,
+                        bookActions: this.props.bookActions
+                    }
+                )}
 				<h1>{this.getTitle()}</h1>
-				<BooksList books={books} />
+				<BooksList books={books} {...this.props} />
 			</div>
 		);
 	},

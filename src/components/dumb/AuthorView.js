@@ -36,7 +36,7 @@ export default React.createClass({
 				{this.props.author.name}
 				<h2>Books</h2>
 
-				<BooksList books={this.props.author.books} {...this.props}/>
+				<BooksList enableEvent={true} books={this.props.author.books} {...this.props}/>
 				
                 { this.props.book ? <BookInfoView book={this.props.book} {...this.props}/> : null }
 			</div>

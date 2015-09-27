@@ -24,7 +24,7 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(book => {
-									return(<li key={book.id}><a className={classNames({'is-read': book.is_read})} href="#" onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a></li>)
+									return(<li key={book.id}><a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a></li>)
 								})}
 							</ul>
 						)
@@ -36,10 +36,11 @@ export default React.createClass({
 	},
 
 	loadBookInfo(bookId, e) {
-		e.preventDefault();
-
-		this.props.bookActions.fetchBookInfo(bookId);
+		this.props.bookActions.fetchBookInfo(bookId);	
+		
+		console.log("loadBookInfo()");
+		if (this.props.enableEvent) {
+			e.preventDefault();
+		}
 	}
-
-
 });

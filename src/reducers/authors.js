@@ -18,7 +18,6 @@ export default handleActions({
 	},
 
 	BOOK_INFO_FETCH: (state, action) => {
-		console.log("authors: here: " + action.book.id);
 		return {
 			...state,
 			book: action.book,

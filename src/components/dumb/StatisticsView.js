@@ -11,7 +11,6 @@ export default React.createClass({
 	},
 
 	render() {
-		console.log("STATS");
 		return (
             <div className="stats-main">
 				<h2>Statistics</h2>

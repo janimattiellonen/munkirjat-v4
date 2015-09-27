@@ -67,7 +67,8 @@ export default class BookService {
             b.is_read,
             b.started_reading,
             b.finished_reading,
-            b.price
+            b.price,
+            b.page_count
         FROM 
             book AS b`;
 

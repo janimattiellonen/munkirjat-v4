@@ -1,5 +1,6 @@
 import moment from 'moment';
 import numeral from 'numeral';
+import _ from 'lodash';
 
 export default class Stats {
 
@@ -71,14 +72,25 @@ export default class Stats {
 	}
 
 	static getAverageBookPrice(books) {
-		let price = 0.0;
-		let booksWithPrice = books.filter(book => book.price > 0);
+		let booksWithPrice = this.getBooksWithValidPrice(books);
 
-		booksWithPrice.map(book => {
-			price += book.price;
+		return this.getMoneySpentOnBooks(booksWithPrice) / booksWithPrice.count();
+	}
+
+	static getBooksWithValidPrice(books) {
+		return books.filter(book => book.price > 0);
+	}
+
+	static getMoneySpentOnBooks(books) {
+		return _.sum(this.getBooksWithValidPrice(books).toArray(), function(book) {
+			return book.price;
 		});
+	}
 
-		return price / booksWithPrice.count();
+	static getPagesReadSoFar(books) {
+		return _.sum(this.getReadBooks(books).toArray(), function(book) {
+			return book.page_count;
+		});
 	}
 }
 

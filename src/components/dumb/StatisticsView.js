@@ -51,6 +51,14 @@ export default React.createClass({
 				<h3>Average book price</h3>
 
 				<p>{this.getAverageBookPrice()}</p>
+
+				<h3>Money spent on books</h3>
+
+				<p>{this.getMoneySpentOnBooks()}</p>
+
+				<h3>Pages read so far</h3>
+
+				<p>{this.getPagesReadSoFar()}</p>
 			</div>	
 		);
 	},
@@ -82,6 +90,16 @@ export default React.createClass({
 	getAverageBookPrice(books) {
 		let avg = Stats.getAverageBookPrice(this.props.books);
 		return avg > 0 ? numeral(avg).format("0.00") + "€" : "0€";
+	},
+
+	getMoneySpentOnBooks() {
+		let sum = Stats.getMoneySpentOnBooks(this.props.books);
+
+		return sum > 0 ? numeral(sum).format("0.00") + "€" : "0€";
+	},
+
+	getPagesReadSoFar() {
+		return Stats.getPagesReadSoFar(this.props.books);
 	},
 
 	formatDays(days) {

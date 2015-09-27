@@ -21,7 +21,7 @@ export default React.createClass({
 		const {book} = this.props;
 
 		return (
-			<div className="book-info">
+			<div className="book-info col-md-12 component">
 				<h2>{book.title}</h2>
 
 				<div className="row">

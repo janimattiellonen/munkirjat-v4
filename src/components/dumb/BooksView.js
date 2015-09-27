@@ -32,7 +32,7 @@ export default React.createClass({
 		}
 
 		return (
-			<div>
+			<div className="component">
 				<h1>{this.getTitle()}</h1>
 				<BooksList books={books} />
 			</div>

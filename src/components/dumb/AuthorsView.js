@@ -10,7 +10,7 @@ export default React.createClass({
 		let authors = _.chunk(this.props.authors.toArray(), Math.ceil(this.props.authors.count() / 2));
 
 		return (
-			<div>
+			<div className="component">
 				<h1>Authors</h1>
 				<div className="data-list">
 					{authors.map(set => {

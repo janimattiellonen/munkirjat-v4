@@ -23,8 +23,7 @@ export default React.createClass({
 
 	render() {
 		return (
-
-			<div>
+			<div className="component">
 				{this.props.children && React.cloneElement(
                     this.props.children,
                     {

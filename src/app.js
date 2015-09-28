@@ -8,6 +8,7 @@ import { Router, Route, Redirect } from 'react-router';
 import { history } from 'react-router/lib/HashHistory';
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
+import AuthorForm from "./components/dumb/AuthorForm";
 import AuthorViewContainer from "./components/smart/AuthorViewContainer";
 import AuthorsViewContainer from "./components/smart/AuthorsViewContainer";
 import BookViewContainer from "./components/smart/BookViewContainer";
@@ -44,6 +45,7 @@ React.render(
 					<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
 					<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
 					<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
+					<Route name="newAutor" path="/author/new" component={AuthorForm} />
 		        </Route>
 		    </Router>	
 		}

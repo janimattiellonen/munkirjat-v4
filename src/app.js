@@ -26,6 +26,12 @@ import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 import promiseMiddleware from 'redux-promise';
 
+import { reducer as formReducer } from 'redux-form';
+
+
+reducers.form = formReducer;
+console.log("rr: " + JSON.stringify(reducers));
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithMiddleware(reducer);
@@ -44,8 +50,8 @@ React.render(
 					<Route name="book" path="/book/:id" component={BookViewContainer} />
 					<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
 					<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
-					<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
 					<Route name="newAutor" path="/author/new" component={AuthorForm} />
+					<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
 		        </Route>
 		    </Router>	
 		}

@@ -154,9 +154,7 @@ function prepare(req, res, service, resultDataProcessor = null) {
         if (null !== resultDataProcessor) {
             result = resultDataProcessor(result);
         }
-
-        console.log(result);
-
+        
         connection.end();
         res.charSet('utf8');
         res.send(200, result);

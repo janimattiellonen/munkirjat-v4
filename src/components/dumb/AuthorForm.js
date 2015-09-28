@@ -34,7 +34,7 @@ export default class AuthorForm extends Component {
 
 	handleSubmit(data, e) {
 		data.preventDefault();
-		alert(JSON.stringify(data));
+		alert(JSON.stringify(e));
 	}
 
     render() {
@@ -45,6 +45,7 @@ export default class AuthorForm extends Component {
       		}, 
 	      	invalid,
 	      	handleSubmit,
+	      	valid,
     	} = this.props;
 
     	const renderInput = (field, label) =>

@@ -79,7 +79,7 @@ export default React.createClass({
 	},
 
 	getAverageReadTime() {
-		return this.formatDays(numeral(Stats.getAverageReadTime(this.props.books)).format("0.0"));
+		return this.formatDays(Stats.getAverageReadTime(this.props.books), true);
 	},
 
 	getTimeTakenToReadAllUnreadBooks() {
@@ -101,7 +101,14 @@ export default React.createClass({
 		return Stats.getPagesReadSoFar(this.props.books);
 	},
 
-	formatDays(days) {
+	formatDays(days, isDecimal = false) {
+
+		let suffix = days > 1 ? " days" : " day";
+
+		if (isDecimal) {
+			days = numeral(days).format("0.00");
+		}
+
 		return days > 1 ? days + " days" : days + " day";
 	}		
 });

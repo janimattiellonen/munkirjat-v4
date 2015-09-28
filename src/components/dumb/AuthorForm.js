@@ -31,7 +31,8 @@ class AuthorForm extends Component {
     fields: PropTypes.object.isRequired,
     handleBlur: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    invalid: PropTypes.bool.isRequired,
   } 
 
   handleSubmit(e) {
@@ -40,36 +41,39 @@ class AuthorForm extends Component {
   }
 
     render() {
-    const {
-      fields: {firstname, lastname},
-      handleSubmit,
+    	const {
+      		fields: {
+	      		firstname, 
+	      		lastname
+      	}, 
+      	invalid,
+      	handleSubmit,
     } = this.props;
     const renderInput = (field, label) =>
-      <div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
-
-        <label htmlFor={field.name} className="col-sm-2">{label}</label>
-        <div className={'col-sm-8'}>
-          <input type="text" className="form-control" id={field.name} {...field}/>
-          {field.error && field.touched && <div className="text-danger">{field.error}</div>}
-        </div>
-      </div>;
+		<div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
+			<label htmlFor={field.name} className="col-sm-2">{label}</label>
+			<div className={'col-sm-8'}>
+				<input type="text" className="form-control" id={field.name} {...field}/>
+			  	{field.error && field.touched && <div className="text-danger">{field.error}</div>}
+			</div>
+		</div>;
 
     return (
-      <div className="component">
-      	<h1>New author</h1>
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
-          {renderInput(firstname, 'Firstname')}
-          {renderInput(lastname, 'Lastname')}
-          <div className="form-group">
-            <div className="col-sm-offset-2 col-sm-10">
-              <button className="btn btn-success" onClick={this.handleSubmit}>
-                <i className="fa fa-paper-plane"/> Submit
-              </button>
-            </div>
-          </div>
-        </form>
+		<div className="component">
+			<h1>New author</h1>
+			<form className="form-horizontal" onSubmit={this.handleSubmit}>
+				{renderInput(firstname, 'Firstname')}
+				{renderInput(lastname, 'Lastname')}
+				<div className="form-group">
+					<div className="col-sm-offset-2 col-sm-10">
+						<button className="btn btn-success" onClick={this.handleSubmit} disabled={invalid}>
+							<i className="fa fa-paper-plane"/> Submit
+						</button>
+					</div>
+				</div>
+			</form>
 
-      </div>
+		</div>
     );
   }
 }

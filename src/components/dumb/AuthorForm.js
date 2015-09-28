@@ -17,39 +17,37 @@ function authorValidation(data) {
 }
 
 
-
-
 @connectReduxForm({
-  form: 'author',
-  fields: ['firstname', 'lastname'],
-  validate: authorValidation
+	form: 'author',
+	fields: ['firstname', 'lastname'],
+	validate: authorValidation
 })
-export default
-class AuthorForm extends Component {
-  static propTypes = {
-    asyncValidating: PropTypes.bool.isRequired,
-    fields: PropTypes.object.isRequired,
-    handleBlur: PropTypes.func.isRequired,
-    handleChange: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
-    invalid: PropTypes.bool.isRequired,
-  } 
+export default class AuthorForm extends Component {
+	static propTypes = {
+		asyncValidating: PropTypes.bool.isRequired,
+		fields: PropTypes.object.isRequired,
+		handleBlur: PropTypes.func.isRequired,
+		handleChange: PropTypes.func.isRequired,
+		handleSubmit: PropTypes.func.isRequired,
+		invalid: PropTypes.bool.isRequired,
+	} 
 
-  handleSubmit(e) {
-    e.preventDefault();
-    alert("lll");
-  }
+	handleSubmit(data, e) {
+		data.preventDefault();
+		alert(JSON.stringify(data));
+	}
 
     render() {
     	const {
       		fields: {
 	      		firstname, 
 	      		lastname
-      	}, 
-      	invalid,
-      	handleSubmit,
-    } = this.props;
-    const renderInput = (field, label) =>
+      		}, 
+	      	invalid,
+	      	handleSubmit,
+    	} = this.props;
+
+    	const renderInput = (field, label) =>
 		<div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
 			<label htmlFor={field.name} className="col-sm-2">{label}</label>
 			<div className={'col-sm-8'}>
@@ -58,22 +56,22 @@ class AuthorForm extends Component {
 			</div>
 		</div>;
 
-    return (
-		<div className="component">
-			<h1>New author</h1>
-			<form className="form-horizontal" onSubmit={this.handleSubmit}>
-				{renderInput(firstname, 'Firstname')}
-				{renderInput(lastname, 'Lastname')}
-				<div className="form-group">
-					<div className="col-sm-offset-2 col-sm-10">
-						<button className="btn btn-success" onClick={this.handleSubmit} disabled={invalid}>
-							<i className="fa fa-paper-plane"/> Submit
-						</button>
+    	return (
+			<div className="component">
+				<h1>New author</h1>
+				<form className="form-horizontal" onSubmit={this.handleSubmit}>
+					{renderInput(firstname, 'Firstname')}
+					{renderInput(lastname, 'Lastname')}
+					<div className="form-group">
+						<div className="col-sm-offset-2 col-sm-10">
+							<button className="btn btn-success" onSubmit={this.props.handleSubmit(this.handleSubmit)} disabled={invalid}>
+								<i className="fa fa-paper-plane"/> Submit
+							</button>
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
 
-		</div>
-    );
-  }
+			</div>
+    	);
+  	}	
 }

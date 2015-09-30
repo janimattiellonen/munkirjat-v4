@@ -1,6 +1,5 @@
 import React from 'react';
 import Immutable from 'immutable';
-import Translate from 'react-translate-component';
 import _ from "lodash";
 import BooksList from './BooksList';
 import BookInfoView from './BookInfoView';

@@ -30,12 +30,17 @@ export default class AuthorForm extends Component {
 		handleChange: PropTypes.func.isRequired,
 		handleSubmit: PropTypes.func.isRequired,
 		invalid: PropTypes.bool.isRequired,
+		valid: PropTypes.bool.isRequired
 	} 
 
-	handleSubmit(data, e) {
+	handleSubmit2(data, e) {
 		data.preventDefault();
 		alert(JSON.stringify(e));
 	}
+
+	handleSubmit(data) {
+		console.log("handleSubmit: " + JSON.stringify(data));
+  	}
 
     render() {
     	const {
@@ -65,7 +70,7 @@ export default class AuthorForm extends Component {
 					{renderInput(lastname, 'Lastname')}
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">
-							<button className="btn btn-success" onSubmit={this.props.handleSubmit(this.handleSubmit)} disabled={invalid}>
+							<button className="btn btn-success" onSubmit={::this.handleSubmit} disabled={invalid}>
 								<i className="fa fa-paper-plane"/> Submit
 							</button>
 						</div>

@@ -40,6 +40,17 @@ export default class AuthorService {
         );
     }  
 
+    createAuthor(author) {
+        this.connection.query(
+            'INSERT INTO author (firstname, lastname) VALUES (:firstname, :lastname)',
+            {
+                firstname: author.firstname,
+                lastname: author.lastname
+            },
+            this.calback
+        );
+    }
+
     createGetAuthorsQuery() {
         let query = `SELECT
               a.id,

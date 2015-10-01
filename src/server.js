@@ -79,6 +79,19 @@ server.get('/books/:mode', function (req, res) {
     }
 });
 
+server.post('/author', function(req, res) {
+    prepare(req, res, authorService, function() {
+        return [];
+    });
+
+    let author = {
+        firstname: req.params.firstname,
+        lastname: req.params.lastname
+    };
+
+    authorService.createAuthor(author);
+});
+
 server.get('/author/:id', function(req, res) {
     prepare(req, res, authorService, function(result) {
 

@@ -4,6 +4,12 @@ import { List } from 'immutable';
 
 export default {
 
+	saveAuthor(author) {
+		axios.post('/author', author).then(function(res) {
+			
+		});
+	},
+
 	getAuthor(id) {
 		return axios.get('/author/' + id).then(res => res.data);
 	},

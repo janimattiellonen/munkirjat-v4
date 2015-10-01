@@ -54,6 +54,7 @@ export default class AuthorForm extends Component {
 
     	return (
 			<div className="component">
+				<h1>New author</h1>
 				<form className="form-horizontal" onSubmit={handleSubmit}>
 					{renderInput(firstname, 'Firstname')}
 					{renderInput(lastname, 'Lastname')}

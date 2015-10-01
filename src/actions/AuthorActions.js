@@ -33,3 +33,11 @@ export function fetchAuthors() {
 		});
 	};
 }
+
+export function createAuthor(author) {
+	return function(dispatch, getState) {
+
+		api.saveAuthor(author);
+		console.log("NEW AUTHOR: " + JSON.stringify(author));
+	};
+}

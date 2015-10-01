@@ -8,7 +8,7 @@ import { Router, Route, Redirect } from 'react-router';
 import { history } from 'react-router/lib/HashHistory';
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
-import AuthorForm from "./components/dumb/AuthorForm";
+import NewAuthorViewContainer from "./components/smart/NewAuthorViewContainer";
 import AuthorViewContainer from "./components/smart/AuthorViewContainer";
 import AuthorsViewContainer from "./components/smart/AuthorsViewContainer";
 import BookViewContainer from "./components/smart/BookViewContainer";
@@ -28,9 +28,7 @@ import promiseMiddleware from 'redux-promise';
 
 import { reducer as formReducer } from 'redux-form';
 
-console.log("reducers length: " + reducers.length);
 reducers.form = formReducer;
-console.log("reducers length: " + reducers.length);
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore);
 const reducer = combineReducers(reducers);
@@ -50,7 +48,7 @@ React.render(
 					<Route name="book" path="/book/:id" component={BookViewContainer} />
 					<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
 					<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
-					<Route name="newAuthor" path="/author/new" component={AuthorForm} />
+					<Route name="newAuthor" path="/author/new" component={NewAuthorViewContainer} />
 					<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
 		        </Route>
 		    </Router>	

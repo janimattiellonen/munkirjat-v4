@@ -16,7 +16,6 @@ function authorValidation(data) {
     return errors;
 }
 
-
 @connectReduxForm({
 	form: 'author',
 	fields: ['firstname', 'lastname'],
@@ -32,15 +31,6 @@ export default class AuthorForm extends Component {
 		invalid: PropTypes.bool.isRequired,
 		valid: PropTypes.bool.isRequired
 	} 
-
-	handleSubmit2(data, e) {
-		data.preventDefault();
-		alert(JSON.stringify(e));
-	}
-
-	handleSubmit(data) {
-		console.log("handleSubmit: " + JSON.stringify(data));
-  	}
 
     render() {
     	const {
@@ -64,14 +54,13 @@ export default class AuthorForm extends Component {
 
     	return (
 			<div className="component">
-				<h1>New author</h1>
-				<form className="form-horizontal" onSubmit={this.handleSubmit}>
+				<form className="form-horizontal" onSubmit={handleSubmit}>
 					{renderInput(firstname, 'Firstname')}
 					{renderInput(lastname, 'Lastname')}
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">
-							<button className="btn btn-success" onSubmit={::this.handleSubmit} disabled={invalid}>
-								<i className="fa fa-paper-plane"/> Submit
+							<button className="btn btn-success" onClick={handleSubmit} disabled={invalid}>
+								 Submit
 							</button>
 						</div>
 					</div>

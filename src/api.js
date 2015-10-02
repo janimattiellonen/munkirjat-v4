@@ -5,9 +5,7 @@ import { List } from 'immutable';
 export default {
 
 	saveAuthor(author) {
-		axios.post('/author', author).then(function(res) {
-			
-		});
+		return axios.post('/author', author).then(res => res.data);
 	},
 
 	getAuthor(id) {

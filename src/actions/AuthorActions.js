@@ -11,6 +11,13 @@ export function setAuthor(author) {
 	}
 }
 
+export function addAuthor(author) {
+	return {
+		type: 'AUTHOR_ADD',
+		author: author,
+	};
+}
+
 export function setAuthors(authors) {
 	return {
 		type: 'AUTHORS_FETCH',
@@ -37,7 +44,11 @@ export function fetchAuthors() {
 export function createAuthor(author) {
 	return function(dispatch, getState) {
 
-		api.saveAuthor(author);
-		console.log("NEW AUTHOR: " + JSON.stringify(author));
+		//api.saveAuthor(author);
+
+		api.saveAuthor(author).then(response => {
+			dispatch(addAuthor(author));
+		});
 	};
+
 }

@@ -17,10 +17,10 @@ import * as BookActions from '../../actions/BookActions';
     }
 )
 export default class NewAuthorViewContainer extends Component {
-	static propTypes = {
+	/*static propTypes = {
     	initialize: PropTypes.func.isRequired
   	}
-
+*/
 	handleSubmit(data) {
     	this.props.authorActions.createAuthor(data);
   	}

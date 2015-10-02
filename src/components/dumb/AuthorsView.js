@@ -27,6 +27,6 @@ export default React.createClass({
 	},
 
 	componentDidMount() {
-		this.props.fetchAuthors();
+		//this.props.fetchAuthors();
 	}
 });

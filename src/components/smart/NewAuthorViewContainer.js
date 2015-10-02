@@ -22,8 +22,6 @@ export default class NewAuthorViewContainer extends Component {
   	}
 
 	handleSubmit(data) {
-    	window.alert('Data submitted! ' + JSON.stringify(data));
-
     	this.props.authorActions.createAuthor(data);
   	}
 

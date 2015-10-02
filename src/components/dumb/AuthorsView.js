@@ -6,21 +6,19 @@ export default React.createClass({
 
 	render() {
 
-		let authors = _.chunk(this.props.authors.toArray(), Math.ceil(this.props.authors.count() / 2));
+		//let authors = _.chunk(this.props.authors.toArray(), Math.ceil(this.props.authors.count() / 2));
+
+		const {authors} = this.props;
 
 		return (
 			<div className="component">
 				<h1>Authors</h1>
 				<div className="data-list">
-					{authors.map(set => {
-						return (
-							<ul>
-								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name} ({author.amount})</a></li>)
-								})}
-							</ul>
-						)
+					<ul>
+					{authors.map(author => {
+						return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name} ({author.amount})</a></li>)	
 					})}
+					</ul>
 				</div>
 			</div>
 		);

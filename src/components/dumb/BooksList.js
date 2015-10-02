@@ -20,9 +20,9 @@ export default React.createClass({
 
 			<div>
 				<div className="data-list">
-					{books.map(set => {
+					{books.map((set, i) => {
 						return (
-							<ul>
+							<ul key={i}>
 								{set.map(book => {
 									return(<li key={book.id}><a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a></li>)
 								})}

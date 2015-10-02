@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 export default connect(
-    function(state) {
+    function mapStateToProps(state) {
         return {
             books: state.books.books,
             authors: state.authors.authors,

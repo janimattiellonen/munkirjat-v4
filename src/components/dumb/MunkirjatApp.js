@@ -15,7 +15,7 @@ export default class MunkirjatApp extends React.Component {
                 {this.props.children && React.cloneElement(
                     this.props.children,
                     {
-                        
+                        authors: this.props.authors
                     }
                 )}
 

@@ -4,6 +4,7 @@ window.jQuery = require('jquery');
 window.$ = window.jQuery;
 
 import React from "react";
+import ReactDOM from 'react-dom';
 import { Router, Route, Redirect } from 'react-router';
 import { history } from 'react-router/lib/HashHistory';
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
@@ -38,21 +39,19 @@ require('bootstrap/dist/css/bootstrap.css');
 require('./app.less');
 require('bootstrap/dist/js/bootstrap.js');
 
-React.render(
+ReactDOM.render(
 	<Provider store = {store}>
-		{	() =>
-			<Router history={history}>
-		        <Redirect from="/" to="/about" />
-		        <Route component={MunkirjatAppContainer} path="/">
-		            <Route name="about" path="about" component={About}/>
-					<Route name="book" path="/book/:id" component={BookViewContainer} />
-					<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
-					<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
-					<Route name="newAuthor" path="/author/new" component={NewAuthorViewContainer} />
-					<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
-		        </Route>
-		    </Router>	
-		}
+		<Router history={history}>
+	        <Redirect from="/" to="/about" />
+	        <Route component={MunkirjatAppContainer} path="/">
+	            <Route name="about" path="about" component={About}/>
+				<Route name="book" path="/book/:id" component={BookViewContainer} />
+				<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
+				<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
+				<Route name="newAuthor" path="/author/new" component={NewAuthorViewContainer} />
+				<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
+	        </Route>
+	    </Router>	
 	</Provider>,
 	document.getElementById('page')
 );

@@ -44,9 +44,8 @@ export function fetchAuthors() {
 export function createAuthor(author) {
 	return function(dispatch, getState) {
 
-		//api.saveAuthor(author);
-
 		api.saveAuthor(author).then(response => {
+			console.log("lussor");
 			dispatch(addAuthor(author));
 		});
 	};

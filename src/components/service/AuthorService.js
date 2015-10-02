@@ -47,7 +47,7 @@ export default class AuthorService {
                 firstname: author.firstname,
                 lastname: author.lastname
             },
-            this.calback
+            this.callback
         );
     }
 

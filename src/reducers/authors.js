@@ -1,11 +1,22 @@
 import { handleActions } from 'redux-actions';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
+
+
+const defaultState = Map({
+    authors: List(),
+    books: List(),
+    book: {},
+    author: {}
+});
 
 export default handleActions({
 	AUTHOR_ADD: (state, action) => {
+console.log("ppp2p");
+		console.log("size: " + state.authors.count());
+		console.log("size 2: " + state.authors.push(action.author).count());
 		return {
 			...state,
-			authors: authors.push(action.author)
+			authors: state.authors.push(action.author)
 		}
 	},
 

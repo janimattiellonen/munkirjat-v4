@@ -18,7 +18,6 @@ export default class AuthorService {
         );
     }
 
-    // @TODO: we need to hydate the results
     getAuthor(id) {
         this.connection.query(
             `SELECT

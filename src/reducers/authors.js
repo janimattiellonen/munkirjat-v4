@@ -11,12 +11,15 @@ const defaultState = Map({
 
 export default handleActions({
 	AUTHOR_ADD: (state, action) => {
-console.log("ppp2p");
+		console.log("ppp2p");
 		console.log("size: " + state.authors.count());
 		console.log("size 2: " + state.authors.push(action.author).count());
+		console.log("aa: " + JSON.stringify(action.author));
+
 		return {
 			...state,
-			authors: state.authors.push(action.author)
+			authors: List(state.authors.push(action.author))
+			//authors: List([action.author])
 		}
 	},
 

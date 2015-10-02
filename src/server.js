@@ -81,7 +81,6 @@ server.get('/books/:mode', function (req, res) {
 
 server.post('/author', function(req, res) {
     prepare(req, res, authorService, function() {
-        console.log("server.post callback");
         return [];
     });
 

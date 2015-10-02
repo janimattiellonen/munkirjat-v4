@@ -45,7 +45,10 @@ export function createAuthor(author) {
 	return function(dispatch, getState) {
 
 		api.saveAuthor(author).then(response => {
-			console.log("lussor");
+			author.id = Math.floor(Math.random() * (10000 - 1000)) + 1000;
+			author.name = "Jane Doe";
+			author.amount = Math.floor(Math.random() * (10000 - 1000)) + 1000;
+			console.log("lussor: " + JSON.stringify(author));
 			dispatch(addAuthor(author));
 		});
 	};

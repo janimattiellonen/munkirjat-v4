@@ -23,78 +23,128 @@ server.get('/book/:id', function(req, res) {
 });
 
 server.get('/books/:mode', function (req, res) {
-
-    prepare(req, res, bookService, function(result) {
-        if (!result) {
-            return null;
-        }
-
-        let books = Immutable.Map();
-
-        result.map(row => {
-            let book = books.get(row.id)
-
-            if (!book) {
-                book = {
-                    id: row.id,
-                    title: row.title,
-                    language_id: row.language_id,
-                    page_count: row.page_count,
-                    is_read: row.is_read,
-                    isbn: row.isbn,
-                    created_at: row.created_at,
-                    updated_at: row.updated_at,
-                    started_reading: row.started_reading,
-                    finished_reading: row.finished_reading,
-                    rating: row.rating,
-                    price: row.price,
-                    authors: [{
-                        firstname: row.firstname,
-                        lastname: row.lastname,
-                        author_name: row.author_name
-                    }]
-                };
-            } else {
-                book.authors.push({
-                    firstname: row.firstname,
-                    lastname: row.lastname,
-                    author_name: row.author_name
-                });
-            }
-
-            books = books.set(row.id, book);
-        });
-
-        return books.toArray();
-    });
+    var connection = getConnection();
+    bookService.setConnection(connection);
 
     let mode = req.params.mode;
 
     if (mode == 'read') {
-        bookService.getReadBooks();
+        bookService.getReadBooks(processGetBooksResult);
     } else if (mode == 'unread') {
-        bookService.getUnreadBooks();
+        bookService.getUnreadBooks(processGetBooksResult);
     } else {
-        bookService.getAllBooks();
+        bookService.getAllBooks(processGetBooksResult);
     }
 });
 
-server.post('/author', function(req, res) {
-    prepare(req, res, authorService, function() {
-        return [];
+function processGetBooksResult(err, result) {
+    if (!result) {
+        return null;
+    }
+
+    let books = Immutable.Map();
+
+    result.map(row => {
+        let book = books.get(row.id)
+
+        if (!book) {
+            book = {
+                id: row.id,
+                title: row.title,
+                language_id: row.language_id,
+                page_count: row.page_count,
+                is_read: row.is_read,
+                isbn: row.isbn,
+                created_at: row.created_at,
+                updated_at: row.updated_at,
+                started_reading: row.started_reading,
+                finished_reading: row.finished_reading,
+                rating: row.rating,
+                price: row.price,
+                authors: [{
+                    firstname: row.firstname,
+                    lastname: row.lastname,
+                    author_name: row.author_name
+                }]
+            };
+        } else {
+            book.authors.push({
+                firstname: row.firstname,
+                lastname: row.lastname,
+                author_name: row.author_name
+            });
+        }
+
+        books = books.set(row.id, book);
     });
 
-    let author = {
+    connection.end();
+
+    return books.toArray();
+};
+
+server.post('/author', function(req, res) {
+    var connection = getConnection();
+    authorService.setConnection(connection);
+    let newAuthor = {
         firstname: req.params.firstname,
-        lastname: req.params.lastname
+        lastname: req.params.lastname,
     };
 
-    authorService.createAuthor(author);
+    authorService.createAuthor(newAuthor, function(err, result) {
+
+        if (err) {
+            console.log("Error: " + err);
+        }
+
+        let createdAuthorId = result.insertId;
+
+        authorService.getAuthor(createdAuthorId, function(err, result) {
+            if (err) {
+                console.log("Error2: " + err);
+            }    
+
+            let author = {};
+
+            console.log("2");
+            if (result) {
+                console.log("3");
+                result.map(row => {
+                    if (null == author.id) {
+                        author.id = row['id'];
+                        author.firstname = row['firstname'];
+                        author.lastname = row['lastname'];
+                        author.name = row['name'];
+                    }
+
+                    if (null == author.books) {
+                        author.books = [];
+                    }
+
+                    author.books.push({
+                        id: row['book_id'],
+                        title: row['title'],
+                        is_read: row['is_read'],
+                    });
+                });
+                console.log("4");
+                author.amount = author.books.length;
+                console.log("5");
+            }
+            console.log("6");
+            
+            res.charSet('utf8');
+            res.send(200, author);
+            connection.end();
+        });
+    });
 });
 
 server.get('/author/:id', function(req, res) {
-    prepare(req, res, authorService, function(result) {
-
+    var connection = getConnection();
+    authorService.setConnection(connection);
+    
+    authorService.getAuthor(req.params.id, function(err, result) {
         if (!result) {
             return null;
         }
@@ -119,18 +169,22 @@ server.get('/author/:id', function(req, res) {
                 is_read: row['is_read'],
             });
         });
+
+        author.amount = author.books.length;
         
-        return author;
-        
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, author);
     });
-    
-    authorService.getAuthor(req.params.id);
 });
 
 server.get('/authors', function(req, res) {
-    prepare(req, res, authorService)
 
-    authorService.getAllAuthors();
+    authorService.getAllAuthors(function(err, result) {
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    });
 });
 
 function getConnection() {
@@ -153,13 +207,14 @@ function getConnection() {
         }.bind(this));
     };
 
-
     connection.connect();
+    console.log("connect");
 
     return connection;
 }
 
 function prepare(req, res, service, resultDataProcessor = null) {
+    console.log("prepare");
     let connection = getConnection();
 
     service.prepare(connection, function(err, result) {
@@ -167,14 +222,18 @@ function prepare(req, res, service, resultDataProcessor = null) {
         if (null !== resultDataProcessor) {
             result = resultDataProcessor(result);
         }
-        
+        console.log("end");
         connection.end();
         res.charSet('utf8');
         res.send(200, result);
     });
 }
 
-server.listen(config.server.port, function() {
+server.listen(config.server.port, function(err) {
+    if (err) {
+        console.log(err);
+        return;
+    }
     console.log('%s listening at %s', server.name, server.url);
 });
 

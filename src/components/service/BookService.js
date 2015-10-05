@@ -6,11 +6,6 @@ export default class BookService {
         this.db = db;
     }
 
-    prepare(connection, callback) {
-        this.connection = connection;
-        this.callback = callback;
-    }
-
     getBook(id) {
         this.connection.query(
             `SELECT
@@ -35,28 +30,28 @@ export default class BookService {
         );
     }
 
-    getAllBooks() {
+    getAllBooks(callback) {
         this.connection.query(
             this.createGetBooksQuery(),
-            this.callback
+            callback
         );
     }
 
-    getReadBooks() {
+    getReadBooks(callback) {
         let query = this.createGetBooksQuery(true);
 
         this.connection.query(
             query,
-            this.callback
+            callback
         );
     }
 
-    getUnreadBooks() {
+    getUnreadBooks(callback) {
         let query = this.createGetBooksQuery(false);
 
         this.connection.query(
             query,
-            this.callback
+            callback
         );
     }
 

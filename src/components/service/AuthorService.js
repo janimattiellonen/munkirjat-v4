@@ -6,19 +6,18 @@ export default class AuthorService {
         this.db = db;
     }
 
-    prepare(connection, callback) {
-        this.connection = connection;
-        this.callback = callback;
+    setConnection(db) {
+        this.db = db;
     }
 
-    getAllAuthors() {
+    getAllAuthors(callback) {
         this.connection.query(
             this.createGetAuthorsQuery(),
-            this.callback
+            callback
         );
     }
 
-    getAuthor(id) {
+    getAuthor(id, callback) {
         this.connection.query(
             `SELECT
                 a.id,
@@ -35,18 +34,18 @@ export default class AuthorService {
             WHERE
                 a.id = :id`,
             {id: id},
-            this.callback
+            callback
         );
     }  
 
-    createAuthor(author) {
+    createAuthor(author, callback) {
         this.connection.query(
             'INSERT INTO author (firstname, lastname) VALUES (:firstname, :lastname)',
             {
                 firstname: author.firstname,
                 lastname: author.lastname
             },
-            this.callback
+            callback
         );
     }
 

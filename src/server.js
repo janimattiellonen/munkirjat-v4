@@ -28,60 +28,56 @@ server.get('/books/:mode', function (req, res) {
 
     let mode = req.params.mode;
 
-    if (mode == 'read') {
-        bookService.getReadBooks(processGetBooksResult);
-    } else if (mode == 'unread') {
-        bookService.getUnreadBooks(processGetBooksResult);
-    } else {
-        bookService.getAllBooks(processGetBooksResult);
-    }
-});
+    bookService.getBooks(mode, function(err, result) {
+        if (!result) {
+            res.charSet('utf8');
+            res.send(200, []);
+            connection.end();
+            return;
+        }
 
-function processGetBooksResult(err, result) {
-    if (!result) {
-        return null;
-    }
+        let books = Immutable.Map();
 
-    let books = Immutable.Map();
+        result.map(row => {
+            let book = books.get(row.id)
 
-    result.map(row => {
-        let book = books.get(row.id)
-
-        if (!book) {
-            book = {
-                id: row.id,
-                title: row.title,
-                language_id: row.language_id,
-                page_count: row.page_count,
-                is_read: row.is_read,
-                isbn: row.isbn,
-                created_at: row.created_at,
-                updated_at: row.updated_at,
-                started_reading: row.started_reading,
-                finished_reading: row.finished_reading,
-                rating: row.rating,
-                price: row.price,
-                authors: [{
+            if (!book) {
+                book = {
+                    id: row.id,
+                    title: row.title,
+                    language_id: row.language_id,
+                    page_count: row.page_count,
+                    is_read: row.is_read,
+                    isbn: row.isbn,
+                    created_at: row.created_at,
+                    updated_at: row.updated_at,
+                    started_reading: row.started_reading,
+                    finished_reading: row.finished_reading,
+                    rating: row.rating,
+                    price: row.price,
+                    authors: [{
+                        firstname: row.firstname,
+                        lastname: row.lastname,
+                        author_name: row.author_name
+                    }]
+                };
+            } else {
+                book.authors.push({
                     firstname: row.firstname,
                     lastname: row.lastname,
                     author_name: row.author_name
-                }]
-            };
-        } else {
-            book.authors.push({
-                firstname: row.firstname,
-                lastname: row.lastname,
-                author_name: row.author_name
-            });
-        }
+                });
+            }
 
-        books = books.set(row.id, book);
+            books = books.set(row.id, book);
+        });
+
+        res.charSet('utf8');
+        res.send(200, books.toArray());
+        connection.end();
+
     });
-
-    connection.end();
-
-    return books.toArray();
-};
+});
 
 server.post('/author', function(req, res) {
     var connection = getConnection();
@@ -95,6 +91,7 @@ server.post('/author', function(req, res) {
 
         if (err) {
             console.log("Error: " + err);
+            return;
         }
 
         let createdAuthorId = result.insertId;
@@ -102,13 +99,12 @@ server.post('/author', function(req, res) {
         authorService.getAuthor(createdAuthorId, function(err, result) {
             if (err) {
                 console.log("Error2: " + err);
+                return;
             }    
 
             let author = {};
 
-            console.log("2");
             if (result) {
-                console.log("3");
                 result.map(row => {
                     if (null == author.id) {
                         author.id = row['id'];
@@ -120,19 +116,10 @@ server.post('/author', function(req, res) {
                     if (null == author.books) {
                         author.books = [];
                     }
-
-                    author.books.push({
-                        id: row['book_id'],
-                        title: row['title'],
-                        is_read: row['is_read'],
-                    });
                 });
-                console.log("4");
-                author.amount = author.books.length;
-                console.log("5");
+                author.amount = 0;
             }
-            console.log("6");
-            
+
             res.charSet('utf8');
             res.send(200, author);
             connection.end();
@@ -179,6 +166,8 @@ server.get('/author/:id', function(req, res) {
 });
 
 server.get('/authors', function(req, res) {
+    var connection = getConnection();
+    authorService.setConnection(connection);
 
     authorService.getAllAuthors(function(err, result) {
         connection.end();
@@ -208,13 +197,11 @@ function getConnection() {
     };
 
     connection.connect();
-    console.log("connect");
 
     return connection;
 }
 
 function prepare(req, res, service, resultDataProcessor = null) {
-    console.log("prepare");
     let connection = getConnection();
 
     service.prepare(connection, function(err, result) {
@@ -222,7 +209,7 @@ function prepare(req, res, service, resultDataProcessor = null) {
         if (null !== resultDataProcessor) {
             result = resultDataProcessor(result);
         }
-        console.log("end");
+
         connection.end();
         res.charSet('utf8');
         res.send(200, result);
@@ -231,7 +218,7 @@ function prepare(req, res, service, resultDataProcessor = null) {
 
 server.listen(config.server.port, function(err) {
     if (err) {
-        console.log(err);
+        console.log("Server error: " + err);
         return;
     }
     console.log('%s listening at %s', server.name, server.url);

@@ -45,7 +45,7 @@ export function createAuthor(author) {
 	return function(dispatch, getState) {
 
 		api.saveAuthor(author).then(author => {
-			author.amount = Math.floor(Math.random() * (10000 - 1000)) + 1000; // TODO: currently faked here as return data doesn't contain it yet
+			//author.amount = Math.floor(Math.random() * (10000 - 1000)) + 1000; // TODO: currently faked here as return data doesn't contain it yet
 			console.log("lussor: " + JSON.stringify(author));
 			dispatch(addAuthor(author));
 		});

@@ -6,8 +6,8 @@ export default class AuthorService {
         this.db = db;
     }
 
-    setConnection(db) {
-        this.db = db;
+    setConnection(connection) {
+        this.connection = connection;
     }
 
     getAllAuthors(callback) {
@@ -23,14 +23,30 @@ export default class AuthorService {
                 a.id,
                 a.firstname,
                 a.lastname,
+                CONCAT(firstname, ' ', lastname) AS name
+            FROM 
+                author AS a
+            WHERE
+                a.id = :id`,
+            {id: id},
+            callback
+        );
+    }  
+
+    getAuthorWithBooks(id, callback) {
+        this.connection.query(
+            `SELECT
+                a.id,
+                a.firstname,
+                a.lastname,
                 CONCAT(firstname, ' ', lastname) AS name,
                 b.id AS book_id,
                 b.title,
                 b.is_read
             FROM 
                 book AS b
-                JOIN book_author AS ba ON b.id = ba.book_id
-                JOIN author AS a ON a.id = ba.author_id
+                LEFT JOIN book_author AS ba ON b.id = ba.book_id
+                RIGHT JOIN author AS a ON a.id = ba.author_id
             WHERE
                 a.id = :id`,
             {id: id},

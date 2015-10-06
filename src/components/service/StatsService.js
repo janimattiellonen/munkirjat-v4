@@ -1,6 +1,10 @@
 
 export default class StatsService {
-
+    
+    setConnection(connection) {
+        this.connection = connection;
+    }
+    
 	function getStatistics() {
 	    let stats = {
 	        	"authorCount" 		: this.getAuthorCount(),

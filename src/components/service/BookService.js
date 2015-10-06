@@ -6,6 +6,10 @@ export default class BookService {
         this.db = db;
     }
 
+    setConnection(connection) {
+        this.connection = connection;
+    }
+
     getBook(id) {
         this.connection.query(
             `SELECT
@@ -28,6 +32,20 @@ export default class BookService {
             {id: id},
             this.callback
         );
+    }
+
+    getBooks(mode, callback) {
+        switch (mode) {
+            case 'read': 
+                this.getReadBooks(callback);
+                break;
+            case 'unread':
+                this.getUnreadBooks(callback);
+                break;
+            default:
+                this.getAllBooks(callback);
+                break;
+        }
     }
 
     getAllBooks(callback) {

@@ -16,7 +16,7 @@ function bookValidation(data) {
 	],
 	validate: bookValidation
 })
-export default class ABookForm extends Component {
+export default class BookForm extends Component {
 	static propTypes = {
 		asyncValidating: PropTypes.bool.isRequired,
 		fields: PropTypes.object.isRequired,
@@ -58,20 +58,21 @@ export default class ABookForm extends Component {
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option1"  value="fi" onChange={this.handleFieldChange} autoComplete="off">Finnish</input>
+						    	<input type="radio" name="languageId" id="option1"  value="fi" autoComplete="off" />
+						  		Finnish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option2" value="se" onChange={this.handleFieldChange} autoComplete="off">Swedish</input>
+						    	<input type="radio" name="languageId" id="option2" value="se" autoComplete="off" />
+						  		Swedish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option3"  value="en" onChange={this.handleFieldChange} autoComplete="off">English</input>
+						    	<input type="radio" name="languageId" id="option3"  value="en" autoComplete="off" />
+						  		English
 						  	</label>
 						</div>	    
 				    </div>
 
 					{renderInput(pageCount, 'Page count')}
-
-
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">

@@ -14,7 +14,7 @@ import AuthorViewContainer from "./components/smart/AuthorViewContainer";
 import AuthorsViewContainer from "./components/smart/AuthorsViewContainer";
 import BookViewContainer from "./components/smart/BookViewContainer";
 import BooksViewContainer from "./components/smart/BooksViewContainer";
-
+import NewBookViewContainer from "./components/smart/NewBookViewContainer";
 
 import GameView from "./components/GameView";
 import PlayerSelectionView from "./components/Game/PlayerSelectionView";
@@ -45,6 +45,7 @@ ReactDOM.render(
 	        <Redirect from="/" to="/about" />
 	        <Route component={MunkirjatAppContainer} path="/">
 	            <Route name="about" path="about" component={About}/>
+	            <Route name="newBook" path="/book/new" component={NewBookViewContainer} />
 				<Route name="book" path="/book/:id" component={BookViewContainer} />
 				<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
 				<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />

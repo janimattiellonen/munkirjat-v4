@@ -131,7 +131,7 @@ server.get('/author/:id', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
     
-    authorService.getAuthor(req.params.id, function(err, result) {
+    authorService.getAuthorWithBooks(req.params.id, function(err, result) {
         if (!result) {
             return null;
         }

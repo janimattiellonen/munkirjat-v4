@@ -10,7 +10,7 @@ export default class BookService {
         this.connection = connection;
     }
 
-    getBook(id) {
+    getBook(id, callback) {
         this.connection.query(
             `SELECT
                 b.id,
@@ -30,7 +30,7 @@ export default class BookService {
             WHERE
                 b.id = :id`,
             {id: id},
-            this.callback
+            callback
         );
     }
 

@@ -15,11 +15,16 @@ let authorService = new AuthorService();
 let bookService = new BookService();
 
 server.get('/book/:id', function(req, res) {
-    prepare(req, res, bookService);
+    var connection = getConnection();
+    bookService.setConnection(connection);
 
     let id = req.params.id;
 
-    bookService.getBook(id);
+    bookService.getBook(id, function(err, result) {
+        res.charSet('utf8');
+        res.send(200, result);
+        connection.end();
+    });
 });
 
 server.get('/books/:mode', function (req, res) {
@@ -199,21 +204,6 @@ function getConnection() {
     connection.connect();
 
     return connection;
-}
-
-function prepare(req, res, service, resultDataProcessor = null) {
-    let connection = getConnection();
-
-    service.prepare(connection, function(err, result) {
-
-        if (null !== resultDataProcessor) {
-            result = resultDataProcessor(result);
-        }
-
-        connection.end();
-        res.charSet('utf8');
-        res.send(200, result);
-    });
 }
 
 server.listen(config.server.port, function(err) {

@@ -4,7 +4,6 @@ import {connectReduxForm} from 'redux-form';
 function authorValidation(data) {
     const errors = {};
    
-
     if (!data.firstname ) {
         errors.firstname = "Firstname is required";
     }

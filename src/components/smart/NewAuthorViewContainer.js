@@ -8,7 +8,6 @@ import * as BookActions from '../../actions/BookActions';
 
 @connect(
   	() => ({}),
-  	/*dispatch => bindActionCreators({initialize}, dispatch),*/
   	function mapDispatchToProps(dispatch) {
         return { 
         	authorActions: bindActionCreators(AuthorActions, dispatch), 
@@ -17,17 +16,14 @@ import * as BookActions from '../../actions/BookActions';
     }
 )
 export default class NewAuthorViewContainer extends Component {
-	/*static propTypes = {
-    	initialize: PropTypes.func.isRequired
-  	}
-*/
+
 	handleSubmit(data) {
     	this.props.authorActions.createAuthor(data);
-  	}
+  }
 
 	render() {
 		return (
 			<AuthorForm onSubmit={::this.handleSubmit}/>
 		)
 	}
-}
+}       

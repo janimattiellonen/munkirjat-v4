@@ -18,7 +18,7 @@ import * as BookActions from '../../actions/BookActions';
 export default class NewBookViewContainer extends Component {
 
     handleSubmit(data) {
-        this.props.BookActions.createBook(data);
+        this.props.bookActions.createBook(data);
     }
 
 	render() {

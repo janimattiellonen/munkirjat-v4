@@ -38,3 +38,9 @@ export function fetchBooks(mode = null) {
 		}
 	};
 }
+
+export function createBook(book) {
+	return function(dispatch, getState) {
+		console.log("createBook: " + JSON.stringify(book));
+	};
+}

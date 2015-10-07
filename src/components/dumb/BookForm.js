@@ -5,6 +5,20 @@ import {Button, ButtonGroup} from 'react-bootstrap';
 function bookValidation(data) {
     const errors = {};
     
+
+    if (!data.title) {
+    	errors.title = "Title is required";	
+    }
+
+
+    if (!data.language) {
+    	errors.language = "Language is required";	
+    }
+
+    if (data.language != "ssss") {
+    	//errors.language = "Fooo!";	
+    }
+
     return errors;
 }
 
@@ -12,6 +26,7 @@ function bookValidation(data) {
 	form: 'book',
 	fields: [
 		'title', 
+		'language',
 		'pageCount'
 	],
 	validate: bookValidation
@@ -31,6 +46,7 @@ export default class BookForm extends Component {
     	const {
       		fields: {
 	      		title, 
+	      		language,
 	      		pageCount
       		}, 
 	      	invalid,
@@ -47,6 +63,8 @@ export default class BookForm extends Component {
 			</div>
 		</div>;
 
+		const {fields} = this.props;
+
     	return (
 			<div className="component">
 				<h1>New Book</h1>
@@ -58,15 +76,15 @@ export default class BookForm extends Component {
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option1"  value="fi" autoComplete="off" />
+						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" onChange={fields.language.onChange} />
 						  		Finnish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option2" value="se" autoComplete="off" />
+						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" onChange={fields.language.onChange} />
 						  		Swedish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="languageId" id="option3"  value="en" autoComplete="off" />
+						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" onChange={fields.language.onChange} />
 						  		English
 						  	</label>
 						</div>	    

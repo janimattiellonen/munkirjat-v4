@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
+import numeral from 'numeral';
 import * as Utils from '../utils';
 
 
@@ -16,15 +17,15 @@ function bookValidation(data) {
     	errors.language = "Language is required";	
     }
 
-    if (data.language != "ssss") {
-    	//errors.language = "Fooo!";	
-    }
-
     if (!data.pageCount) {
     	errors.pageCount = "Page count is required";
     } else if (!Utils.isPositiveInteger(data.pageCount) || data.pageCount == 0) {
 		errors.pageCount = "Value must be an integer greater than 0";
 	}
+
+	if (!data.price) {
+		errors.price = "Price is required";
+	} 
 
     return errors;
 }
@@ -38,7 +39,8 @@ function isNormalInteger(str) {
 	fields: [
 		'title', 
 		'language',
-		'pageCount'
+		'pageCount',
+		'price'
 	],
 	validate: bookValidation
 })
@@ -58,7 +60,8 @@ export default class BookForm extends Component {
       		fields: {
 	      		title, 
 	      		language,
-	      		pageCount
+	      		pageCount,
+	      		price
       		}, 
 	      	invalid,
 	      	handleSubmit,
@@ -102,6 +105,8 @@ export default class BookForm extends Component {
 				    </div>
 
 					{renderInput(pageCount, 'Page count')}
+
+					{renderInput(price, 'Price')}
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">

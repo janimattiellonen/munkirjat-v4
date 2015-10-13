@@ -57,3 +57,7 @@ export function money(value) {
 
 	return numeral(value).format('0.00 $');
 }
+
+export function isPositiveInteger(str) {
+    return /^\+?(0|[1-9]\d*)$/.test(str);
+}

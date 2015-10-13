@@ -1,17 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
+import * as Utils from '../utils';
+
 
 function bookValidation(data) {
     const errors = {};
-    
 
     if (!data.title) {
     	errors.title = "Title is required";	
     }
 
-
     if (!data.language) {
+    	console.log("fiuertuiertyiuertiuyter");
     	errors.language = "Language is required";	
     }
 
@@ -19,7 +20,17 @@ function bookValidation(data) {
     	//errors.language = "Fooo!";	
     }
 
+    if (!data.pageCount) {
+    	errors.pageCount = "Page count is required";
+    } else if (!Utils.isPositiveInteger(data.pageCount) || data.pageCount == 0) {
+		errors.pageCount = "Value must be an integer greater than 0";
+	}
+
     return errors;
+}
+
+function isNormalInteger(str) {
+    return /^\+?(0|[1-9]\d*)$/.test(str);
 }
 
 @connectReduxForm({

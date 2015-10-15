@@ -25,13 +25,11 @@ function bookValidation(data) {
 
 	if (!data.price) {
 		errors.price = "Price is required";
-	} 
+	} else if (isNaN(parseFloat(data.price))) {
+		errors.price = "Not a valid price";
+	}
 
     return errors;
-}
-
-function isNormalInteger(str) {
-    return /^\+?(0|[1-9]\d*)$/.test(str);
 }
 
 @connectReduxForm({

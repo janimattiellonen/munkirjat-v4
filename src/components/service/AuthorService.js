@@ -65,6 +65,23 @@ export default class AuthorService {
         );
     }
 
+    searchAuthors(term, callback) {
+        let query = `SELECT
+              a.id,
+              a.firstname,
+              a.lastname,
+              CONCAT(firstname, ' ', lastname) AS name
+            FROM
+              author a
+            WHERE
+              a.firstname LIKE :term
+              OR a.lastname LIKE :term 
+            ORDER BY
+              a.lastname ASC, a.firstname ASC`;
+
+        this.connection.query(query, {term: term + '%'}, callback);
+    }
+
     createGetAuthorsQuery() {
         let query = `SELECT
               a.id,

@@ -1,8 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
+import Select from "react-select";
 import numeral from 'numeral';
+import Immutable from 'immutable';
 import * as Utils from '../utils';
+import Api from "../../api";
 
 
 function bookValidation(data) {
@@ -53,6 +56,57 @@ export default class BookForm extends Component {
 		valid: PropTypes.bool.isRequired
 	} 
 
+	searchAuthors(input, callback) {
+		const {d} = this.props;
+		console.log("lols");
+		Api.searchAuthors(input).then(authors => {
+			console.log("authors2: " + JSON.stringify(authors.toArray()));
+
+
+			let mapped = Immutable.List();
+
+			authors.map(author => {
+				mapped = mapped.push({
+					value: author.id,
+					label: author.name,
+				})
+			});
+
+			console.log("sss: " + mapped.toArray());
+    		//let selections = {options: authors.toArray()};
+    		let selections = {options: mapped.toArray()};
+			callback(null, selections);
+			//this.props.courseActions.setCourses(courses, d);
+		});
+
+	}
+
+	getOptions(input, callback) {	
+		var self = this;
+
+	    setTimeout(() => {
+	    	self.searchAuthors(input, callback);
+	    }, 500);
+	}
+
+	changeValue(newValue) {
+		console.log("new value: " + newValue);
+		//const { courseActions } = this.props;
+
+	    //courseActions.setSelectedCourseId(newValue);
+	}
+
+	renderOption(author) {
+		console.log("luss: " + JSON.stringify(author));
+		return (
+			<div>
+				<p key={author.value}>
+					{author.label}
+				</p>
+			</div>
+		);
+	}
+
     render() {
     	const {
       		fields: {
@@ -101,6 +155,25 @@ export default class BookForm extends Component {
 						  	</label>
 						</div>	    
 				    </div>
+
+				    <div className="form-group">
+				    	<label className="col-sm-2">Authors</label>
+				    	<div className={'col-sm-8'}>
+						<Select
+							valueKey="value"
+							labelKey="label"
+							name="authors"
+							multi={true}
+							searchable={true}
+							autoload={false}
+							cacheAsyncResults={false}
+							asyncOptions={::this.getOptions}
+							optionRenderer={this.renderOption}
+							onChange={this.changeValue}
+						></Select>
+				    	</div>
+				    </div>
+    				
 
 					{renderInput(pageCount, 'Page count')}
 

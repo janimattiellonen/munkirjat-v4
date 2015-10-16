@@ -16,6 +16,11 @@ export default {
 		return axios.get('/authors').then(res => List(res.data));
 	},
 
+	searchAuthors(term) {
+		console.log("Api.searchAuthors(): " + term);
+		return axios.get('/authors/' + term).then(res => List(res.data));
+	},
+
 	getBook(id) {
 		return axios.get('/book/' + id).then(res => res.data);
 	},

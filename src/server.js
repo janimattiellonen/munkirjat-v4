@@ -170,6 +170,22 @@ server.get('/author/:id', function(req, res) {
     });
 });
 
+server.get('/authors/:term', function(req, res) {
+    console.log("Server, search authors");
+    var connection = getConnection();
+    authorService.setConnection(connection);
+
+    authorService.searchAuthors(req.params.term, function(err, result) {
+        if (err) {
+            console.log("Error: " + err);
+            return;
+        }
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    });
+});
+
 server.get('/authors', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);

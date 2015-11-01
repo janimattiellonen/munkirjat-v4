@@ -62,9 +62,7 @@ export default class BookForm extends Component {
 
 	searchAuthors(input, callback) {
 		const {d} = this.props;
-		console.log("lols");
 		Api.searchAuthors(input).then(authors => {
-			console.log("authors2: " + JSON.stringify(authors.toArray()));
 
 			let mapped = Immutable.List();
 
@@ -75,7 +73,6 @@ export default class BookForm extends Component {
 				})
 			});
 
-			console.log("sss: " + mapped.toArray());
     		//let selections = {options: authors.toArray()};
     		let selections = {options: mapped.toArray()};
 			callback(null, selections);
@@ -93,12 +90,10 @@ export default class BookForm extends Component {
 	}
 
 	changeValue(newValue) {
-		console.log("new value: " + newValue);
 		let selectedAuthorIds = newValue.split(",");
 	}
 
 	renderOption(author) {
-		console.log("luss: " + JSON.stringify(author));
 		return (
 			<div>
 				<p key={author.value}>
@@ -117,25 +112,22 @@ export default class BookForm extends Component {
 	validateForm(e) {
 		e.preventDefault();
 
-    	const {
-      		fields: {
-	      		title, 
-	      		language,
-	      		authors,
-	      		pageCount,
-	      		price
-      		}, 
-    	} = this.props;
-
 		let formData = {
-			title: this.props.fields.title 
+			title: this.state.title
 		};
 
 		alert("validateForm(): " + JSON.stringify(formData));
 	}
 
-	handleChange(name, field) {
+	handleChange(e, name, field) {
+		console.log(e.target.name + ": " + e.target.value);
 
+		let nextState = {}
+		nextState[e.target.name] = e.target.value;
+
+		this.setState({
+			[e.target.name]:  e.target.value
+		})
 	}
 
     render() {
@@ -150,11 +142,11 @@ export default class BookForm extends Component {
       		}, 
     	} = this.props;
 
-    	const renderInput = (field, name, label) =>
+    	const renderInput = (value, name, label) =>
 		<div className="">
 			<label htmlFor={name} className="col-sm-2">{label}</label>
 			<div className={'col-sm-8'}>
-				<input type="text" className="form-control" id={name} onChange={this.handleChange.bind(name, field)}/>
+				<input type="text" className="form-control" name={name} id={name} value={value} onChange={::this.handleChange}/>
 			</div>
 		</div>;
 
@@ -162,9 +154,10 @@ export default class BookForm extends Component {
 
     	return (
 			<div className="component">
+				STATE: {this.state.title}
 				<h1>New Book</h1>
 				<form className="form-horizontal" onSubmit={::this.validateForm}>
-					{renderInput(fields.title, 'title', 'Title')}
+					{renderInput(this.state.title, 'title', 'Title')}
 					
 					<div className="form-group">
 				    	<label className="col-sm-2">Language</label>

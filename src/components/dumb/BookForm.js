@@ -35,33 +35,36 @@ function bookValidation(data) {
     return errors;
 }
 
-@connectReduxForm({
-	form: 'book',
-	fields: [
-		'title', 
-		'language',
-		'pageCount',
-		'price'
-	],
-	validate: bookValidation
-})
 export default class BookForm extends Component {
-	static propTypes = {
-		asyncValidating: PropTypes.bool.isRequired,
-		fields: PropTypes.object.isRequired,
-		handleBlur: PropTypes.func.isRequired,
-		handleChange: PropTypes.func.isRequired,
-		handleSubmit: PropTypes.func.isRequired,
-		invalid: PropTypes.bool.isRequired,
-		valid: PropTypes.bool.isRequired
-	} 
+	static defaultProps = {
+		fields: {
+			title: null,
+			language: null,
+			authors: null,
+			pageCount: 0,
+			price: 0
+		}
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			title: null,
+			language: null,
+			authors: null,
+			pageCount: 0,
+			price: 0
+		}
+
+		console.log("ctor called: " + JSON.stringify(props));
+	}
 
 	searchAuthors(input, callback) {
 		const {d} = this.props;
 		console.log("lols");
 		Api.searchAuthors(input).then(authors => {
 			console.log("authors2: " + JSON.stringify(authors.toArray()));
-
 
 			let mapped = Immutable.List();
 
@@ -91,9 +94,7 @@ export default class BookForm extends Component {
 
 	changeValue(newValue) {
 		console.log("new value: " + newValue);
-		//const { courseActions } = this.props;
-
-	    //courseActions.setSelectedCourseId(newValue);
+		let selectedAuthorIds = newValue.split(",");
 	}
 
 	renderOption(author) {
@@ -107,25 +108,53 @@ export default class BookForm extends Component {
 		);
 	}
 
-    render() {
+	foo(a, b, c) {
+		console.log("a: " + JSON.stringify(a));
+		console.log("b: " + JSON.stringify(b));
+		console.log("c: " + JSON.stringify(c));
+	}
+
+	validateForm(e) {
+		e.preventDefault();
+
     	const {
       		fields: {
 	      		title, 
 	      		language,
+	      		authors,
 	      		pageCount,
 	      		price
       		}, 
-	      	invalid,
-	      	handleSubmit,
-	      	valid,
     	} = this.props;
 
-    	const renderInput = (field, label) =>
-		<div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
-			<label htmlFor={field.name} className="col-sm-2">{label}</label>
+		let formData = {
+			title: this.props.fields.title 
+		};
+
+		alert("validateForm(): " + JSON.stringify(formData));
+	}
+
+	handleChange(name, field) {
+
+	}
+
+    render() {
+    	console.log("BookForm::render()");
+    	const {
+      		fields: {
+	      		title, 
+	      		language,
+	      		authors,
+	      		pageCount,
+	      		price
+      		}, 
+    	} = this.props;
+
+    	const renderInput = (field, name, label) =>
+		<div className="">
+			<label htmlFor={name} className="col-sm-2">{label}</label>
 			<div className={'col-sm-8'}>
-				<input type="text" className="form-control" id={field.name} {...field}/>
-			  	{field.error && field.touched && <div className="text-danger">{field.error}</div>}
+				<input type="text" className="form-control" id={name} onChange={this.handleChange.bind(name, field)}/>
 			</div>
 		</div>;
 
@@ -134,23 +163,23 @@ export default class BookForm extends Component {
     	return (
 			<div className="component">
 				<h1>New Book</h1>
-				<form className="form-horizontal" onSubmit={handleSubmit}>
-					{renderInput(title, 'Title')}
+				<form className="form-horizontal" onSubmit={::this.validateForm}>
+					{renderInput(fields.title, 'title', 'Title')}
 					
 					<div className="form-group">
 				    	<label className="col-sm-2">Language</label>
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" onChange={fields.language.onChange} />
+						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" />
 						  		Finnish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" onChange={fields.language.onChange} />
+						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" />
 						  		Swedish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" onChange={fields.language.onChange} />
+						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" />
 						  		English
 						  	</label>
 						</div>	    
@@ -169,25 +198,23 @@ export default class BookForm extends Component {
 							cacheAsyncResults={false}
 							asyncOptions={::this.getOptions}
 							optionRenderer={this.renderOption}
-							onChange={this.changeValue}
+							onChange={::this.foo}
 						></Select>
 				    	</div>
 				    </div>
     				
+					{renderInput(fields.pageCount, 'pageCount', 'Page count')}
 
-					{renderInput(pageCount, 'Page count')}
-
-					{renderInput(price, 'Price')}
+					{renderInput(fields.price, 'price', 'Price')}
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">
-							<button className="btn btn-success" onClick={handleSubmit} disabled={invalid}>
+							<button className="btn btn-success" onClick={::this.validateForm} >
 								 Submit
 							</button>
 						</div>
 					</div>
 				</form>
-
 			</div>
     	);
   	}	

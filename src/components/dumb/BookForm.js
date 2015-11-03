@@ -50,6 +50,7 @@ export default class BookForm extends Component {
 		super(props);
 
 		this.state = {
+			id: null,
 			title: null,
 			language: null,
 			authors: null,
@@ -103,17 +104,23 @@ export default class BookForm extends Component {
 		);
 	}
 
-	foo(a, b, c) {
-		console.log("a: " + JSON.stringify(a));
-		console.log("b: " + JSON.stringify(b));
-		console.log("c: " + JSON.stringify(c));
+	onAuthorChanged(selectioString, selectionObj) {
+		console.log("selectionString: " + JSON.stringify(selectioString));
+		console.log("selectionObj: " + JSON.stringify(selectionObj));	
+		console.log("luss: " + JSON.stringify(Immutable.Seq(selectionObj).map(x => x.value).toArray()))
+		
+		this.setState({
+			authors: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
+		});
+			
 	}
 
 	validateForm(e) {
 		e.preventDefault();
 
 		let formData = {
-			title: this.state.title
+			title: this.state.title,
+			authors: this.state.authors
 		};
 
 		alert("validateForm(): " + JSON.stringify(formData));
@@ -128,6 +135,10 @@ export default class BookForm extends Component {
 		this.setState({
 			[e.target.name]:  e.target.value
 		})
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return this.state.id != nextState.id;
 	}
 
     render() {
@@ -154,7 +165,6 @@ export default class BookForm extends Component {
 
     	return (
 			<div className="component">
-				STATE: {this.state.title}
 				<h1>New Book</h1>
 				<form className="form-horizontal" onSubmit={::this.validateForm}>
 					{renderInput(this.state.title, 'title', 'Title')}
@@ -191,7 +201,7 @@ export default class BookForm extends Component {
 							cacheAsyncResults={false}
 							asyncOptions={::this.getOptions}
 							optionRenderer={this.renderOption}
-							onChange={::this.foo}
+							onChange={::this.onAuthorChanged}
 						></Select>
 				    	</div>
 				    </div>

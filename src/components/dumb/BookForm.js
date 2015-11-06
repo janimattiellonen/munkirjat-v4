@@ -18,7 +18,6 @@ function bookValidation(data) {
     }
 
     if (!data.language) {
-    	console.log("fiuertuiertyiuertiuyter");
     	errors.language = "Language is required";	
     }
 
@@ -63,8 +62,6 @@ export default class BookForm extends Component {
 			startedReading: null,
 			finishedReading: null
 		}
-
-		console.log("ctor called: " + JSON.stringify(props));
 	}
 
 	searchAuthors(input, callback) {
@@ -83,9 +80,7 @@ export default class BookForm extends Component {
     		//let selections = {options: authors.toArray()};
     		let selections = {options: mapped.toArray()};
 			callback(null, selections);
-			//this.props.courseActions.setCourses(courses, d);
 		});
-
 	}
 
 	getOptions(input, callback) {	
@@ -111,10 +106,6 @@ export default class BookForm extends Component {
 	}
 
 	onAuthorChanged(selectioString, selectionObj) {
-		console.log("selectionString: " + JSON.stringify(selectioString));
-		console.log("selectionObj: " + JSON.stringify(selectionObj));	
-		console.log("luss: " + JSON.stringify(Immutable.Seq(selectionObj).map(x => x.value).toArray()))
-		
 		this.setState({
 			authors: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
 		});
@@ -138,14 +129,12 @@ export default class BookForm extends Component {
 	}
 
 	handleChange(e, name, field) {
-		console.log(JSON.stringify(e));
 		let nextState = {}
 		let value = null;
 
 		if (e.target.type == "checkbox") {
 			value = e.target.checked;
 		} else {
-			console.log(e.target.name + ": " + e.target.value);
 			value = e.target.value;
 		}
 
@@ -173,7 +162,6 @@ export default class BookForm extends Component {
 	}
 
     render() {
-    	console.log("BookForm::render()");
     	const {
       		fields: {
 	      		title, 

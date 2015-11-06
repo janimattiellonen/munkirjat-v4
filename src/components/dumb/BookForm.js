@@ -7,6 +7,7 @@ import numeral from 'numeral';
 import Immutable from 'immutable';
 import * as Utils from '../utils';
 import Api from "../../api";
+import _ from 'underscore';
 
 
 function bookValidation(data) {
@@ -128,7 +129,9 @@ export default class BookForm extends Component {
 			language: this.state.language,
 			pageCount: this.state.pageCount,
 			price: this.state.price,
-			isRead: this.state.isRead
+			isRead: this.state.isRead,
+			startedReading: this.state.startedReading,
+			finishedReading: this.state.finishedReading
 		};
 
 		alert("validateForm(): " + JSON.stringify(formData));
@@ -152,6 +155,18 @@ export default class BookForm extends Component {
 			[e.target.name]: value
 		});
 	}
+
+	handleStartedReadingChange(date) {
+		this.setState({
+			startedReading: date,
+		});
+	}
+
+	handleFinishedReadingChange(date) {
+		this.setState({
+			finishedReading: date,
+		});
+	}	
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return this.state.id != nextState.id;
@@ -239,7 +254,7 @@ export default class BookForm extends Component {
 							<DatePicker
 							    selected={this.state.startedReading}
 							    dateFormat="DD.MM.YYYY"
-							    onChange={::this.handleChange}
+							    onChange={::this.handleStartedReadingChange}
 							/>						
 						</div>
 					</div>
@@ -247,7 +262,11 @@ export default class BookForm extends Component {
 					<div className="form-group">
 						<label htmlFor="finishedReading" className="col-sm-2">Finished reading</label>
 						<div className={'col-sm-8'}>
-							<input type="text" className="form-control" name="finishedReading" id="finishedReading" value={this.state.finishedReading} onChange={::this.handleChange}/>
+							<DatePicker
+							    selected={this.state.finishedReading}
+							    dateFormat="DD.MM.YYYY"
+							    onChange={::this.handleFinishedReadingChange}
+							/>	
 						</div>
 					</div>
 

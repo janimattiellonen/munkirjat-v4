@@ -77,7 +77,6 @@ export default class BookForm extends Component {
 				})
 			});
 
-    		//let selections = {options: authors.toArray()};
     		let selections = {options: mapped.toArray()};
 			callback(null, selections);
 		});

@@ -39,6 +39,7 @@ require('bootstrap/dist/css/bootstrap.css');
 require('react-select/dist/default.css');
 require('./app.less');
 require('bootstrap/dist/js/bootstrap.js');
+require('react-datepicker/dist/react-datepicker.min.css');
 
 ReactDOM.render(
 	<Provider store = {store}>

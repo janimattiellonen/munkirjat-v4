@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 import Select from "react-select";
 import numeral from 'numeral';
 import Immutable from 'immutable';
@@ -58,8 +59,8 @@ export default class BookForm extends Component {
 			pageCount: null,
 			price: null,
 			isRead: null,
-			startedReading,
-			finishedReading
+			startedReading: null,
+			finishedReading: null
 		}
 
 		console.log("ctor called: " + JSON.stringify(props));
@@ -134,6 +135,7 @@ export default class BookForm extends Component {
 	}
 
 	handleChange(e, name, field) {
+		console.log(JSON.stringify(e));
 		let nextState = {}
 		let value = null;
 
@@ -234,16 +236,22 @@ export default class BookForm extends Component {
 					<div className="form-group">
 						<label htmlFor="startedReading" className="col-sm-2">Started reading</label>
 						<div className={'col-sm-8'}>
-							<input type="text" className="form-control" name="startedReading" id="startedReading" checked={this.state.startedReading} onChange={::this.handleChange}/>
+							<DatePicker
+							    selected={this.state.startedReading}
+							    dateFormat="DD.MM.YYYY"
+							    onChange={::this.handleChange}
+							/>						
 						</div>
 					</div>
 
 					<div className="form-group">
 						<label htmlFor="finishedReading" className="col-sm-2">Finished reading</label>
 						<div className={'col-sm-8'}>
-							<input type="text" className="form-control" name="finishedReading" id="finishedReading" checked={this.state.finishedReading} onChange={::this.handleChange}/>
+							<input type="text" className="form-control" name="finishedReading" id="finishedReading" value={this.state.finishedReading} onChange={::this.handleChange}/>
 						</div>
 					</div>
+
+
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">

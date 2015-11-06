@@ -42,7 +42,8 @@ export default class BookForm extends Component {
 			language: null,
 			authors: null,
 			pageCount: 0,
-			price: 0
+			price: 0,
+			isRead: false
 		}
 	}
 
@@ -54,8 +55,11 @@ export default class BookForm extends Component {
 			title: null,
 			language: null,
 			authors: null,
-			pageCount: 0,
-			price: 0
+			pageCount: null,
+			price: null,
+			isRead: null,
+			startedReading,
+			finishedReading
 		}
 
 		console.log("ctor called: " + JSON.stringify(props));
@@ -112,7 +116,6 @@ export default class BookForm extends Component {
 		this.setState({
 			authors: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
 		});
-			
 	}
 
 	validateForm(e) {
@@ -120,21 +123,32 @@ export default class BookForm extends Component {
 
 		let formData = {
 			title: this.state.title,
-			authors: this.state.authors
+			authors: this.state.authors,
+			language: this.state.language,
+			pageCount: this.state.pageCount,
+			price: this.state.price,
+			isRead: this.state.isRead
 		};
 
 		alert("validateForm(): " + JSON.stringify(formData));
 	}
 
 	handleChange(e, name, field) {
-		console.log(e.target.name + ": " + e.target.value);
-
 		let nextState = {}
-		nextState[e.target.name] = e.target.value;
+		let value = null;
+
+		if (e.target.type == "checkbox") {
+			value = e.target.checked;
+		} else {
+			console.log(e.target.name + ": " + e.target.value);
+			value = e.target.value;
+		}
+
+		nextState[e.target.name] = value;
 
 		this.setState({
-			[e.target.name]:  e.target.value
-		})
+			[e.target.name]: value
+		});
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -149,12 +163,12 @@ export default class BookForm extends Component {
 	      		language,
 	      		authors,
 	      		pageCount,
-	      		price
+	      		price,
       		}, 
     	} = this.props;
 
     	const renderInput = (value, name, label) =>
-		<div className="">
+		<div className="form-group">
 			<label htmlFor={name} className="col-sm-2">{label}</label>
 			<div className={'col-sm-8'}>
 				<input type="text" className="form-control" name={name} id={name} value={value} onChange={::this.handleChange}/>
@@ -174,15 +188,15 @@ export default class BookForm extends Component {
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" />
+						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" onChange={::this.handleChange} />
 						  		Finnish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" />
+						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" onChange={::this.handleChange} />
 						  		Swedish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" />
+						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" onChange={::this.handleChange} />
 						  		English
 						  	</label>
 						</div>	    
@@ -206,9 +220,30 @@ export default class BookForm extends Component {
 				    	</div>
 				    </div>
     				
-					{renderInput(fields.pageCount, 'pageCount', 'Page count')}
+					{renderInput(this.state.pageCount, 'pageCount', 'Page count')}
 
-					{renderInput(fields.price, 'price', 'Price')}
+					{renderInput(this.state.price, 'price', 'Price')}
+
+					<div className="form-group">
+						<label htmlFor="isRead" className="col-sm-2">Is read</label>
+						<div className={'col-sm-8'}>
+							<input type="checkbox" className="form-control" name="isRead" id="isRead" checked={this.state.isRead} onChange={::this.handleChange}/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="startedReading" className="col-sm-2">Started reading</label>
+						<div className={'col-sm-8'}>
+							<input type="text" className="form-control" name="startedReading" id="startedReading" checked={this.state.startedReading} onChange={::this.handleChange}/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label htmlFor="finishedReading" className="col-sm-2">Finished reading</label>
+						<div className={'col-sm-8'}>
+							<input type="text" className="form-control" name="finishedReading" id="finishedReading" checked={this.state.finishedReading} onChange={::this.handleChange}/>
+						</div>
+					</div>
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">

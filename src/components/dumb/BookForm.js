@@ -245,7 +245,7 @@ export default class BookForm extends Component {
 							/>						
 						</div>
 					</div>
-
+	
 					<div className="form-group">
 						<label htmlFor="finishedReading" className="col-sm-2">Finished reading</label>
 						<div className={'col-sm-8'}>
@@ -256,8 +256,6 @@ export default class BookForm extends Component {
 							/>	
 						</div>
 					</div>
-
-
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">

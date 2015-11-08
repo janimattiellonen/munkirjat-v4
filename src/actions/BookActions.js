@@ -1,5 +1,12 @@
 import api from '../api';
 
+export function addook(book) {
+	return {
+		type: 'BOOK_ADD',
+		book: book,
+	};
+}
+
 export function setBooks(books, mode = null) {
 	return {
 		type: 'BOOKS_FETCH',
@@ -41,6 +48,9 @@ export function fetchBooks(mode = null) {
 
 export function createBook(book) {
 	return function(dispatch, getState) {
-		console.log("createBook: " + JSON.stringify(book));
+		api.saveBook(book).then(book => {
+			dispatch(addBook(book));
+		});
 	};
 }
+

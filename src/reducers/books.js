@@ -3,6 +3,13 @@ import { List } from 'immutable';
 import moment from 'moment';
 
 export default handleActions({
+	BOOK_ADD: (state, action) => {
+
+		return {
+			...state,
+			books: List(state.books.push(action.book))
+		}
+	},
 
 	BOOK_INFO_FETCH: (state, action) => {
 		return {

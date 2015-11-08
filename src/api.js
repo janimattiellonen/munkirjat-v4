@@ -27,5 +27,9 @@ export default {
 
 	getBooks: (mode = null) => {
 		return axios.get('/books/' + mode).then(res => List(res.data));
-	}
+	},
+
+	saveBook(book) {
+		return axios.post('/book', book).then(res => res.data);
+	}	
 };

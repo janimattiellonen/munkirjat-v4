@@ -1,13 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
 import Select from "react-select";
+import moment from 'moment';
 import numeral from 'numeral';
 import Immutable from 'immutable';
 import * as Utils from '../utils';
 import Api from "../../api";
 import _ from 'underscore';
+import jqueryui from 'jquery-ui';
 
 
 function bookValidation(data) {
@@ -90,10 +91,6 @@ export default class BookForm extends Component {
 	    }, 500);
 	}
 
-	changeValue(newValue) {
-		let selectedAuthorIds = newValue.split(",");
-	}
-
 	renderOption(author) {
 		return (
 			<div>
@@ -130,7 +127,7 @@ export default class BookForm extends Component {
 	handleChange(e, name, field) {
 		let nextState = {}
 		let value = null;
-
+		console.log("name: " + name);
 		if (e.target.type == "checkbox") {
 			value = e.target.checked;
 		} else {
@@ -156,8 +153,23 @@ export default class BookForm extends Component {
 		});
 	}	
 
+	componentDidMount() {
+		let self = this;
+		let datePickerConfig = {
+			dateFormat: "dd.mm.yy"
+		};
+
+		$('#startedReading').datepicker(datePickerConfig).on('change', function(e) {
+			self.handleStartedReadingChange($(this).val());
+		});
+
+		$('#finishedReading').datepicker(datePickerConfig).on('change', function(e) {
+			self.handleFinishedReadingChange($(this).val());
+		});
+	}
+
 	shouldComponentUpdate(nextProps, nextState) {
-		return this.state.id != nextState.id;
+		return this.state.date != null && this.state.date != nextState.date;
 	}
 
     render() {
@@ -238,9 +250,8 @@ export default class BookForm extends Component {
 					<div className="form-group">
 						<label htmlFor="startedReading" className="col-sm-2">Started reading</label>
 						<div className={'col-sm-8'}>
-							<DatePicker
-							    selected={this.state.startedReading}
-							    dateFormat="DD.MM.YYYY"
+							<input type="text"
+								id="startedReading"
 							    onChange={::this.handleStartedReadingChange}
 							/>						
 						</div>
@@ -249,9 +260,8 @@ export default class BookForm extends Component {
 					<div className="form-group">
 						<label htmlFor="finishedReading" className="col-sm-2">Finished reading</label>
 						<div className={'col-sm-8'}>
-							<DatePicker
-							    selected={this.state.finishedReading}
-							    dateFormat="DD.MM.YYYY"
+							<input type="text"
+								id="finishedReading"
 							    onChange={::this.handleFinishedReadingChange}
 							/>	
 						</div>

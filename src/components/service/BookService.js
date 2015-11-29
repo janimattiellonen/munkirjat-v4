@@ -1,4 +1,4 @@
-
+import _ from 'lodash';
 
 export default class BookService {
     constructor(db) {
@@ -8,6 +8,76 @@ export default class BookService {
 
     setConnection(connection) {
         this.connection = connection;
+    }
+
+    createBook(book, callback) {
+        this.connection.query(
+            `INSERT INTO 
+                book (title, language_id, page_count, is_read, started_reading, finished_reading, price) 
+            VALUES 
+                (:title, :language, :pageCount, :isRead, :startedReading, :finishedReading, :price)`,
+            {
+                title: book.title,
+                language: book.language,
+                pageCount: book.pageCount,
+                price: book.price,
+                isRead: book.isRead,
+                startedReading: book.startedReading,
+                finishedReading: book.finishedReading
+            },
+            callback
+        );
+
+        /*
+        let formData = {
+            title: this.state.title,
+            authors: this.state.authors,
+            language: this.state.language,
+            pageCount: this.state.pageCount,
+            price: this.state.price,
+            isRead: this.state.isRead,
+            startedReading: this.state.startedReading,
+            finishedReading: this.state.finishedReading
+        };
+        */
+
+        /*
+
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `title` varchar(128) NOT NULL,
+          `language_id` varchar(3) NOT NULL,
+          `page_count` int(11) NOT NULL,
+          `is_read` tinyint(1) NOT NULL,
+          `isbn` varchar(40) DEFAULT NULL,
+          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+          `started_reading` timestamp NULL DEFAULT NULL,
+          `finished_reading` timestamp NULL DEFAULT NULL,
+          `rating` double DEFAULT NULL,
+          `price` decimal(21,2) DEFAULT NULL,
+        */
+    }
+
+    addAuthors(bookId, authors, callback) {
+
+        let params = [];
+
+        authors.map(authorId => {
+            params.push(bookId);
+            params.push(authorId);
+        });
+
+        // must most likely replace? with :foo1, :foo2 and so on due to this being used: https://www.npmjs.com/package/mysql#custom-format
+        let placeHolders = _.trimRight("(?, ?),".repeat(params.length / 2), ',');
+        console.log("placeholders: " + placeHolders);
+        this.connection.query(
+            `INSERT INTO 
+                book_author (book_id, author_id) 
+            VALUES 
+                ${placeHolders}`,
+            params,
+            callback
+        ); 
     }
 
     getBook(id, callback) {

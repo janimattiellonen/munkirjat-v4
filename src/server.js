@@ -84,6 +84,43 @@ server.get('/books/:mode', function (req, res) {
     });
 });
 
+server.post('/book', function(req, res) {
+    var connection = getConnection();
+    bookService.setConnection(connection);
+
+    let newBook = {
+
+    };
+
+    console.log("params: " + JSON.stringify(req.params));
+
+    bookService.createBook(req.params, function(err, result) {
+        if (err) {
+            console.log("Error creating a new book: " + err);
+            return;
+        }
+
+        let createdBookId   = result.insertId;
+        let authors         = [];
+
+        req.params.authors.map(author => {
+            authors.push(author.value);
+        });
+
+        bookService.addAuthors(createdBookId, authors, function(err, result) {
+            if (err) {
+                console.log("Error adding authors for book: " + err);
+                return;
+            }
+            
+            res.charSet('utf8');
+            res.send(200, {"status": "OK", "id": createdBookId});
+            connection.end();
+        });
+    });
+
+});
+
 server.post('/author', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);

@@ -18,12 +18,15 @@ import * as BookActions from '../../actions/BookActions';
 export default class NewBookViewContainer extends Component {
 
     handleSubmit(data) {
+
+        alert("handleSubmit(): " + JSON.stringify(data));
+
         this.props.bookActions.createBook(data);
     }
 
 	render() {
 		return (
-			<BookForm onSubmit={::this.handleSubmit}/>
+			<BookForm handleSubmit={::this.handleSubmit}/>
 		)
 	}
 }

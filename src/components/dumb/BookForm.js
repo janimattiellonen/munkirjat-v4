@@ -59,7 +59,7 @@ export default class BookForm extends Component {
 			authors: null,
 			pageCount: null,
 			price: null,
-			isRead: null,
+			isRead: false,
 			startedReading: null,
 			finishedReading: null
 		}
@@ -121,7 +121,11 @@ export default class BookForm extends Component {
 			finishedReading: this.state.finishedReading
 		};
 
-		alert("validateForm(): " + JSON.stringify(formData));
+		alert("validateForm2(): " + JSON.stringify(formData));
+
+		const { handleSubmit} = this.props;
+
+		handleSubmit(formData);
 	}
 
 	handleChange(e, name, field) {

@@ -40,6 +40,10 @@ export default class BookForm extends Component {
 
 	}
 
+    static contextTypes = {
+        history: React.PropTypes.object.isRequired
+    }
+
 	constructor(props) {
 		super(props);
 

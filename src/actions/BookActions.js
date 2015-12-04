@@ -1,7 +1,7 @@
 import api from '../api';
 import history from '../components/history';
 
-export function addook(book) {
+export function addBook(book) {
 	return {
 		type: 'BOOK_ADD',
 		book: book,
@@ -49,10 +49,11 @@ export function fetchBooks(mode = null) {
 
 export function createBook(book) {
 	return function(dispatch, getState) {
-		api.saveBook(book).then(book => {
-			dispatch(addBook(book));
 
-			history.pushState(null, '/some/path');
+		api.saveBook(book).then(book => {
+			alert("oo2: " + book.id);
+			dispatch(addBook(book));
+			history.pushState(null, '/book/' + book.id);
 		});
 	};
 }

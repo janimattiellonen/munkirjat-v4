@@ -6,7 +6,7 @@ window.$ = window.jQuery;
 import React from "react";
 import ReactDOM from 'react-dom';
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
-//import history from './components/history';
+import history from './components/history';
 
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
@@ -29,7 +29,7 @@ import * as reducers from './reducers';
 import promiseMiddleware from 'redux-promise';
 
 import { reducer as formReducer } from 'redux-form';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import createHashHistory from 'history/lib/createHashHistory';
 
 
 reducers.form = formReducer;
@@ -48,7 +48,7 @@ require('jquery-ui/themes/base/jquery.ui.datepicker.css');
 
 ReactDOM.render(
 	<Provider store = {store}>
-		<Router >
+		<Router history={history}>
 	        <Route component={MunkirjatAppContainer} path="/">
 	            <Route name="about" path="about" component={About}/>
 	            <Route name="newBook" path="book/new" component={NewBookViewContainer} />

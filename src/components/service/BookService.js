@@ -60,21 +60,23 @@ export default class BookService {
 
     addAuthors(bookId, authors, callback) {
 
-        let params = [];
+        let params = {};
+        let placeholders = "";
 
-        authors.map(authorId => {
-            params.push(bookId);
-            params.push(authorId);
+        authors.map((authorId, i) => {
+            let bookParam = "bookId" + i;
+            let authorParam = "authorId" + i;
+
+            placeholders += "(:" + bookParam + ", :" + authorParam + "),";
+
+            params[bookParam] = bookId;
+            params[authorParam] = authorId;
         });
 
-        // must most likely replace? with :foo1, :foo2 and so on due to this being used: https://www.npmjs.com/package/mysql#custom-format
-        let placeHolders = _.trimRight("(?, ?),".repeat(params.length / 2), ',');
-        console.log("placeholders: " + placeHolders);
+        let placeHolders = _.trimRight(placeholders, ',');
         this.connection.query(
-            `INSERT INTO 
-                book_author (book_id, author_id) 
-            VALUES 
-                ${placeHolders}`,
+
+            `INSERT INTO book_author (book_id, author_id) VALUES ${placeHolders}`,
             params,
             callback
         ); 

@@ -6,7 +6,7 @@ import StatisticsView from './StatisticsView';
 
 export default class MunkirjatApp extends React.Component {
     static contextTypes = {
-        router: React.PropTypes.object.isRequired
+        history: React.PropTypes.object.isRequired
     }
 
     render() {

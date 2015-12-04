@@ -1,4 +1,5 @@
 import api from '../api';
+import history from '../components/history';
 
 export function addook(book) {
 	return {
@@ -50,6 +51,8 @@ export function createBook(book) {
 	return function(dispatch, getState) {
 		api.saveBook(book).then(book => {
 			dispatch(addBook(book));
+
+			history.pushState(null, '/some/path');
 		});
 	};
 }

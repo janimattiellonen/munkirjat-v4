@@ -5,8 +5,9 @@ window.$ = window.jQuery;
 
 import React from "react";
 import ReactDOM from 'react-dom';
-import { Router, Route, Redirect } from 'react-router';
-import { history } from 'react-router/lib/HashHistory';
+import { Router, Route, Redirect, IndexRoute } from 'react-router';
+//import history from './components/history';
+
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
 import NewAuthorViewContainer from "./components/smart/NewAuthorViewContainer";
@@ -28,6 +29,8 @@ import * as reducers from './reducers';
 import promiseMiddleware from 'redux-promise';
 
 import { reducer as formReducer } from 'redux-form';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
+
 
 reducers.form = formReducer;
 
@@ -45,16 +48,15 @@ require('jquery-ui/themes/base/jquery.ui.datepicker.css');
 
 ReactDOM.render(
 	<Provider store = {store}>
-		<Router history={history}>
-	        <Redirect from="/" to="/about" />
+		<Router >
 	        <Route component={MunkirjatAppContainer} path="/">
 	            <Route name="about" path="about" component={About}/>
-	            <Route name="newBook" path="/book/new" component={NewBookViewContainer} />
-				<Route name="book" path="/book/:id" component={BookViewContainer} />
-				<Route name="listBooks" path="/books(/:mode)" component={BooksViewContainer} />
-				<Route name="listAuthors" path="/authors" component={AuthorsViewContainer} />
-				<Route name="newAuthor" path="/author/new" component={NewAuthorViewContainer} />
-				<Route name="viewAuthor" path="/author/:id" component={AuthorViewContainer} />
+	            <Route name="newBook" path="book/new" component={NewBookViewContainer} />
+				<Route name="book" path="book/:id" component={BookViewContainer} />
+				<Route name="listBooks" path="books(/:mode)" component={BooksViewContainer} />
+				<Route name="listAuthors" path="authors" component={AuthorsViewContainer} />
+				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
+				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
 	        </Route>
 	    </Router>	
 	</Provider>,

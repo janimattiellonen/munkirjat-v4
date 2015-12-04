@@ -23,7 +23,7 @@ export default class NewAuthorViewContainer extends Component {
 
 	render() {
 		return (
-			<AuthorForm onSubmit={::this.handleSubmit}/>
+			<AuthorForm handleSubmit={::this.handleSubmit}/>
 		)
 	}
 }       

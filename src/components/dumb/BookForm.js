@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {connectReduxForm} from 'redux-form';
 import {Button, ButtonGroup} from 'react-bootstrap';
 import Select from "react-select";
 import moment from 'moment';
@@ -9,7 +8,6 @@ import * as Utils from '../utils';
 import Api from "../../api";
 import _ from 'underscore';
 import jqueryui from 'jquery-ui';
-
 
 function bookValidation(data) {
     const errors = {};
@@ -39,14 +37,7 @@ function bookValidation(data) {
 
 export default class BookForm extends Component {
 	static defaultProps = {
-		fields: {
-			title: null,
-			language: null,
-			authors: null,
-			pageCount: 0,
-			price: 0,
-			isRead: false
-		}
+
 	}
 
 	constructor(props) {
@@ -177,15 +168,7 @@ export default class BookForm extends Component {
 	}
 
     render() {
-    	const {
-      		fields: {
-	      		title, 
-	      		language,
-	      		authors,
-	      		pageCount,
-	      		price,
-      		}, 
-    	} = this.props;
+
 
     	const renderInput = (value, name, label) =>
 		<div className="form-group">
@@ -195,7 +178,6 @@ export default class BookForm extends Component {
 			</div>
 		</div>;
 
-		const {fields} = this.props;
 
     	return (
 			<div className="component">

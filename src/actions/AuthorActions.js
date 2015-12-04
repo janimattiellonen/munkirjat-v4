@@ -48,7 +48,6 @@ export function createAuthor(author) {
 			dispatch(addAuthor(author));
 		});
 	};
-
 }
 
 export function searchAuthors(input) {

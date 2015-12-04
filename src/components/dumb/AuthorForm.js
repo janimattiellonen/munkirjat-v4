@@ -1,65 +1,66 @@
 import React, {Component, PropTypes} from 'react';
-import {connectReduxForm} from 'redux-form';
 
-function authorValidation(data) {
-    const errors = {};
-   
-    if (!data.firstname ) {
-        errors.firstname = "Firstname is required";
-    }
-
-    if (!data.lastname ) {
-        errors.lastname = "Lastname is required";
-    }
-    
-    return errors;
-}
-
-@connectReduxForm({
-	form: 'author',
-	fields: ['firstname', 'lastname'],
-	validate: authorValidation
-})
 export default class AuthorForm extends Component {
-	static propTypes = {
-		asyncValidating: PropTypes.bool.isRequired,
-		fields: PropTypes.object.isRequired,
-		handleBlur: PropTypes.func.isRequired,
-		handleChange: PropTypes.func.isRequired,
-		handleSubmit: PropTypes.func.isRequired,
-		invalid: PropTypes.bool.isRequired,
-		valid: PropTypes.bool.isRequired
-	} 
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			firstname: null,
+			lastname: null
+		}
+	}
+
+	handleChange(e, name, field) {
+		let nextState = {}
+		let value = null;
+		console.log("name: " + name);
+		if (e.target.type == "checkbox") {
+			value = e.target.checked;
+		} else {
+			value = e.target.value;
+		}
+
+		nextState[e.target.name] = value;
+
+		this.setState({
+			[e.target.name]: value
+		});
+	}
+
+	validateForm(e) {
+		e.preventDefault();
+
+		const { handleSubmit} = this.props;
+
+		let formData = {
+			firstname: this.state.firstname,
+			lastname: this.state.lastname,
+			
+		};
+
+		handleSubmit(formData);
+	}	
 
     render() {
-    	const {
-      		fields: {
-	      		firstname, 
-	      		lastname
-      		}, 
-	      	invalid,
-	      	handleSubmit,
-	      	valid,
-    	} = this.props;
 
-    	const renderInput = (field, label) =>
-		<div className={'form-group' + (field.error && field.touched ? ' has-error' : '')}>
-			<label htmlFor={field.name} className="col-sm-2">{label}</label>
+    	const renderInput = (value, name, label) =>
+		<div className="form-group">
+			<label htmlFor={name} className="col-sm-2">{label}</label>
 			<div className={'col-sm-8'}>
-				<input type="text" className="form-control" id={field.name} {...field}/>
-			  	{field.error && field.touched && <div className="text-danger">{field.error}</div>}
+				<input type="text" className="form-control" name={name} id={name} value={value} onChange={::this.handleChange}/>
 			</div>
 		</div>;
 
     	return (
 			<div className="component">
 				<h1>New author</h1>
-				<form className="form-horizontal" onSubmit={handleSubmit}>
-					{renderInput(firstname, 'Firstname')}
-					{renderInput(lastname, 'Lastname')}
+				<form className="form-horizontal" onSubmit={::this.validateForm}>
+					{renderInput(this.state.firstname, 'firstname', 'Firstname')}
+					{renderInput(this.state.lastname, 'lastname', 'Lastname')}
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">
-							<button className="btn btn-success" onClick={handleSubmit} disabled={invalid}>
+							<button className="btn btn-success" onClick={::this.validateForm}>
 								 Submit
 							</button>
 						</div>

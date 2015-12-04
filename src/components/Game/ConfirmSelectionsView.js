@@ -43,7 +43,7 @@ export default class ConfirmSelectionsView extends React.Component {
 		const { gameActions} = this.props;
 
 		gameActions.startGame();
-		this.context.router.transitionTo('game');
+		this.context.history.transitionTo('game');
 	}
 
 	componentDidMount() {

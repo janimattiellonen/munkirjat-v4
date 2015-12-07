@@ -43,6 +43,7 @@ export default class AuthorForm extends Component {
 	}	
 
     render() {
+    	console.log("props: " + JSON.stringify(this.props.params));
 
     	const renderInput = (value, name, label) =>
 		<div className="form-group">

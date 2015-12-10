@@ -19,7 +19,7 @@ export default class NewAuthorViewContainer extends Component {
 
 	handleSubmit(data) {
     	this.props.authorActions.createAuthor(data);
-    }
+        }
 
 	render() {
 
@@ -33,3 +33,5 @@ export default class NewAuthorViewContainer extends Component {
 		)
 	}
 }       
+
+// re-do using https://github.com/pekkis/web-development-with-js/tree/sensor-thingy

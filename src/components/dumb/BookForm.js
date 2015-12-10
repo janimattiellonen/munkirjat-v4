@@ -102,7 +102,7 @@ export default class BookForm extends Component {
 		});
 	}
 
-	validateForm(e) {
+	processForm(e) {
 		e.preventDefault();
 
 		let formData = {
@@ -116,8 +116,6 @@ export default class BookForm extends Component {
 			finishedReading: this.state.finishedReading
 		};
 
-		alert("validateForm2(): " + JSON.stringify(formData));
-
 		const { handleSubmit} = this.props;
 
 		handleSubmit(formData);
@@ -126,14 +124,12 @@ export default class BookForm extends Component {
 	handleChange(e, name, field) {
 		let nextState = {}
 		let value = null;
-		console.log("name: " + name);
+
 		if (e.target.type == "checkbox") {
 			value = e.target.checked;
 		} else {
 			value = e.target.value;
 		}
-
-		nextState[e.target.name] = value;
 
 		this.setState({
 			[e.target.name]: value
@@ -167,13 +163,11 @@ export default class BookForm extends Component {
 		});
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate_INACTIVE(nextProps, nextState) {
 		return this.state.date != null && this.state.date != nextState.date;
 	}
 
     render() {
-
-
     	const renderInput = (value, name, label) =>
 		<div className="form-group">
 			<label htmlFor={name} className="col-sm-2">{label}</label>
@@ -186,7 +180,7 @@ export default class BookForm extends Component {
     	return (
 			<div className="component">
 				<h1>New Book</h1>
-				<form className="form-horizontal" onSubmit={::this.validateForm}>
+				<form className="form-horizontal" onSubmit={::this.processForm}>
 					{renderInput(this.state.title, 'title', 'Title')}
 					
 					<div className="form-group">
@@ -259,7 +253,7 @@ export default class BookForm extends Component {
 
 					<div className="form-group">
 						<div className="col-sm-offset-2 col-sm-10">
-							<button className="btn btn-success" onClick={::this.validateForm} >
+							<button className="btn btn-success" onClick={::this.processForm} >
 								 Submit
 							</button>
 						</div>

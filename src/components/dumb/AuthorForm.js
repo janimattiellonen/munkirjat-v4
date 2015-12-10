@@ -1,6 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class AuthorForm extends Component {
+    static contextTypes = {
+        history: React.PropTypes.object.isRequired
+    }
 
 	constructor(props) {
 		super(props);
@@ -22,6 +25,7 @@ export default class AuthorForm extends Component {
 		}
 
 		nextState[e.target.name] = value;
+		console.log(e.target.name + ": " + value);
 
 		this.setState({
 			[e.target.name]: value
@@ -42,8 +46,12 @@ export default class AuthorForm extends Component {
 		handleSubmit(formData);
 	}	
 
+	componentDidMount() {
+		console.log("cdm: " + JSON.stringify(this.props.params));
+	}
+
     render() {
-    	console.log("props: " + JSON.stringify(this.props.params));
+    	console.log("render: " + JSON.stringify(this.props.params));
 
     	const renderInput = (value, name, label) =>
 		<div className="form-group">

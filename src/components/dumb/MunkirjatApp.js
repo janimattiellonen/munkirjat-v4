@@ -10,15 +10,14 @@ export default class MunkirjatApp extends React.Component {
     }
 
     render() {
+
+        console.log("1oo: " + this.props.params.id);
+
         return (
             <div id="page-inner">
-                {this.props.children && React.cloneElement(
-                    this.props.children,
-                    {
-                        authors: this.props.authors
-                    }
-                )}
 
+                {this.props.children}
+                
                 <StatisticsView books={this.props.books} authors={this.props.authors} />
 
             </div>

@@ -19,11 +19,17 @@ export default class NewAuthorViewContainer extends Component {
 
 	handleSubmit(data) {
     	this.props.authorActions.createAuthor(data);
-  }
+    }
 
 	render() {
+
+        console.log("ppp: " + JSON.stringify(this.props.params));
 		return (
-			<AuthorForm handleSubmit={::this.handleSubmit}/>
+          <div>
+                {this.props.children}
+
+                <AuthorForm params={this.props.params} handleSubmit={::this.handleSubmit}/>
+          </div>
 		)
 	}
 }       

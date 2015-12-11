@@ -25,18 +25,9 @@ import GamePlayView from "./components/Game/GamePlayView";
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import * as reducers from './reducers';
 import promiseMiddleware from 'redux-promise';
-
-import { reducer as formReducer } from 'redux-form';
 import createHashHistory from 'history/lib/createHashHistory';
-
-
-reducers.form = formReducer;
-
-const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, thunk)(createStore);
-const reducer = combineReducers(reducers);
-const store = createStoreWithMiddleware(reducer);
+import store from './store';
 
 require('bootstrap/dist/css/bootstrap.css');
 require('react-select/dist/default.css');

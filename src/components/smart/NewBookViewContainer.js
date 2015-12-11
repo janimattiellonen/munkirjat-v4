@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {initialize} from 'redux-form';
 import BookForm from '../dumb/BookForm';
 import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';

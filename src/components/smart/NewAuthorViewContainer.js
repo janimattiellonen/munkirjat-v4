@@ -5,6 +5,32 @@ import AuthorForm from '../dumb/AuthorForm';
 import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
 
+
+function mapStateToProps(state) {
+    return {
+
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return { 
+      authorActions: bindActionCreators(AuthorActions, dispatch), 
+      bookActions: bindActionCreators(BookActions, dispatch) 
+    };
+}
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AuthorForm);
+
+
+
+
+/*
+
+
 @connect(
   	() => ({}),
   	function mapDispatchToProps(dispatch) {
@@ -34,3 +60,4 @@ export default class NewAuthorViewContainer extends Component {
 }       
 
 // re-do using https://github.com/pekkis/web-development-with-js/tree/sensor-thingy
+*/

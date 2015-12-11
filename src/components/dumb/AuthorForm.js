@@ -48,6 +48,10 @@ export default class AuthorForm extends Component {
 
 	componentDidMount() {
 		console.log("cdm: " + JSON.stringify(this.props.params));
+
+		if (this.props.params.id) {
+			
+		}
 	}
 
     render() {

@@ -11,6 +11,7 @@ export default class AuthorForm extends Component {
 		console.log("AuthorForm::constructor()");	
 
 		this.state = {
+			id: this.props.author.id,
 			firstname: this.props.author.firstname,
 			lastname: this.props.author.lastname
 		}
@@ -40,6 +41,7 @@ export default class AuthorForm extends Component {
 		const { handleSubmit} = this.props;
 
 		let formData = {
+			id: this.state.id,
 			firstname: this.state.firstname,
 			lastname: this.state.lastname,
 		};

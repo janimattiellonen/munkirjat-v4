@@ -18,6 +18,22 @@ export function addAuthor(author) {
 	};
 }
 
+export function replaceAuthor(author) {
+	return {
+		type: 'AUTHOR_UPDATE',
+		author: author,
+	};
+}
+
+export function updateAuthor(author) {
+
+	return function(dispatch, getState) {
+		api.updateAuthor(author).then(author => {
+			dispatch(replaceAuthor(author));
+		});
+	}
+}
+
 export function setAuthors(authors) {
 	return {
 		type: 'AUTHORS_FETCH',

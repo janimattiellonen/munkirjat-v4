@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { List, Map } from 'immutable';
+import { List, Map, Seq } from 'immutable';
 
 
 const defaultState = Map({
@@ -11,14 +11,21 @@ const defaultState = Map({
 
 export default handleActions({
 	AUTHOR_ADD: (state, action) => {
-		console.log("ppp2p");
-		console.log("size: " + state.authors.count());
-		console.log("size 2: " + state.authors.push(action.author).count());
-		console.log("aa: " + JSON.stringify(action.author));
 
 		return {
 			...state,
 			authors: List(state.authors.push(action.author))
+		}
+	},
+
+	AUTHOR_UPDATE: (state, action) => {
+
+		let list = List(state.authors);
+		let i = list.findIndex(item => item.id === action.author.id);
+
+		return {
+			...state,
+			authors: list.set(i, action.author)
 		}
 	},
 

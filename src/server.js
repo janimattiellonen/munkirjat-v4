@@ -169,6 +169,62 @@ server.post('/author', function(req, res) {
     });
 });
 
+server.put('/author/:id', function(req, res) {
+    var connection = getConnection();
+    authorService.setConnection(connection);
+
+    let updatedAuthor = {
+        firstname: req.params.firstname,
+        lastname: req.params.lastname,
+    };
+
+    let id = req.params.id;
+
+    authorService.updateAuthor(id, updatedAuthor, function(err, result) {
+
+        if (err) {
+            console.log("Error: " + err);
+            return;
+        }
+
+        authorService.getAuthorWithBooks(id, function(err, result) {
+            if (err) {
+                console.log("Error2: " + err);
+                return;
+            }    
+
+            let author = {};
+
+            if (result) {
+                result.map(row => {
+                    if (null == author.id) {
+                        author.id = row['id'];
+                        author.firstname = row['firstname'];
+                        author.lastname = row['lastname'];
+                        author.name = row['name'];
+                    }
+
+                    if (null == author.books) {
+                        author.books = [];
+                    }
+
+                    author.books.push({
+                        id: row['book_id'],
+                        title: row['title'],
+                        is_read: row['is_read'],
+                    });
+                });
+            }
+
+            author.amount = author.books.length;
+
+            res.charSet('utf8');
+            res.send(200, author);
+            connection.end();
+        });
+    });
+});
+
 server.get('/author/:id', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);

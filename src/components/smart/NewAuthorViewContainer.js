@@ -20,10 +20,14 @@ class NewAuthorViewContainer extends React.Component {
         } 
     }
 
+    handleSubmit(data) {
+        this.props.authorActions.updateAuthor(data);
+    }
+
     render() {
         const {author} = this.props;
         return (
-            <AuthorForm key={author.id} author={author} params={this.props.params}/>
+            <AuthorForm key={author.id} author={author} params={this.props.params} handleSubmit={::this.handleSubmit} />
         );
     }
 }

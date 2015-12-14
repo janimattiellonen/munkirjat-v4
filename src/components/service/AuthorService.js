@@ -65,6 +65,19 @@ export default class AuthorService {
         );
     }
 
+    updateAuthor(id, author, callback) {
+        this.connection.query(
+            'UPDATE author set firstname = :firstname, lastname = :lastname WHERE id = :id',
+            {
+                firstname: author.firstname,
+                lastname: author.lastname,
+                id: id
+            },
+            callback
+        );
+    }
+
+
     searchAuthors(term, callback) {
         let query = `SELECT
               a.id,

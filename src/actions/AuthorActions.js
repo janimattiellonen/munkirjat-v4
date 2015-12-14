@@ -59,7 +59,6 @@ export function createAuthor(author) {
 
 export function searchAuthors(input) {
 	return function(dispatch, getState) {
-		console.log("searching with input: " + input);
 		api.searchAuthors(input).then(authors => {
 			console.log(JSON.stringify(authors));
 		});

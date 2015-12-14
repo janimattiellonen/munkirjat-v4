@@ -19,7 +19,6 @@ export default handleActions({
 		return {
 			...state,
 			authors: List(state.authors.push(action.author))
-			//authors: List([action.author])
 		}
 	},
 

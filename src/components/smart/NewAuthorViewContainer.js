@@ -6,9 +6,39 @@ import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
 
 
-function mapStateToProps(state) {
-    return {
+class NewAuthorViewContainer extends React.Component {
+    
+    componentDidMount() {
+        if (this.props.params.id) {
+            this.props.authorActions.fetchAuthor(this.props.params.id);
+        }
+    }
 
+    componentWillReceiveProps(nextProps) {
+        console.log("componentWillReceiveProps");
+
+        console.log("kk: " + JSON.stringify(nextProps));
+        if (this.props.params.id && nextProps.params.id && this.props.params.id != nextProps.params.id) {
+            console.log("LUTS");
+            this.props.authorActions.fetchAuthor(nextProps.params.id);
+        }
+    }
+
+    render() {
+        
+        const {author} = this.props;
+        console.log("author: " + author.firstname);
+        return (
+            <AuthorForm author={author} params={this.props.params}/>
+        );
+    }
+}
+
+
+function mapStateToProps(state) {
+    console.log("iiiiiii");
+    return {
+        author: state.authors.author,
     };
 }
 
@@ -19,11 +49,10 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(AuthorForm);
+)(NewAuthorViewContainer);
 
 
 

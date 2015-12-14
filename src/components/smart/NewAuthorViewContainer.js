@@ -8,32 +8,40 @@ import * as BookActions from '../../actions/BookActions';
 
 class NewAuthorViewContainer extends React.Component {
     
+
     componentDidMount() {
         if (this.props.params.id) {
             this.props.authorActions.fetchAuthor(this.props.params.id);
+        } else {
+            //this.props.authorActions.resetAuthor();
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps");
 
-        console.log("kk: " + JSON.stringify(nextProps));
         if (this.props.params.id && nextProps.params.id && this.props.params.id != nextProps.params.id) {
-            console.log("LUTS");
             this.props.authorActions.fetchAuthor(nextProps.params.id);
+        } else {
+            //this.props.authorActions.resetAuthor();
         }
     }
 
     render() {
-        
         const {author} = this.props;
-        console.log("author: " + author.firstname);
+        console.log("author 2: " + JSON.stringify(this.props.author));
         return (
-            <AuthorForm author={author} params={this.props.params}/>
+            <AuthorForm key={author.id} author={author} params={this.props.params}/>
         );
     }
 }
 
+NewAuthorViewContainer.defaultProps = {
+    author: {
+        id: null,
+        firstname: null,
+        lastname: null
+    }  
+};
 
 function mapStateToProps(state) {
     console.log("iiiiiii");
@@ -53,9 +61,6 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(NewAuthorViewContainer);
-
-
-
 
 /*
 

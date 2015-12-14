@@ -41,6 +41,13 @@ export function fetchAuthors() {
 	};
 }
 
+export function resetAuthor() {
+	return {
+		type: 'AUTHOR_RESET',
+		author: null,
+	};
+}
+
 export function createAuthor(author) {
 	return function(dispatch, getState) {
 

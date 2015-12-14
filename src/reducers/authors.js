@@ -22,6 +22,13 @@ export default handleActions({
 		}
 	},
 
+	AUTHOR_RESET: (state, action) => {
+		return {
+			...state,
+			author: {}
+		};
+	},
+
 	AUTHOR_FETCH: (state, action) => {
 
 		return {

@@ -8,9 +8,11 @@ export default class AuthorForm extends Component {
 	constructor(props) {
 		super(props);
 
+		console.log("AuthorForm::constructor()");	
+
 		this.state = {
 			firstname: this.props.author.firstname,
-			lastname: null
+			lastname: this.props.author.lastname
 		}
 	}
 
@@ -45,8 +47,6 @@ export default class AuthorForm extends Component {
 		handleSubmit(formData);
 	}	
 
-
-
     render() {
     	console.log("render: " + JSON.stringify(this.props.params));
 
@@ -60,10 +60,7 @@ export default class AuthorForm extends Component {
 
     	return (
 			<div className="component">
-				<h1>New author</h1>
-
-				{this.props.author.firstname}
-				
+				<h1>New author</h1>				
 
 				<form className="form-horizontal" onSubmit={::this.validateForm}>
 					{renderInput(this.state.firstname, 'firstname', 'Firstname')}

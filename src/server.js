@@ -138,7 +138,7 @@ server.post('/author', function(req, res) {
 
         let createdAuthorId = result.insertId;
 
-        authorService.getAuthor(createdAuthorId, function(err, result) {
+        authorService.getAuthorWithBooks(createdAuthorId, function(err, result) {
             if (err) {
                 console.log("Error2: " + err);
                 return;
@@ -147,19 +147,7 @@ server.post('/author', function(req, res) {
             let author = {};
 
             if (result) {
-                result.map(row => {
-                    if (null == author.id) {
-                        author.id = row['id'];
-                        author.firstname = row['firstname'];
-                        author.lastname = row['lastname'];
-                        author.name = row['name'];
-                    }
-
-                    if (null == author.books) {
-                        author.books = [];
-                    }
-                });
-                author.amount = 0;
+                author = authorService.createAuthorObject(result);
             }
 
             res.charSet('utf8');
@@ -196,27 +184,8 @@ server.put('/author/:id', function(req, res) {
             let author = {};
 
             if (result) {
-                result.map(row => {
-                    if (null == author.id) {
-                        author.id = row['id'];
-                        author.firstname = row['firstname'];
-                        author.lastname = row['lastname'];
-                        author.name = row['name'];
-                    }
-
-                    if (null == author.books) {
-                        author.books = [];
-                    }
-
-                    author.books.push({
-                        id: row['book_id'],
-                        title: row['title'],
-                        is_read: row['is_read'],
-                    });
-                });
+                author = authorService.createAuthorObject(result);
             }
-
-            author.amount = author.books.length;
 
             res.charSet('utf8');
             res.send(200, author);
@@ -230,32 +199,12 @@ server.get('/author/:id', function(req, res) {
     authorService.setConnection(connection);
     
     authorService.getAuthorWithBooks(req.params.id, function(err, result) {
-        if (!result) {
-            return null;
-        }
 
         let author = {};
 
-        result.map(row => {
-            if (null == author.id) {
-                author.id = row['id'];
-                author.firstname = row['firstname'];
-                author.lastname = row['lastname'];
-                author.name = row['name'];
-            }
-
-            if (null == author.books) {
-                author.books = [];
-            }
-
-            author.books.push({
-                id: row['book_id'],
-                title: row['title'],
-                is_read: row['is_read'],
-            });
-        });
-
-        author.amount = author.books.length;
+        if (result) {
+            author = authorService.createAuthorObject(result);
+        }
         
         connection.end();
         res.charSet('utf8');

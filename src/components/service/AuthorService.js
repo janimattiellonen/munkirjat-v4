@@ -114,4 +114,31 @@ export default class AuthorService {
         
         return query;
     }
+
+    createAuthorObject(result) {
+        let author = {};
+
+        result.map(row => {
+            if (null == author.id) {
+                author.id = row['id'];
+                author.firstname = row['firstname'];
+                author.lastname = row['lastname'];
+                author.name = row['name'];
+            }
+
+            if (null == author.books) {
+                author.books = [];
+            }
+
+            author.books.push({
+                id: row['book_id'],
+                title: row['title'],
+                is_read: row['is_read'],
+            });
+
+            author.amount = author.books.length;
+        });
+
+        return author;
+    }
 };

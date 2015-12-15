@@ -205,7 +205,6 @@ function loadAuthorWithBooks(authorId, connection, res) {
     });
 }
 
-
 server.get('/author/:id', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
@@ -294,6 +293,5 @@ server.listen(config.server.port, function(err) {
     }
     console.log('%s listening at %s', server.name, server.url);
 });
-
 
 export default server;

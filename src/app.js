@@ -11,6 +11,7 @@ import history from './components/history';
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
 import NewAuthorViewContainer from "./components/smart/NewAuthorViewContainer";
+import UpdateAuthorViewContainer from "./components/smart/UpdateAuthorViewContainer";
 import AuthorViewContainer from "./components/smart/AuthorViewContainer";
 import AuthorsViewContainer from "./components/smart/AuthorsViewContainer";
 import BookViewContainer from "./components/smart/BookViewContainer";
@@ -47,7 +48,7 @@ ReactDOM.render(
 				<Route name="listBooks" path="books(/:mode)" component={BooksViewContainer} />
 				<Route name="listAuthors" path="authors" component={AuthorsViewContainer} />
 				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
-				<Route name="editAuthor" path="author/:id/edit" component={NewAuthorViewContainer} />
+				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />
 				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
 	        </Route>
 	    </Router>	

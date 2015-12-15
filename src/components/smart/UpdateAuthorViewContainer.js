@@ -5,21 +5,34 @@ import AuthorForm from '../dumb/AuthorForm';
 import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
 
-class NewAuthorViewContainer extends React.Component {
+class UpdateAuthorViewContainer extends React.Component {
+
+    componentDidMount() {
+        if (this.props.params.id) {
+            this.props.authorActions.fetchAuthor(this.props.params.id);
+        }   
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props.params.id && nextProps.params.id && this.props.params.id != nextProps.params.id) {
+            this.props.authorActions.fetchAuthor(nextProps.params.id);
+        } 
+    }
 
     handleSubmit(data) {
-        this.props.authorActions.createAuthor(data);
+        this.props.authorActions.updateAuthor(data);
     }
 
     render() {
         const {author} = this.props;
         return (
-            <AuthorForm key={null} author={author} handleSubmit={::this.handleSubmit} />
+            <AuthorForm key={author.id} author={author} params={this.props.params} handleSubmit={::this.handleSubmit} />
         );
     }
 }
 
-NewAuthorViewContainer.defaultProps = {
+UpdateAuthorViewContainer.defaultProps = {
     author: {
         id: null,
         firstname: null,
@@ -43,4 +56,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(NewAuthorViewContainer);
+)(UpdateAuthorViewContainer);

@@ -21,6 +21,12 @@ server.get('/book/:id', function(req, res) {
     let id = req.params.id;
 
     bookService.getBook(id, function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+
         res.charSet('utf8');
         res.send(200, result);
         connection.end();
@@ -34,9 +40,8 @@ server.get('/books/:mode', function (req, res) {
     let mode = req.params.mode;
 
     bookService.getBooks(mode, function(err, result) {
-        if (!result) {
-            res.charSet('utf8');
-            res.send(200, []);
+        if (err) {
+            handleError(err, res);
             connection.end();
             return;
         }
@@ -92,11 +97,10 @@ server.post('/book', function(req, res) {
 
     };
 
-    console.log("params: " + JSON.stringify(req.params));
-
     bookService.createBook(req.params, function(err, result) {
         if (err) {
-            console.log("Error creating a new book: " + err);
+            handleError(err, res);
+            connection.end();
             return;
         }
 
@@ -109,7 +113,8 @@ server.post('/book', function(req, res) {
 
         bookService.addAuthors(createdBookId, authors, function(err, result) {
             if (err) {
-                console.log("Error adding authors for book: " + err);
+                handleError(err, res);
+                connection.end();
                 return;
             }
             
@@ -130,9 +135,9 @@ server.post('/author', function(req, res) {
     };
 
     authorService.createAuthor(newAuthor, function(err, result) {
-
         if (err) {
-            console.log("Error: " + err);
+            handleError(err, res);
+            connection.end();
             return;
         }
 
@@ -140,9 +145,10 @@ server.post('/author', function(req, res) {
 
         authorService.getAuthorWithBooks(createdAuthorId, function(err, result) {
             if (err) {
-                console.log("Error2: " + err);
+                handleError(err, res);
+                connection.end();
                 return;
-            }    
+            } 
 
             let author = {};
 
@@ -169,47 +175,42 @@ server.put('/author/:id', function(req, res) {
     let id = req.params.id;
 
     authorService.updateAuthor(id, updatedAuthor, function(err, result) {
-
         if (err) {
-            console.log("Error: " + err);
+            handleError(err, res);
+            connection.end();
             return;
         }
 
-        authorService.getAuthorWithBooks(id, function(err, result) {
-            if (err) {
-                console.log("Error2: " + err);
-                return;
-            }    
-
-            let author = {};
-
-            if (result) {
-                author = authorService.createAuthorObject(result);
-            }
-
-            res.charSet('utf8');
-            res.send(200, author);
-            connection.end();
-        });
+        loadAuthorWithBooks(id, connection, res);
     });
 });
 
-server.get('/author/:id', function(req, res) {
-    var connection = getConnection();
-    authorService.setConnection(connection);
-    
-    authorService.getAuthorWithBooks(req.params.id, function(err, result) {
+function loadAuthorWithBooks(authorId, connection, res) {
+    authorService.getAuthorWithBooks(authorId, function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        } 
 
         let author = {};
 
         if (result) {
             author = authorService.createAuthorObject(result);
         }
-        
-        connection.end();
+
         res.charSet('utf8');
         res.send(200, author);
+        connection.end();
     });
+}
+
+
+server.get('/author/:id', function(req, res) {
+    var connection = getConnection();
+    authorService.setConnection(connection);
+    
+    loadAuthorWithBooks(req.params.id, connection, res);
 });
 
 server.get('/authors/:term', function(req, res) {
@@ -219,9 +220,11 @@ server.get('/authors/:term', function(req, res) {
 
     authorService.searchAuthors(req.params.term, function(err, result) {
         if (err) {
-            console.log("Error: " + err);
+            handleError(err, res);
+            connection.end();
             return;
         }
+
         connection.end();
         res.charSet('utf8');
         res.send(200, result);
@@ -233,11 +236,31 @@ server.get('/authors', function(req, res) {
     authorService.setConnection(connection);
 
     authorService.getAllAuthors(function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+
         connection.end();
         res.charSet('utf8');
         res.send(200, result);
     });
 });
+
+function handleError(err, res) {
+    if(err) {
+        console.log("Request failed: " + err);
+
+        let result = {
+            status: false,
+            message: 'Request failed due to server error'
+        };
+
+        res.charSet('utf8');
+        res.send(500, result);
+    }
+}
 
 function getConnection() {
     var connection = mysql.createConnection({

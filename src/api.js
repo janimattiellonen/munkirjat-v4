@@ -4,7 +4,7 @@ import { List } from 'immutable';
 
 export default {
 
-	createAuthor(author) {
+	saveAuthor(author) {
 		return axios.post('/author', author).then(res => res.data);
 	},
 

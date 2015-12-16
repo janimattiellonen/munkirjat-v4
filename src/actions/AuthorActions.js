@@ -66,7 +66,6 @@ export function resetAuthor() {
 
 export function createAuthor(author) {
 	return function(dispatch, getState) {
-
 		api.saveAuthor(author).then(author => {
 			dispatch(addAuthor(author));
 		});

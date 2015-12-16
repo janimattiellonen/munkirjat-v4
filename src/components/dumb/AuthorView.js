@@ -21,6 +21,9 @@ export default React.createClass({
 	},
 
 	render() {
+
+		const {author, book} = this.props;
+
 		return (
 			<div className="component">
 				{this.props.children && React.cloneElement(
@@ -32,12 +35,12 @@ export default React.createClass({
                     }
                 )}
 				<h1>Author</h1>
-				{this.props.author.name}
+				{author.name} <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 				<h2>Books</h2>
 
-				<BooksList enableEvent={true} books={this.props.author.books} {...this.props}/>
+				<BooksList enableEvent={true} books={author.books} {...this.props}/>
 				
-                { this.props.book ? <BookInfoView book={this.props.book} {...this.props}/> : null }
+                { book ? <BookInfoView book={book} {...this.props}/> : null }
 			</div>
 		);
 	},

@@ -16,7 +16,7 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a></li>)
+									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>)
 								})}
 							</ul>
 						)

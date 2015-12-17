@@ -48,6 +48,7 @@
     "numeral": "^1.5.3",
     "mysql": "^2.8.0", 
     "node-uuid": "^1.4.7",
+    "noty": "^2.3.7",
     "react": "^0.14.3",
     "react-bootstrap": "0.28.1",
     "react-datepicker": "^0.15.2", 

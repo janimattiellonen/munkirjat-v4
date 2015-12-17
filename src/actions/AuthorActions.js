@@ -1,5 +1,6 @@
 import api from '../api';
 import { List } from 'immutable';
+import noty from 'noty';
 
 export function setAuthor(author) {
 
@@ -30,6 +31,7 @@ export function updateAuthor(author) {
 	return function(dispatch, getState) {
 		api.updateAuthor(author).then(author => {
 			dispatch(replaceAuthor(author));
+			noty({text: 'Author saved'});
 		});
 	}
 }
@@ -68,6 +70,7 @@ export function createAuthor(author) {
 	return function(dispatch, getState) {
 		api.saveAuthor(author).then(author => {
 			dispatch(addAuthor(author));
+			noty({text: 'Author Created'});
 		});
 	};
 }

@@ -12,7 +12,9 @@ class NewAuthorViewContainer extends React.Component {
     }
 
     render() {
-        const {author} = this.props;
+        
+        let author = {};
+        
         return (
             <AuthorForm key={null} author={author} handleSubmit={::this.handleSubmit} />
         );

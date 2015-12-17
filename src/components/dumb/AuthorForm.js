@@ -18,7 +18,7 @@ export default class AuthorForm extends Component {
 	handleChange(e, name, field) {
 		let nextState = {}
 		let value = null;
-		console.log("name: " + name);
+
 		if (e.target.type == "checkbox") {
 			value = e.target.checked;
 		} else {
@@ -26,7 +26,6 @@ export default class AuthorForm extends Component {
 		}
 
 		nextState[e.target.name] = value;
-		console.log(e.target.name + ": " + value);
 
 		this.setState({
 			[e.target.name]: value

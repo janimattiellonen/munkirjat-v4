@@ -21,7 +21,6 @@ export default {
 	},
 
 	searchAuthors(term) {
-		console.log("Api.searchAuthors(): " + term);
 		return axios.get('/authors/' + term).then(res => List(res.data));
 	},
 

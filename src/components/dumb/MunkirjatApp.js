@@ -10,9 +10,6 @@ export default class MunkirjatApp extends React.Component {
     }
 
     render() {
-
-        console.log("1oo: " + this.props.params.id);
-
         return (
             <div id="page-inner">
 
@@ -25,6 +22,7 @@ export default class MunkirjatApp extends React.Component {
     }
 
     componentDidMount() {
+        console.log("======================== Loading data...");
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
     }

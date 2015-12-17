@@ -33,7 +33,6 @@ export function fetchBookInfo(bookId) {
 
 export function fetchBooks(mode = null) {
 	return function(dispatch, getState) {
-		console.log("fetchBooks, mode: " + mode);
 		let books = getState().books.books;
 
 		if (!books || books.length == 0) {
@@ -41,7 +40,6 @@ export function fetchBooks(mode = null) {
 				dispatch(setBooks(books, mode));
 			});	
 		} else {
-			console.log("Fetching from state");
 			dispatch(setBooks(books, mode));		
 		}
 	};
@@ -51,7 +49,6 @@ export function createBook(book) {
 	return function(dispatch, getState) {
 
 		api.saveBook(book).then(book => {
-			alert("oo2: " + book.id);
 			dispatch(addBook(book));
 			history.pushState(null, '/book/' + book.id);
 		});

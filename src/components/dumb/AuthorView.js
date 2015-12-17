@@ -17,7 +17,6 @@ export default React.createClass({
 				book: undefined
 			}	
 		}
-
 	},
 
 	render() {
@@ -35,7 +34,10 @@ export default React.createClass({
                     }
                 )}
 				<h1>Author</h1>
-				{author.name} <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				{author.name} <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>  
+
+				{this.getRemoveAuthorLink()}
+				
 				<h2>Books</h2>
 
 				<BooksList enableEvent={true} books={author.books} {...this.props}/>
@@ -43,6 +45,18 @@ export default React.createClass({
                 { book ? <BookInfoView book={book} {...this.props}/> : null }
 			</div>
 		);
+	},
+
+	getRemoveAuthorLink() {
+		const {author} = this.props;
+		console.log(JSON.stringify(author));
+		if (!author.books || author.books && author.books.count() == 0) {
+			return (
+				<a href={"/#/author/" + author.id + "/remove"} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			) 
+		} else {
+			return "";
+		}
 	},
 
 	componentDidMount() {

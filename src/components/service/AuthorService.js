@@ -130,11 +130,13 @@ export default class AuthorService {
                 author.books = [];
             }
 
-            author.books.push({
-                id: row['book_id'],
-                title: row['title'],
-                is_read: row['is_read'],
-            });
+            if (null !== row['book_id']) {
+                author.books.push({
+                    id: row['book_id'],
+                    title: row['title'],
+                    is_read: row['is_read'],
+                });                
+            }
 
             author.amount = author.books.length;
         });

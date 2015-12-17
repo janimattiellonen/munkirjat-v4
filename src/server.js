@@ -213,7 +213,6 @@ server.get('/author/:id', function(req, res) {
 });
 
 server.get('/authors/:term', function(req, res) {
-    console.log("Server, search authors");
     var connection = getConnection();
     authorService.setConnection(connection);
 

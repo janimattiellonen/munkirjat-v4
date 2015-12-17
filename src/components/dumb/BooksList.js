@@ -9,13 +9,11 @@ export default React.createClass({
 		return {
 			books: Immutable.List([])
 		}
-
 	},
 
 	render() {
 	
 		let books = _.chunk(this.props.books.toArray(), Math.ceil(this.props.books.count() / 2));
-		console.log("BooksList::render(): " + this.props.books.count());
 		return (
 
 			<div>
@@ -38,7 +36,6 @@ export default React.createClass({
 	loadBookInfo(bookId, e) {
 		this.props.bookActions.fetchBookInfo(bookId);	
 
-		console.log("loadBookInfo()");
 		if (this.props.enableEvent) {
 			e.preventDefault();
 		}

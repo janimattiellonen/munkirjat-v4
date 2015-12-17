@@ -29,7 +29,7 @@ export default React.createClass({
 		} else {
 			books = allBooks;
 		}
-		console.log("BooksView.render(), mode: " + mode + ", count: " + books.count());
+
 		return (
 			<div className="component">
 					{this.props.children && React.cloneElement(

@@ -80,7 +80,6 @@ export function createAuthor(author) {
 export function searchAuthors(input) {
 	return function(dispatch, getState) {
 		api.searchAuthors(input).then(authors => {
-			console.log(JSON.stringify(authors));
 		});
 	}
 }

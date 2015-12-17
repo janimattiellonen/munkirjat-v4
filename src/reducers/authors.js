@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import { List, Map, Seq } from 'immutable';
-
+import _ from 'lodash';
 
 const defaultState = Map({
     authors: List(),
@@ -12,9 +12,12 @@ const defaultState = Map({
 export default handleActions({
 	AUTHOR_ADD: (state, action) => {
 
+		let authors = List(state.authors.push(action.author));
+		authors = _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
+
 		return {
 			...state,
-			authors: List(state.authors.push(action.author))
+			authors: List(authors)
 		}
 	},
 

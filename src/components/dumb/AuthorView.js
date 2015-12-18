@@ -49,7 +49,7 @@ export default React.createClass({
 
 	getRemoveAuthorLink() {
 		const {author} = this.props;
-		console.log(JSON.stringify(author));
+
 		if (!author.books || author.books && author.books.count() == 0) {
 			return (
 				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>

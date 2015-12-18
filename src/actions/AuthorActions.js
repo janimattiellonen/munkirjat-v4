@@ -15,6 +15,7 @@ export function removeAuthor(id) {
 	return function(dispatch, getState) {
 		api.removeAuthor(id).then(result => {
 			dispatch(deleteAuthor(id));
+			Noty.info('Author removed');
 		});
 	};
 }

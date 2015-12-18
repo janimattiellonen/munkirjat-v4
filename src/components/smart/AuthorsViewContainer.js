@@ -1,5 +1,6 @@
 import MunkirjatApp from '../dumb/MunkirjatApp';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as AuthorActions from '../../actions/AuthorActions';
 import AuthorsView from '../dumb/AuthorsView';
 
@@ -9,5 +10,9 @@ export default connect(
             authors: state.authors.authors
         };
     },
-    AuthorActions
+    function mapDispatchToProps(dispatch) {
+        return { 
+        	authorActions: bindActionCreators(AuthorActions, dispatch)
+        };
+    }
 )(AuthorsView);

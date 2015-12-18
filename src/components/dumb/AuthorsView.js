@@ -16,7 +16,7 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>)
+									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> {this.getRemoveAuthorLink(author)}</li>)
 								})}
 							</ul>
 						)
@@ -25,5 +25,21 @@ export default React.createClass({
 				</div>
 			</div>
 		);
-	}
+	},
+
+	getRemoveAuthorLink(author) {
+
+		if (author.amount === 0) {
+			return (
+				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			) 
+		} else {
+			return "";
+		}
+	},	
+
+	onAuthorRemove(id, e) {
+		e.preventDefault();
+		this.props.authorActions.removeAuthor(id);
+	}	
 });

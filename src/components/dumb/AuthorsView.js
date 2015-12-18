@@ -12,12 +12,13 @@ export default React.createClass({
 			<div className="component">
 				<h1>Authors</h1>
 
-				<p>Sort by:
-					<ul>
-						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a></li>
+					<span>Sort by: </span>
+					<ul className="horizontal-list">
+						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
 						<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
 					</ul>
-				</p>
+				<br/>	
+				<br/>			
 
 				<div className="data-list">
 					{authors.map(set => {

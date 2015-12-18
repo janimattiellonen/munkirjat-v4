@@ -52,11 +52,16 @@ export default React.createClass({
 		console.log(JSON.stringify(author));
 		if (!author.books || author.books && author.books.count() == 0) {
 			return (
-				<a href={"/#/author/" + author.id + "/remove"} ><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			) 
 		} else {
 			return "";
 		}
+	},
+
+	onAuthorRemove(id, e) {
+		e.preventDefault();
+		this.props.authorActions.removeAuthor(id);
 	},
 
 	componentDidMount() {

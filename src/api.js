@@ -3,6 +3,9 @@ import axios from 'axios';
 import { List } from 'immutable';
 
 export default {
+	removeAuthor(id) {
+		return axios.delete('/author/' + id).then(res => res.data);
+	},
 
 	saveAuthor(author) {
 		return axios.post('/author', author).then(res => res.data);

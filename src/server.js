@@ -126,6 +126,23 @@ server.post('/book', function(req, res) {
 
 });
 
+server.del('/author/:id', function(req, res) {
+    var connection = getConnection();
+    authorService.setConnection(connection);
+
+    authorService.removeAuthor(req.params.id, function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+
+        res.charSet('utf8');
+        res.send(200, {status: "OK"});
+        connection.end();
+    });
+});
+
 server.post('/author', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);

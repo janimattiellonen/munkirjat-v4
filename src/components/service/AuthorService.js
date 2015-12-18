@@ -10,6 +10,14 @@ export default class AuthorService {
         this.connection = connection;
     }
 
+    removeAuthor(id, callback) {
+        this.connection.query(
+            `DELETE FROM author WHERE id = :id`,
+            {id: id},
+            callback
+        );
+    }
+
     getAllAuthors(callback) {
         this.connection.query(
             this.createGetAuthorsQuery(),
@@ -76,7 +84,6 @@ export default class AuthorService {
             callback
         );
     }
-
 
     searchAuthors(term, callback) {
         let query = `SELECT

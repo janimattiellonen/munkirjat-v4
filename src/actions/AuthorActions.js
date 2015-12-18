@@ -4,6 +4,14 @@ import { List } from 'immutable';
 import Noty from '../components/Noty';
 
 
+export function removeAuthor(id) {
+	return function(dispatch, getState) {
+		api.removeAuthor(id).then(result => {
+			
+		});
+	};
+}
+
 export function setAuthor(author) {
 
 	author.books = List(author.books);

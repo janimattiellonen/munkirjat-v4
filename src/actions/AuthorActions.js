@@ -1,13 +1,18 @@
 import api from '../api';
 import { List } from 'immutable';
-//import noty from 'noty';
 import Noty from '../components/Noty';
 
+export function deleteAuthor(id) {
+	return {
+		type: 'AUTHOR_DELETE',
+		id: id
+	}
+}
 
 export function removeAuthor(id) {
 	return function(dispatch, getState) {
 		api.removeAuthor(id).then(result => {
-			
+			dispatch(deleteAuthor(id));
 		});
 	};
 }

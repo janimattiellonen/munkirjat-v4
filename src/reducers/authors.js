@@ -10,6 +10,16 @@ const defaultState = Map({
 });
 
 export default handleActions({
+	AUTHOR_DELETE: (state, action) => {
+		let list = List(state.authors);
+		let i = list.findIndex(item => item.id === action.id);
+
+		return {
+			...state,
+			authors: list.remove(i)
+		}
+	},
+
 	AUTHOR_ADD: (state, action) => {
 
 		let authors = List(state.authors.push(action.author));

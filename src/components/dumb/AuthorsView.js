@@ -11,6 +11,14 @@ export default React.createClass({
 		return (
 			<div className="component">
 				<h1>Authors</h1>
+
+				<p>Sort by:
+					<ul>
+						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a></li>
+						<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
+					</ul>
+				</p>
+
 				<div className="data-list">
 					{authors.map(set => {
 						return (
@@ -41,5 +49,17 @@ export default React.createClass({
 	onAuthorRemove(id, e) {
 		e.preventDefault();
 		this.props.authorActions.removeAuthor(id);
-	}	
+	},	
+
+	onSortByBookCount(e) {
+		e.preventDefault();
+		this.props.authorActions.sortByBookCount();
+	},
+
+	onSortByAuthorName(e) {
+		e.preventDefault();
+		this.props.authorActions.sortByAuthorName();
+	}
 });
+
+

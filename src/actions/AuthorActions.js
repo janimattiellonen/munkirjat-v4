@@ -11,6 +11,19 @@ export function deleteAuthor(id) {
 	}
 }
 
+export function sortByBookCount() {
+	return {
+		type: 'AUTHORS_SORT_BY_BOOK_COUNT'
+	}
+}
+
+export function sortByAuthorName() {
+	return {
+		type: 'AUTHORS_SORT_BY_NAME'
+	}
+}
+
+
 export function removeAuthor(id) {
 	return function(dispatch, getState) {
 		api.removeAuthor(id).then(result => {

@@ -13,7 +13,25 @@ function sortAuthors(authors) {
 	return _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
 }
 
+function sortAuthorsByBookCount(authors) {
+	return _.sortByOrder(authors.toArray(), ['amount'], ['desc']);
+}
+
 export default handleActions({
+	AUTHORS_SORT_BY_BOOK_COUNT: (state, action) => {
+		return {
+			...state,
+			authors: List(sortAuthorsByBookCount(state.authors))
+		}
+	},
+
+	AUTHORS_SORT_BY_NAME: (state, action) => {
+		return {
+			...state,
+			authors: List(sortAuthors(state.authors))
+		}
+	},
+
 	AUTHOR_DELETE: (state, action) => {
 		let list = List(state.authors);
 		let i = list.findIndex(item => item.id === action.id);

@@ -36,9 +36,12 @@ export default handleActions({
 		let list = List(state.authors);
 		let i = list.findIndex(item => item.id === action.author.id);
 
+		list = list.set(i, action.author);
+		list = _.sortByOrder(list.toArray(), ['lastname', 'firstname'], ['asc']);
+
 		return {
 			...state,
-			authors: list.set(i, action.author)
+			authors: List(list)
 		}
 	},
 

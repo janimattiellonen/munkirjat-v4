@@ -1,6 +1,8 @@
 import api from '../api';
 import { List } from 'immutable';
 import Noty from '../components/Noty';
+import { Router, Route, Redirect, IndexRoute } from 'react-router';
+import history from '../components/history';
 
 export function deleteAuthor(id) {
 	return {
@@ -46,6 +48,7 @@ export function updateAuthor(author) {
 	return function(dispatch, getState) {
 		api.updateAuthor(author).then(author => {
 			dispatch(replaceAuthor(author));
+			history.replaceState(null, '/authors');
 			Noty.info('Author updated');
 		});
 	}

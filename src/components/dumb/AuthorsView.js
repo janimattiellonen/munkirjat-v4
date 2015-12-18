@@ -16,7 +16,7 @@ export default React.createClass({
 						return (
 							<ul>
 								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>)
+									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></li>)
 								})}
 							</ul>
 						)
@@ -25,10 +25,5 @@ export default React.createClass({
 				</div>
 			</div>
 		);
-	},
-
-
-	componentDidMount() {
-		//this.props.fetchAuthors();
 	}
 });

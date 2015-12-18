@@ -8,3 +8,4 @@ dist
 src/config.js
 node_modules
 npm-debug.log
+munkirjatscala.sql

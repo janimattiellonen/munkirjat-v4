@@ -9,6 +9,10 @@ const defaultState = Map({
     author: {}
 });
 
+function sortAuthors(authors) {
+	return _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
+}
+
 export default handleActions({
 	AUTHOR_DELETE: (state, action) => {
 		let list = List(state.authors);
@@ -21,13 +25,11 @@ export default handleActions({
 	},
 
 	AUTHOR_ADD: (state, action) => {
-
 		let authors = List(state.authors.push(action.author));
-		authors = _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
 
 		return {
 			...state,
-			authors: List(authors)
+			authors: List(sortAuthors(authors))
 		}
 	},
 
@@ -37,11 +39,10 @@ export default handleActions({
 		let i = list.findIndex(item => item.id === action.author.id);
 
 		list = list.set(i, action.author);
-		list = _.sortByOrder(list.toArray(), ['lastname', 'firstname'], ['asc']);
 
 		return {
 			...state,
-			authors: List(list)
+			authors: List(sortAuthors(list))
 		}
 	},
 

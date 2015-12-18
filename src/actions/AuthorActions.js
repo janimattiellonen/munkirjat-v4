@@ -88,7 +88,8 @@ export function createAuthor(author) {
 	return function(dispatch, getState) {
 		api.saveAuthor(author).then(author => {
 			dispatch(addAuthor(author));
-			Noty('Author Created');
+			history.replaceState(null, '/authors');
+			Noty.info('Author Created');
 		});
 	};
 }

@@ -13,10 +13,9 @@ export default React.createClass({
 
 	render() {
 		return (
-			<div className="component">
-				<h1>{this.props.book.title}</h1>
+			<div className="component" id="single-book">
 
-				<BookInfoView book={this.props.book} />
+				<BookInfoView book={this.props.book} singleMode={true} />
 			</div>
 		);
 	},

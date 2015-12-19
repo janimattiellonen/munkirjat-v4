@@ -21,7 +21,7 @@ export default React.createClass({
 
 		return (
 			<div className="book-info col-md-12 component">
-				<h2>{book.title}</h2>
+				<h2>{this.getTitleElement(book)}</h2>
 
 				<div className="row">
 					<div className="title">Language</div>
@@ -48,11 +48,20 @@ export default React.createClass({
 					<div className="title">Finished reading</div>
 					<div>{utils.date_format(book.finished_reading)}</div>
 				</div>
-				
-				
 			</div>
 		);
 	},
 
+	getTitleElement(book) {
 
+		if(this.props.singleMode) {
+			return (
+				<h1>{book.title}</h1>
+			);
+		} else {
+			return (
+				<h2>{book.title}</h2>
+			);
+		}
+	}
 });

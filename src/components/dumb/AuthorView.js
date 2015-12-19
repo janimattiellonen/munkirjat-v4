@@ -24,7 +24,7 @@ export default React.createClass({
 		const {author, book} = this.props;
 
 		return (
-			<div className="component">
+			<div className="component" id="single-author">
 				{this.props.children && React.cloneElement(
                     this.props.children,
                     {
@@ -42,7 +42,7 @@ export default React.createClass({
 
 				<BooksList enableEvent={true} books={author.books} {...this.props}/>
 				
-                { book ? <BookInfoView book={book} {...this.props}/> : null }
+                { book ? <BookInfoView book={book} singleMode={false} {...this.props}/> : null }
 			</div>
 		);
 	},

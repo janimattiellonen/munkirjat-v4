@@ -36,9 +36,6 @@ function bookValidation(data) {
 }
 
 export default class BookForm extends Component {
-	static defaultProps = {
-
-	}
 
     static contextTypes = {
         history: React.PropTypes.object.isRequired
@@ -48,15 +45,15 @@ export default class BookForm extends Component {
 		super(props);
 
 		this.state = {
-			id: null,
-			title: null,
-			language: null,
+			id: this.props.book.id,
+			title: this.props.book.title,
+			language: this.props.book.language_id,
 			authors: null,
-			pageCount: null,
-			price: null,
-			isRead: false,
-			startedReading: null,
-			finishedReading: null
+			pageCount: this.props.book.page_count,
+			price: this.props.book.price,
+			isRead: this.props.book.is_read,
+			startedReading: this.props.book.started_reading,
+			finishedReading: this.props.bookfinished_reading
 		}
 	}
 

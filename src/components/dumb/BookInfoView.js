@@ -29,6 +29,11 @@ export default React.createClass({
 				</div>
 				
 				<div className="row">
+					<div className="title">Page count</div>
+					<div>{book.page_count}</div>
+				</div>
+
+				<div className="row">
 					<div className="title">Price</div>
 					<div>{utils.money(book.price)}</div>
 				</div>

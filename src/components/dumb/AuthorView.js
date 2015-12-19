@@ -20,7 +20,6 @@ export default React.createClass({
 	},
 
 	render() {
-
 		const {author, book} = this.props;
 
 		return (
@@ -42,7 +41,7 @@ export default React.createClass({
 
 				<BooksList enableEvent={true} books={author.books} {...this.props}/>
 				
-                { book ? <BookInfoView book={book} singleMode={false} {...this.props}/> : null }
+                { book ? <BookInfoView key={book.id} book={book} singleMode={false} {...this.props}/> : null }
 			</div>
 		);
 	},
@@ -66,5 +65,6 @@ export default React.createClass({
 
 	componentDidMount() {
 		this.props.authorActions.fetchAuthor(this.props.params.id);
+		this.props.bookActions.fetchBookInfo(null);
 	},
 });

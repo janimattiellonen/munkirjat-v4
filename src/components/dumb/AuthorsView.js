@@ -44,11 +44,11 @@ export default React.createClass({
 				<br/>			
 
 				<div className="data-list">
-					{authors.map(set => {
+					{authors.map((set, i) => {
 						return (
-							<ul>
+							<ul key={i}>
 								{set.map(author => {
-									return(<li key={author.id}><a href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> {this.getRemoveAuthorLink(author)}</li>)
+									return(<li key={author.id}><a key={"view-" + author.id} href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> {this.getRemoveAuthorLink(author)}</li>)
 								})}
 							</ul>
 						)
@@ -86,7 +86,7 @@ export default React.createClass({
 	onAuthorRemove(id, e) {
 		e.preventDefault();
 		this.setState({ removableId: id });
-		this.open();
+		this.open();	
 	},	
 
 	onSortByBookCount(e) {

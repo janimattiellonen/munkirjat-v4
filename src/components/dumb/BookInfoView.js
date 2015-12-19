@@ -21,7 +21,7 @@ export default React.createClass({
 
 		return (
 			<div className="book-info col-md-12 component">
-				<h2>{this.getTitleElement(book)}</h2>
+				{this.getTitleElement(book)}
 
 				<div className="row">
 					<div className="title">Language</div>

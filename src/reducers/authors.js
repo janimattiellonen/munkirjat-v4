@@ -90,7 +90,7 @@ export default handleActions({
 		return {
 			...state,
 			book: action.book,
-			showBookInfo: action.book.id != undefined
+			showBookInfo: action.book != undefined && action.book.id != undefined
 		};
 	},	
 

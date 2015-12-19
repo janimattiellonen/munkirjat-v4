@@ -12,10 +12,12 @@ export default React.createClass({
 	},
 
 	render() {
+		const {book} = this.props;
+
 		return (
 			<div className="component" id="single-book">
 
-				<BookInfoView book={this.props.book} singleMode={true} />
+				<BookInfoView key={book.id}  book={book} singleMode={true} />
 			</div>
 		);
 	},
@@ -23,9 +25,9 @@ export default React.createClass({
 	componentDidMount() {
 		this.props.bookActions.fetchBookInfo(this.props.params.id);	
 	},
-
+/*
 	shouldComponentUpdate(nextProps, nextState) {
 		return this.props.book.id == null;
-	}
-
+	},
+*/
 });

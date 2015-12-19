@@ -1,8 +1,31 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from "lodash";
+import {Button, Modal} from 'react-bootstrap';
 
 export default React.createClass({
+
+	getInitialState() {
+		return {
+			showModal: false,
+			removableId: null
+		}
+	},
+
+	close() {
+		this.setState({ showModal: false });
+	},
+
+	open() {
+		this.setState({ showModal: true });
+	},
+
+	remove() {
+		if (this.state.removableId) {
+			this.props.authorActions.removeAuthor(this.state.removableId);
+			this.close();
+		}
+	},
 
 	render() {
 
@@ -29,9 +52,22 @@ export default React.createClass({
 								})}
 							</ul>
 						)
-
 					})}
 				</div>
+
+				<Modal show={this.state.showModal} onHide={this.close}>
+			        <Modal.Header closeButton>
+			            <Modal.Title>Remove author</Modal.Title>
+			        </Modal.Header>
+
+					<Modal.Body>
+			         	<p>Do you really want to remove the selected author?</p>        	
+			        </Modal.Body>
+		          	<Modal.Footer>
+		            	<Button onClick={this.close}>No</Button>
+		            	<Button onClick={this.remove}>Yes</Button>
+		          	</Modal.Footer>
+				</Modal>
 			</div>
 		);
 	},
@@ -49,7 +85,8 @@ export default React.createClass({
 
 	onAuthorRemove(id, e) {
 		e.preventDefault();
-		this.props.authorActions.removeAuthor(id);
+		this.setState({ removableId: id });
+		this.open();
 	},	
 
 	onSortByBookCount(e) {

@@ -174,10 +174,13 @@ export default class BookForm extends Component {
 			</div>
 		</div>;
 
+		let title = this.state.id ? 'Edit Book': 'New Book';
 
     	return (
 			<div className="component">
-				<h1>New Book</h1>
+
+
+				<h1>{title}</h1>
 				<form className="form-horizontal" onSubmit={::this.processForm}>
 					{renderInput(this.state.title, 'title', 'Title')}
 					

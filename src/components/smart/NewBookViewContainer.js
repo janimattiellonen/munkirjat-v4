@@ -5,15 +5,6 @@ import BookForm from '../dumb/BookForm';
 import * as AuthorActions from '../../actions/AuthorActions';
 import * as BookActions from '../../actions/BookActions';
 
-@connect(
-  	() => ({}),
-  	function mapDispatchToProps(dispatch) {
-        return { 
-        	authorActions: bindActionCreators(AuthorActions, dispatch), 
-        	bookActions: bindActionCreators(BookActions, dispatch) 
-        };
-    }
-)
 export default class NewBookViewContainer extends Component {
 
     handleSubmit(data) {
@@ -21,8 +12,42 @@ export default class NewBookViewContainer extends Component {
     }
 
 	render() {
+        let book = {};
+
 		return (
-			<BookForm handleSubmit={::this.handleSubmit}/>
+			<BookForm key={null} book={book} handleSubmit={::this.handleSubmit}/>
 		)
 	}
 }
+
+NewBookViewContainer.defaultProps = {
+    book: {
+        id: null,
+        title: null,
+        language: null,
+        authors: null,
+        pageCount: null,
+        price: null,
+        isRead: false,
+        startedReading: null,
+        finishedReading: null
+    }  
+};
+
+function mapStateToProps(state) {
+    return {
+        book: state.books.book,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+        return { 
+            authorActions: bindActionCreators(AuthorActions, dispatch), 
+            bookActions: bindActionCreators(BookActions, dispatch) 
+        };
+    }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NewBookViewContainer);

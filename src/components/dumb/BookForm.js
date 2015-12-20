@@ -108,7 +108,7 @@ export default class BookForm extends Component {
 
 		const { handleSubmit} = this.props;
 
-		//handleSubmit(formData);
+		handleSubmit(formData);
 	}
 
 	handleChange(e, name, field) {

@@ -29,6 +29,34 @@ export default class BookService {
         );
     }
 
+    updateBook(id, book, callback) {
+        this.connection.query(
+            `UPDATE 
+                book 
+            SET 
+                title = :title, 
+                language_id = :language_id, 
+                page_count = :page_count, 
+                is_read = :is_read, 
+                started_reading = :started_reading, 
+                finished_reading = :finished_reading, 
+                price = :price 
+            WHERE 
+                id = :id`,
+            {
+                title: book.title,
+                language_id: book.language_id,
+                page_count: book.page_count,
+                is_read: book.is_read,
+                started_reading: book.started_reading,
+                finished_reading: book.finished_reading,
+                price: book.price,
+                id: id
+            },
+            callback
+        );
+    }
+
     addAuthors(bookId, authors, callback) {
 
         let params = {};

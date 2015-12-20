@@ -62,7 +62,6 @@ export function updateAuthor(author) {
 	return function(dispatch, getState) {
 		api.updateAuthor(author).then(author => {
 			dispatch(replaceAuthor(author));
-			history.replaceState(null, '/authors');
 			Noty.info('Author updated');
 		});
 	}

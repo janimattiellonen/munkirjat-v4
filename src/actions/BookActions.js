@@ -8,6 +8,13 @@ export function addBook(book) {
 	};
 }
 
+export function replaceBook(book) {
+	return {
+		type: 'BOOK_UPDATE',
+		book: book,
+	};
+}
+
 export function setBooks(books, mode = null) {
 	return {
 		type: 'BOOKS_FETCH',
@@ -55,3 +62,12 @@ export function createBook(book) {
 	};
 }
 
+export function updateBook(book) {
+
+	return function(dispatch, getState) {
+		api.updateBook(book).then(book => {
+			dispatch(replaceBook(book));
+			Noty.info('Book updated');
+		});
+	}
+}

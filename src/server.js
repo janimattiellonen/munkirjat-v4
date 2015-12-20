@@ -157,6 +157,40 @@ server.post('/book', function(req, res) {
 
 });
 
+server.put('book/:id', function(req, res) {
+    var connection = getConnection();
+    bookService.setConnection(connection);
+
+    const {params} = req;
+
+    let updatedBook = {
+        title: params.title,
+        authors: params.authors.map(author => {return author.value}),
+        language_id: params.language,
+        page_count: params.pageCount,
+        price: params.price,
+        is_read: params.isRead,
+        started_reading: params.startedReading,
+        finished_reading: params.finishedReading
+    }
+
+    let id = params.id;
+
+    bookService.updateBook(id, updatedBook, function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+
+        res.charSet('utf8');
+        res.send(200, {status: "OK"});
+        connection.end();
+    });
+    // {"id":64,"title":"Hundarna i Riga","authors":[{"value":12,"label":"Henning233 Mankell233"}],"language":"se","pageCount":339,"price":null,"isRead":1,"startedReading":null,"finishedReading":null}
+    // title, language_id, page_count, is_read, started_reading, finished_reading, price
+});
+
 server.del('/author/:id', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);

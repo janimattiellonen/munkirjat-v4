@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { List, Map, Seq } from 'immutable';
+import { List, Map} from 'immutable';
 import _ from 'lodash';
 
 const defaultState = Map({

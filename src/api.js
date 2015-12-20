@@ -37,5 +37,9 @@ export default {
 
 	saveBook(book) {
 		return axios.post('/book', book).then(res => res.data);
-	}	
+	},
+
+	updateBook(book) {
+		return axios.put('/book/' + book.id, book).then(res => res.data);
+	},
 };

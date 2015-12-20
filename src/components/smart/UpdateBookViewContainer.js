@@ -27,7 +27,7 @@ class UpdateBookViewContainer extends React.Component {
     }
 
     handleSubmit(data) {
-        this.props.authorActions.updateAuthor(data);
+        this.props.bookActions.updateBook(data);
     }
 }
 

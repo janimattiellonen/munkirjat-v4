@@ -48,7 +48,7 @@ export default React.createClass({
 						return (
 							<ul key={i}>
 								{set.map(author => {
-									return(<li key={author.id}><a key={"view-" + author.id} href={"/#/author/" + author.id}>{author.name}</a> ({author.amount}) <a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> {this.getRemoveAuthorLink(author)}</li>)
+									return(<li key={author.id}>{this.getViewAuthorLink(author)} ({author.amount}) {this.getEditAuthorLink(author)} {this.getRemoveAuthorLink(author)}</li>)
 								})}
 							</ul>
 						)
@@ -70,6 +70,18 @@ export default React.createClass({
 				</Modal>
 			</div>
 		);
+	},
+
+	getViewAuthorLink(author) {
+		return (
+			<a key={"view-" + author.id} href={"/#/author/" + author.id}>{author.name}</a>
+		)
+	},
+
+	getEditAuthorLink(author) {
+		return (
+			<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+		)
 	},
 
 	getRemoveAuthorLink(author) {

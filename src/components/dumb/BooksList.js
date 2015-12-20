@@ -22,7 +22,7 @@ export default React.createClass({
 						return (
 							<ul key={i}>
 								{set.map(book => {
-									return(<li key={book.id}><a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a></li>)
+									return(<li key={book.id}>{this.getViewBookLink(book)} {this.getEditBookLink(book)}</li>)
 								})}
 							</ul>
 						)
@@ -31,6 +31,18 @@ export default React.createClass({
 				</div>
 			</div>
 		);
+	},
+
+	getViewBookLink(book) {
+		return (
+			<a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a>
+		)
+	},
+
+	getEditBookLink(book) {
+		return (
+			<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+		)
 	},
 
 	loadBookInfo(bookId, e) {

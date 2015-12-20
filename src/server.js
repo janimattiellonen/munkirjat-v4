@@ -19,7 +19,7 @@ server.get('/book/:id', function(req, res) {
     bookService.setConnection(connection);
 
     let id = req.params.id;
-
+    
     bookService.getBook(id, function(err, result) {
         if (err) {
             handleError(err, res);
@@ -27,8 +27,39 @@ server.get('/book/:id', function(req, res) {
             return;
         }
 
+        let authors = [];
+        let book = null;
+
+        result.map(row => {
+            if (null == book) {
+                book = {
+                    id: row.id,
+                    title: row.title,
+                    language_id: row.language_id,
+                    page_count: row.page_count,
+                    is_read: row.is_read,
+                    started_reading: row.started_reading,
+                    finished_reading: row.finished_reading,
+                    price: row.price,
+                    authors: [{
+                        id: row.author_id,
+                        firstname: row.firstname,
+                        lastname: row.lastname,
+                        name: row.author_name
+                    }]
+                };
+            } else {
+                book.authors.push({
+                    id: row.author_id,
+                    firstname: row.firstname,
+                    lastname: row.lastname,
+                    name: row.author_name
+                });
+            }
+        });
+
         res.charSet('utf8');
-        res.send(200, result);
+        res.send(200, book);
         connection.end();
     });
 });

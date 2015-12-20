@@ -27,35 +27,6 @@ export default class BookService {
             },
             callback
         );
-
-        /*
-        let formData = {
-            title: this.state.title,
-            authors: this.state.authors,
-            language: this.state.language,
-            pageCount: this.state.pageCount,
-            price: this.state.price,
-            isRead: this.state.isRead,
-            startedReading: this.state.startedReading,
-            finishedReading: this.state.finishedReading
-        };
-        */
-
-        /*
-
-          `id` int(11) NOT NULL AUTO_INCREMENT,
-          `title` varchar(128) NOT NULL,
-          `language_id` varchar(3) NOT NULL,
-          `page_count` int(11) NOT NULL,
-          `is_read` tinyint(1) NOT NULL,
-          `isbn` varchar(40) DEFAULT NULL,
-          `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-          `started_reading` timestamp NULL DEFAULT NULL,
-          `finished_reading` timestamp NULL DEFAULT NULL,
-          `rating` double DEFAULT NULL,
-          `price` decimal(21,2) DEFAULT NULL,
-        */
     }
 
     addAuthors(bookId, authors, callback) {
@@ -85,6 +56,10 @@ export default class BookService {
     getBook(id, callback) {
         this.connection.query(
             `SELECT
+                a.id AS author_id,
+                a.firstname,
+                a.lastname,
+                CONCAT(a.firstname, ' ', a.lastname) AS author_name,
                 b.id,
                 b.title,
                 b.language_id,
@@ -98,7 +73,8 @@ export default class BookService {
                 b.rating,
                 b.price
             FROM 
-                book AS b
+                book AS b LEFT JOIN book_author AS ba ON b.id = ba.book_id
+                LEFT JOIN author AS a ON a.id = ba.author_id
             WHERE
                 b.id = :id`,
             {id: id},

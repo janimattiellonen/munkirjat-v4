@@ -26,7 +26,7 @@ export function setBookInfo(book) {
 export function fetchBookInfo(bookId) {
 	return function(dispatch, getState) {
 		api.getBook(bookId).then(book => {
-			dispatch(setBookInfo(book.length == 1 ? book[0] : null));
+			dispatch(setBookInfo(book));
 		});
 	};
 }

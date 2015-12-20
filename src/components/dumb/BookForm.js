@@ -9,32 +9,6 @@ import Api from "../../api";
 import _ from 'underscore';
 import jqueryui from 'jquery-ui';
 
-function bookValidation(data) {
-    const errors = {};
-
-    if (!data.title) {
-    	errors.title = "Title is required";	
-    }
-
-    if (!data.language) {
-    	errors.language = "Language is required";	
-    }
-
-    if (!data.pageCount) {
-    	errors.pageCount = "Page count is required";
-    } else if (!Utils.isPositiveInteger(data.pageCount) || data.pageCount == 0) {
-		errors.pageCount = "Value must be an integer greater than 0";
-	}
-
-	if (!data.price) {
-		errors.price = "Price is required";
-	} else if (isNaN(parseFloat(data.price))) {
-		errors.price = "Not a valid price";
-	}
-
-    return errors;
-}
-
 export default class BookForm extends Component {
 
     static contextTypes = {
@@ -48,13 +22,27 @@ export default class BookForm extends Component {
 			id: this.props.book.id,
 			title: this.props.book.title,
 			language: this.props.book.language_id,
-			authors: null,
+			authors: this.mapAuthors(this.props.book.authors),
 			pageCount: this.props.book.page_count,
 			price: this.props.book.price,
 			isRead: this.props.book.is_read,
 			startedReading: moment(this.props.book.started_reading).format('DD.MM.YYYY'),
 			finishedReading: moment(this.props.book.finished_reading).format('DD.MM.YYYY')
 		}
+	}
+
+	mapAuthors(authors) {
+		if (!authors) {
+			return [];
+		}
+
+		let items = [];
+
+		items = authors.map(author => {
+			return {value: author.id, label: author.name};
+		});
+
+		return items;
 	}
 
 	searchAuthors(input, callback) {
@@ -221,6 +209,7 @@ export default class BookForm extends Component {
 							searchable={true}
 							autoload={false}
 							cacheAsyncResults={false}
+							value={this.state.authors}
 							asyncOptions={::this.getOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onAuthorChanged}

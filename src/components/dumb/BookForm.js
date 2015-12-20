@@ -18,16 +18,18 @@ export default class BookForm extends Component {
 	constructor(props) {
 		super(props);
 
+		const {book} = this.props;
+
 		this.state = {
-			id: this.props.book.id,
-			title: this.props.book.title,
-			language: this.props.book.language_id,
-			authors: this.mapAuthors(this.props.book.authors),
-			pageCount: this.props.book.page_count,
-			price: this.props.book.price,
-			isRead: this.props.book.is_read,
-			startedReading: moment(this.props.book.started_reading).format('DD.MM.YYYY'),
-			finishedReading: moment(this.props.book.finished_reading).format('DD.MM.YYYY')
+			id: book.id,
+			title: book.title,
+			language: book.language_id,
+			authors: this.mapAuthors(book.authors),
+			pageCount: book.page_count,
+			price: book.price,
+			isRead: book.is_read,
+			startedReading: book.started_reading ? moment(book.started_reading).format('DD.MM.YYYY') : null,
+			finishedReading: book.finished_reading ? moment(book.finished_reading).format('DD.MM.YYYY') : null
 		}
 	}
 

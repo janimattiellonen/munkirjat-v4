@@ -52,8 +52,8 @@ export default class BookForm extends Component {
 			pageCount: this.props.book.page_count,
 			price: this.props.book.price,
 			isRead: this.props.book.is_read,
-			startedReading: this.props.book.started_reading,
-			finishedReading: this.props.bookfinished_reading
+			startedReading: moment(this.props.book.started_reading).format('DD.MM.YYYY'),
+			finishedReading: moment(this.props.book.finished_reading).format('DD.MM.YYYY')
 		}
 	}
 
@@ -103,6 +103,7 @@ export default class BookForm extends Component {
 		e.preventDefault();
 
 		let formData = {
+			id: this.state.id,
 			title: this.state.title,
 			authors: this.state.authors,
 			language: this.state.language,
@@ -111,11 +112,13 @@ export default class BookForm extends Component {
 			isRead: this.state.isRead,
 			startedReading: this.state.startedReading,
 			finishedReading: this.state.finishedReading
-		};
+		};	
+
+		alert(JSON.stringify(formData));
 
 		const { handleSubmit} = this.props;
 
-		handleSubmit(formData);
+		//handleSubmit(formData);
 	}
 
 	handleChange(e, name, field) {
@@ -158,6 +161,14 @@ export default class BookForm extends Component {
 		$('#finishedReading').datepicker(datePickerConfig).on('change', function(e) {
 			self.handleFinishedReadingChange($(this).val());
 		});
+
+		if (this.state.startedReading) {
+			$('#startedReading').datepicker("setDate", this.state.startedReading);
+		}
+
+		if (this.state.finishedReading) {
+			$('#finishedReading').datepicker("setDate", this.state.finishedReading);
+		}
 	}
 
 	shouldComponentUpdate_INACTIVE(nextProps, nextState) {
@@ -185,15 +196,15 @@ export default class BookForm extends Component {
 				    	
 						<div className="col-sm-9 btn-group">
 							<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" onChange={::this.handleChange} />
+						    	<input type="radio" name="language" id="option1"  value="fi" autoComplete="off" checked={this.state.language=="fi"} onChange={::this.handleChange} />
 						  		Finnish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" onChange={::this.handleChange} />
+						    	<input type="radio" name="language" id="option2" value="se" autoComplete="off" checked={this.state.language=="se"} onChange={::this.handleChange} />
 						  		Swedish
 						  	</label>
 						  	<label className="btn btn-primary">
-						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" onChange={::this.handleChange} />
+						    	<input type="radio" name="language" id="option3"  value="en" autoComplete="off" checked={this.state.language=="en"} onChange={::this.handleChange} />
 						  		English
 						  	</label>
 						</div>	    

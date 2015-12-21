@@ -148,7 +148,7 @@ server.post('/book', function(req, res) {
                 connection.end();
                 return;
             }
-            
+
             res.charSet('utf8');
             res.send(200, {"status": "OK", "id": createdBookId});
             connection.end();
@@ -165,7 +165,6 @@ server.put('book/:id', function(req, res) {
 
     let updatedBook = {
         title: params.title,
-        authors: params.authors.map(author => {return author.value}),
         language_id: params.language,
         page_count: params.pageCount,
         price: params.price,
@@ -174,6 +173,7 @@ server.put('book/:id', function(req, res) {
         finished_reading: params.finishedReading
     }
 
+    let authors = params.authors.map(author => {return author.value});
     let id = params.id;
 
     bookService.updateBook(id, updatedBook, function(err, result) {
@@ -183,12 +183,19 @@ server.put('book/:id', function(req, res) {
             return;
         }
 
-        res.charSet('utf8');
-        res.send(200, {status: "OK"});
-        connection.end();
+        bookService.setAuthors(id, authors, function(err, result) {
+            if (err) {
+                handleError(err, res);
+                connection.end();
+                return;
+            }
+
+            res.charSet('utf8');
+            res.send(200, {status: "OK"});
+            connection.end();
+        });
+
     });
-    // {"id":64,"title":"Hundarna i Riga","authors":[{"value":12,"label":"Henning233 Mankell233"}],"language":"se","pageCount":339,"price":null,"isRead":1,"startedReading":null,"finishedReading":null}
-    // title, language_id, page_count, is_read, started_reading, finished_reading, price
 });
 
 server.del('/author/:id', function(req, res) {

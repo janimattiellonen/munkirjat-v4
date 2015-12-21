@@ -81,6 +81,26 @@ export default class BookService {
         ); 
     }
 
+    setAuthors(id, authors, callback) {
+        let self = this;
+
+        this.removeAuthors(id, function(err, result) {
+            if (err) {
+                throw err;
+            }
+
+            self.addAuthors(id, authors, callback);
+        });
+    }
+
+    removeAuthors(id, callback) {
+        this.connection.query(
+            `DELETE ba FROM book_author AS ba WHERE ba.book_id = :id`,
+            {id: id},
+            callback
+        );
+    }
+
     getBook(id, callback) {
         this.connection.query(
             `SELECT

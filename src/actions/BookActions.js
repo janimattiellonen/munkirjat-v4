@@ -1,5 +1,6 @@
 import api from '../api';
 import history from '../components/history';
+import Noty from '../components/Noty';
 
 export function addBook(book) {
 	return {

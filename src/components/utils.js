@@ -61,3 +61,11 @@ export function money(value) {
 export function isPositiveInteger(str) {
     return /^\+?(0|[1-9]\d*)$/.test(str);
 }
+
+export function mysql_date(date) {
+	if (null === date || undefined === date || "" == date) {
+		return "";
+	}
+
+	return moment(date, "DD.MM.YYYY").format('YYYY-MM-DD 00:00:00');
+}

@@ -7,6 +7,7 @@ var mysql 	= require('mysql');
 var AuthorService = require('./components/service/AuthorService');
 var BookService = require('./components/service/BookService');
 var Immutable = require('immutable');
+var Utils   = require('./components/utils');
 
 server.use(restify.CORS());
 server.use(restify.bodyParser({ mapParams: true }));
@@ -27,36 +28,7 @@ server.get('/book/:id', function(req, res) {
             return;
         }
 
-        let authors = [];
-        let book = null;
-
-        result.map(row => {
-            if (null == book) {
-                book = {
-                    id: row.id,
-                    title: row.title,
-                    language_id: row.language_id,
-                    page_count: row.page_count,
-                    is_read: row.is_read,
-                    started_reading: row.started_reading,
-                    finished_reading: row.finished_reading,
-                    price: row.price,
-                    authors: [{
-                        id: row.author_id,
-                        firstname: row.firstname,
-                        lastname: row.lastname,
-                        name: row.author_name
-                    }]
-                };
-            } else {
-                book.authors.push({
-                    id: row.author_id,
-                    firstname: row.firstname,
-                    lastname: row.lastname,
-                    name: row.author_name
-                });
-            }
-        });
+        let book = bookService.createBookObject(result);
 
         res.charSet('utf8');
         res.send(200, book);
@@ -124,11 +96,19 @@ server.post('/book', function(req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
-    let newBook = {
+    const {params} = req;
 
+    let newBook = {
+        title: params.title,
+        language_id: params.language,
+        page_count: params.pageCount,
+        price: params.price,
+        is_read: params.isRead,
+        started_reading: Utils.mysql_date(params.startedReading),
+        finished_reading: Utils.mysql_date(params.finishedReading)
     };
 
-    bookService.createBook(req.params, function(err, result) {
+    bookService.createBook(newBook, function(err, result) {
         if (err) {
             handleError(err, res);
             connection.end();
@@ -169,11 +149,11 @@ server.put('book/:id', function(req, res) {
         page_count: params.pageCount,
         price: params.price,
         is_read: params.isRead,
-        started_reading: params.startedReading,
-        finished_reading: params.finishedReading
+        started_reading: Utils.mysql_date(params.startedReading),
+        finished_reading: Utils.mysql_date(params.finishedReading)
     }
 
-    let authors = params.authors.map(author => {return author.value});
+    let authors = params.authors.map(author => { return author.value });
     let id = params.id;
 
     bookService.updateBook(id, updatedBook, function(err, result) {
@@ -190,11 +170,13 @@ server.put('book/:id', function(req, res) {
                 return;
             }
 
-            res.charSet('utf8');
-            res.send(200, {status: "OK"});
-            connection.end();
+            bookService.getBook(id, function(err, result) {
+                let book = bookService.createBookObject(result);
+                res.charSet('utf8');
+                res.send(200, book);
+                connection.end();
+            });
         });
-
     });
 });
 

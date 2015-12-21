@@ -23,6 +23,8 @@ export default React.createClass({
 			<div className="book-info col-md-12 component">
 				{this.getTitleElement(book)}
 
+				<p>{this.getEditBookLink(book)}</p> 
+
 				<div className="row">
 					<div className="title">Language</div>
 					<div>{utils.language(book.language_id)}</div>
@@ -55,6 +57,12 @@ export default React.createClass({
 				</div>
 			</div>
 		);
+	},
+
+	getEditBookLink(book) {
+		return (
+			<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+		)
 	},
 
 	getTitleElement(book) {

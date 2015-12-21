@@ -104,8 +104,6 @@ export default class BookForm extends Component {
 			finishedReading: this.state.finishedReading
 		};	
 
-		alert(JSON.stringify(formData));
-
 		const { handleSubmit} = this.props;
 
 		handleSubmit(formData);

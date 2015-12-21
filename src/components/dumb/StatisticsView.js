@@ -12,7 +12,7 @@ export default React.createClass({
 
 	render() {
 		return (
-            <div className="stats-main">
+            <div className="stats">
 				<h2>Statistics</h2>
 
 				<h3>Unread books</h3>

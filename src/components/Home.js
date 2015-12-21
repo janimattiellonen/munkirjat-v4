@@ -1,31 +1,33 @@
 import React from "react";
 import Immutable from "immutable";
 import Api from "../api";
-import StatusList from "./StatusList";
+import Stats from "./Stats";
 
 export default React.createClass({
 
-	getInitialState() {
-		return {
-			'statuses': Immutable.List()
-		}
-	},
-
 	render() {
+		const {authors, books} = this.props;
+
 		return (
-			<div><StatusList statuses={this.state.statuses} /></div>
+			<div className="stats-main">
+				<div className="box h_taller">
+					<h2>Currently reading</h2>
+
+					{this.currentlyReading(Stats.getCurrentlyReadBook(books))}
+
+
+
+				</div>
+			</div>
 		);
 	},
 
-	componentDidMount() {
-        this.getStatuses();
-    },
-
-	getStatuses() {
-		Api.getStatuses().then(statuses => {
-			this.setState({
-				'statuses': statuses
-			});
-		});
+	currentlyReading(book) {
+		if (null === book) {
+			return '<p>Nothing at the moment</p>';
+		} else {
+			return "<div>lll</div>";
+		}
 	}
+
 });

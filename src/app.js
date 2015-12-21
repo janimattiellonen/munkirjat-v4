@@ -10,6 +10,7 @@ import history from './components/history';
 
 import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
 import About from "./components/AboutView";
+import HomeContainer from "./components/smart/HomeContainer";
 import NewAuthorViewContainer from "./components/smart/NewAuthorViewContainer";
 import UpdateAuthorViewContainer from "./components/smart/UpdateAuthorViewContainer";
 import AuthorViewContainer from "./components/smart/AuthorViewContainer";
@@ -43,6 +44,7 @@ ReactDOM.render(
 	<Provider store = {store}>
 		<Router history={history}>
 	        <Route component={MunkirjatAppContainer} path="/">
+	        	<IndexRoute component={HomeContainer}/>
 	            <Route name="about" path="about" component={About}/>
 	            <Route name="newBook" path="book/new" component={NewBookViewContainer} />
 	            <Route name="editBook" path="book/:id/edit" component={UpdateBookViewContainer} />

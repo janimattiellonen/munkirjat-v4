@@ -14,16 +14,22 @@ export default React.createClass({
 				<div className="box h_taller">
 					<h2>Currently reading</h2>
 
-
 					<StatsList items={[Stats.getCurrentlyReadBook(books)]} render={this.renderItem} />
 
 				</div>
+
+				<div className="box h_taller">
+					<h2>Latest read book</h2>
+
+					<StatsList items={[Stats.getLatestReadBook(books)]} render={this.renderItem} />
+				</div>
+
 			</div>
 		);
 	},
 
 	renderItem(item) {
-		alert("books will be empty if you don't navigate through one of the books listings first. Fix this!");
+		console.log("books will be empty if you don't navigate through one of the books listings first. Fix this!");
 		return (
 			<a href={"/#/book/" + item.id}>{item.title}</a>
 		)

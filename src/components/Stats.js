@@ -9,6 +9,16 @@ export default class Stats {
 		return filtered.count() === 1 ? filtered.first() : null;
 	}
 
+	static getLatestReadBook(books) {
+		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
+		
+		let sorted = filtered.sort((a, b) => {
+			return moment(a.finished_reading).unix() < moment(b.finished_reading).unix();
+		});
+
+		return sorted.count() > 0 ? sorted.first() : null;
+	}
+
 	static getUnreadBookCount(books) {
 		return this.getUnreadBooks(books).count()
 	}

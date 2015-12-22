@@ -6,7 +6,6 @@ export default class Stats {
 
 	static getCurrentlyReadBook(books) {
 		let filtered = books.filter(b => b.is_read == 0 && b.started_reading !== null && b.finished_reading === null);
-
 		return filtered.count() === 1 ? filtered.first() : null;
 	}
 

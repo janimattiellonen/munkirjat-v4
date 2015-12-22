@@ -11,12 +11,23 @@ export default class Stats {
 
 	static getLatestReadBook(books) {
 		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
-		
+
 		let sorted = filtered.sort((a, b) => {
 			return moment(a.finished_reading).unix() < moment(b.finished_reading).unix();
 		});
 
 		return sorted.count() > 0 ? sorted.first() : null;
+	}
+
+	static getLatestAddedBooks(books, amount = 10) {
+
+		let sorted = books.sort((a, b) => {
+			return moment(a.created_at).unix() < moment(b.created_at).unix();
+		}).take(amount);
+
+		console.log("count: " + sorted.count());
+
+		return sorted;
 	}
 
 	static getUnreadBookCount(books) {

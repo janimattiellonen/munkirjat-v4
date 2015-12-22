@@ -100,12 +100,12 @@ server.post('/book', function(req, res) {
 
     let newBook = {
         title: params.title,
-        language_id: params.language,
-        page_count: params.pageCount,
+        language: params.language,
+        pageCount: params.pageCount,
         price: params.price,
-        is_read: params.isRead,
-        started_reading: Utils.mysql_date(params.startedReading),
-        finished_reading: Utils.mysql_date(params.finishedReading)
+        isRead: params.isRead,
+        startedReading: Utils.mysql_date(params.startedReading),
+        finishedReading: Utils.mysql_date(params.finishedReading)
     };
 
     bookService.createBook(newBook, function(err, result) {
@@ -145,12 +145,12 @@ server.put('book/:id', function(req, res) {
 
     let updatedBook = {
         title: params.title,
-        language_id: params.language,
-        page_count: params.pageCount,
+        language: params.language,
+        pageCount: params.pageCount,
         price: params.price,
-        is_read: params.isRead,
-        started_reading: Utils.mysql_date(params.startedReading),
-        finished_reading: Utils.mysql_date(params.finishedReading)
+        isRead: params.isRead,
+        startedReading: Utils.mysql_date(params.startedReading),
+        finishedReading: Utils.mysql_date(params.finishedReading)
     }
 
     let authors = params.authors.map(author => { return author.value });

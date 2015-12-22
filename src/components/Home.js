@@ -24,6 +24,12 @@ export default React.createClass({
 					<StatsList items={[Stats.getLatestReadBook(books)]} render={this.renderItem} />
 				</div>
 
+				<div className="box h_tallest">
+					<h2>Latest added books</h2>
+
+					<StatsList items={Stats.getLatestAddedBooks(books, 10)} render={this.renderItem} />
+				</div>
+
 			</div>
 		);
 	},

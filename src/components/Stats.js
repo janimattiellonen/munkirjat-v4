@@ -10,28 +10,44 @@ export default class Stats {
 	}
 
 	static getLatestReadBook(books) {
-		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
+		let latestReadBook = this.getRecentlyReadBooks(books, 1);
 
-		let sorted = filtered.sort((a, b) => {
-			return moment(a.finished_reading).unix() < moment(b.finished_reading).unix();
-		});
-
-		return sorted.count() > 0 ? sorted.first() : null;
+		return latestReadBook.count() === 1 ? latestReadBook.first() : null;
 	}
 
 	static getLatestAddedBooks(books, amount = 10) {
-
-		let sorted = books.sort((a, b) => {
+		return books.sort((a, b) => {
 			return moment(a.created_at).unix() < moment(b.created_at).unix();
 		}).take(amount);
+	}
 
-		console.log("count: " + sorted.count());
+	static getRecentlyReadBooks(books, amount = 10) {
+		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
 
-		return sorted;
+		return filtered.sort((a, b) => {
+			return moment(a.finished_reading).unix() < moment(b.finished_reading).unix();
+		}).take(amount);
+	}
+
+	static getUnreadBooks(books, amount = 10) {
+		console.log("AMOUNT: " + amount);
+		let filtered = books.filter(b => b.is_read == 0 && (b.started_reading === null || b.finished_reading === null));
+
+		let sorted = filtered.sort((a, b) => {
+			return moment(a.created_at).unix() < moment(b.created_at).unix();
+		});
+
+		return null !== amount ? sorted.take(amount) : sorted;
+	}
+
+	static getFavouriteAuthors(authors, amount = 10) {
+		return authors.sort((a, b) => {
+			return a.amount < b.amount;
+		}).take(amount);
 	}
 
 	static getUnreadBookCount(books) {
-		return this.getUnreadBooks(books).count()
+		return this.getUnreadBooks(books, null).count()
 	}
 
 	static getReadBookCount(books) {
@@ -40,10 +56,6 @@ export default class Stats {
 
 	static getReadBooks(books) {
 		return books.filter(n => n.is_read == 1);
-	}
-
-	static getUnreadBooks(books) {
-		return books.filter(n => n.is_read == 0);
 	}
 
 	static getSlowestReadTime(books) {

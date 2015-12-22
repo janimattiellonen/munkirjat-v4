@@ -14,15 +14,14 @@ export default class MunkirjatApp extends React.Component {
             <div id="page-inner">
 
                 {this.props.children}
-                
+
                 <StatisticsView books={this.props.books} authors={this.props.authors} />
 
             </div>
         );
     }
 
-    componentDidMount() {
-        console.log("======================== Loading data...");
+    componentWillMount() {
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
     }

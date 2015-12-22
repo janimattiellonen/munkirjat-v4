@@ -64,7 +64,7 @@ export default React.createClass({
 		}
 
 		return title;
-	},
+	}/*,
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (this.props.params.mode != nextProps.params.mode) {
@@ -73,4 +73,5 @@ export default React.createClass({
 
 		return this.props.params.mode != nextProps.params.mode || this.state.mode == undefined;
 	},
+	*/
 });

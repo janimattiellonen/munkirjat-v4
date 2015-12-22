@@ -7,14 +7,13 @@ export default class StatsList extends Component {
 	}
 
 	render() {
-		
 		const {items, render} = this.props;
 
 		return (
 			<ul>
 				{items.map((item, i) => {
 					return (
-						<li>
+						<li key={item.id}>
 							{render(item)}
 						</li>
 					)

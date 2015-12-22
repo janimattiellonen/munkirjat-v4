@@ -8,20 +8,26 @@ export default React.createClass({
 
 	render() {
 		const {authors, books} = this.props;
-		console.log("ii: " + JSON.stringify(Stats.getCurrentlyReadBook(books)));
+
+		let currentlyReadBook = Stats.getCurrentlyReadBook(books);
+		let latestReadBook = Stats.getLatestReadBook(books);
+
+		let currentlyReadBookArr = null !== currentlyReadBook ? [currentlyReadBook] : [];
+		let latestReadBookArr = null !== latestReadBook ? [latestReadBook] : [];
+
 		return (
 			<div className="stats-main">
 				<div className="box h_taller">
 					<h2>Currently reading</h2>
 
-					<StatsList items={[Stats.getCurrentlyReadBook(books)]} render={this.renderBookItem} />
+					<StatsList items={currentlyReadBookArr} render={this.renderBookItem} />
 
 				</div>
 
 				<div className="box h_taller">
 					<h2>Latest read book</h2>
 
-					<StatsList items={[Stats.getLatestReadBook(books)]} render={this.renderBookItem} />
+					<StatsList items={latestReadBookArr} render={this.renderBookItem} />
 				</div>
 
 				<div className="box h_tallest">
@@ -53,13 +59,22 @@ export default React.createClass({
 	},
 
 	renderAuthorItem(item) {
+		if (null === item) {
+			console.log("renderAuthorItem is empty");
+			return "";
+		}
+
 		return (
 			<a href={"/#/author/" + item.id}>{item.name + " (" + item.amount + ")"}</a>
 		)
 	},
 
 	renderBookItem(item) {
-		console.log("books will be empty if you don't navigate through one of the books listings first. Fix this!");
+		if (null === item) {
+			console.log("renderBookItem is empty");
+			return "";
+		}
+
 		return (
 			<a href={"/#/book/" + item.id}>{item.title}</a>
 		)

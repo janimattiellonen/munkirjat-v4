@@ -8,9 +8,17 @@ var AuthorService = require('./components/service/AuthorService');
 var BookService = require('./components/service/BookService');
 var Immutable = require('immutable');
 var Utils   = require('./components/utils');
+var jwt     = require('restify-jwt');
+var Buffer  = require('buffer/').Buffer;
+
+var authenticate = jwt({
+  secret: new Buffer('Kl-tAfT1Zj-caO3IEL1NDKpAw90BQ8-IbKMmK9fxgBDNUs_RPdpYNr7YL7-p6Elw', 'base64'),
+  audience: 'I8BCbPj0NoYE2jk4YR1t2eZkDJjGdmmN'
+});
 
 server.use(restify.CORS());
 server.use(restify.bodyParser({ mapParams: true }));
+//server.use('/secured', authenticate);
 
 let authorService = new AuthorService();
 let bookService = new BookService();
@@ -34,6 +42,11 @@ server.get('/book/:id', function(req, res) {
         res.send(200, book);
         connection.end();
     });
+});
+
+server.get('/protected', authenticate, function( req, res) {
+    res.charSet('utf8');
+    res.send(200, {status: "AUTHENTICATED"});
 });
 
 server.get('/books/:mode', function (req, res) {

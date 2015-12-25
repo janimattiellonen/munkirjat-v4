@@ -2,6 +2,13 @@ import api from '../api';
 import history from '../components/history';
 import Noty from '../components/Noty';
 
+export function filterByLanguage(languageId) {
+	return {
+		type: 'BOOKS_FILTER_BY_LANGUAGE',
+		languageId: languageId
+	}
+}
+
 export function addBook(book) {
 	return {
 		type: 'BOOK_ADD',

@@ -40,7 +40,16 @@ export default React.createClass({
                         bookActions: this.props.bookActions
                     }
                 )}
+
 				<h1>{this.getTitle()}</h1>
+
+				<span>By language: </span>
+				<ul className="horizontal-list">
+					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'fi')}>Finnish</a> | </li>
+					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'se')}>Swedish</a> | </li>
+					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'en')}>English</a></li>
+				</ul>
+
 				<BooksList {...this.props} books={books} />
 			</div>
 		);
@@ -64,7 +73,13 @@ export default React.createClass({
 		}
 
 		return title;
-	}/*,
+	},
+
+	onFilterByLanguage(language, e) {
+		e.preventDefault();
+		this.props.bookActions.filterByLanguage(language);
+	}
+	/*,
 
 	shouldComponentUpdate(nextProps, nextState) {
 		if (this.props.params.mode != nextProps.params.mode) {

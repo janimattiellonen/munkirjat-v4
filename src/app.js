@@ -19,6 +19,8 @@ import BookViewContainer from "./components/smart/BookViewContainer";
 import BooksViewContainer from "./components/smart/BooksViewContainer";
 import NewBookViewContainer from "./components/smart/NewBookViewContainer";
 import UpdateBookViewContainer from "./components/smart/UpdateBookViewContainer";
+import LoginViewContainer from "./components/smart/LoginViewContainer";
+
 
 import GameView from "./components/GameView";
 import PlayerSelectionView from "./components/Game/PlayerSelectionView";
@@ -54,6 +56,7 @@ ReactDOM.render(
 				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
 				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />
 				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
+				<Route name="login" path="login" component={LoginViewContainer} />
 	        </Route>
 	    </Router>	
 	</Provider>,

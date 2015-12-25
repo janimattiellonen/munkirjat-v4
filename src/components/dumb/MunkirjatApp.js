@@ -10,6 +10,7 @@ export default class MunkirjatApp extends React.Component {
     }
 
     render() {
+       // alert('https://www.npmjs.com/package/basic-authorization-header');
         return (
             <div id="page-inner">
 

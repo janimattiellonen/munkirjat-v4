@@ -47,7 +47,9 @@ export default React.createClass({
 				<ul className="horizontal-list">
 					<li><a href={"/#/books/" + mode + "/fi"}>Finnish</a> | </li>
 					<li><a href={"/#/books/" + mode + "/se"}>Swedish</a> | </li>
-					<li><a href={"/#/books/" + mode + "/en"}>English</a></li>
+					<li><a href={"/#/books/" + mode + "/en"}>English</a> | </li>
+					<li><a href={"/#/books/" + mode}>None</a></li>
+
 				</ul>
 				<br/>	
 				<br/>						

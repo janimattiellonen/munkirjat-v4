@@ -7,23 +7,7 @@ function sortBooks(books) {
 	return _.sortByOrder(books.toArray(), ['title'], ['asc']);
 }
 
-function filterBooksByLanguage(books, languageId) {
-	console.log("language: " + languageId);
-	return books.filter(b => b.language_id == languageId);
-}
-
 export default handleActions({
-	BOOKS_FILTER_BY_LANGUAGE: (state, action) => {
-
-		let books = state.books;
-		let languageId = action.languageId;
-
-		return {
-			...state,
-			books: filterBooksByLanguage(books, languageId)
-		}
-	},
-
 	BOOK_ADD: (state, action) => {
 
 		return {

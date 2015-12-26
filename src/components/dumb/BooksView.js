@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 import _ from 'lodash';
-
+import history from '../history'
 import BooksList from './BooksList';
 
 export default React.createClass({
@@ -27,29 +27,30 @@ export default React.createClass({
 		} else if (mode == 'read') {
 			books = allBooks.filter(n => n.is_read == 1);
 		} else {
+			mode = "all";
 			books = allBooks;
+		}
+
+		let language = this.props.params.language;
+
+		if (null != language) {
+			books = books.filter(b => b.language_id == language);
 		}
 
 		return (
 			<div className="component">
-					{this.props.children && React.cloneElement(
-                    this.props.children,
-                    {
-                        authorActions: this.props.authorActions,
-                        userActions: this.props.userActions,
-                        bookActions: this.props.bookActions
-                    }
-                )}
+				
 
 				<h1>{this.getTitle()}</h1>
 
 				<span>By language: </span>
 				<ul className="horizontal-list">
-					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'fi')}>Finnish</a> | </li>
-					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'se')}>Swedish</a> | </li>
-					<li><a href="#" onClick={this.onFilterByLanguage.bind(this, 'en')}>English</a></li>
+					<li><a href={"/#/books/" + mode + "/fi"}>Finnish</a> | </li>
+					<li><a href={"/#/books/" + mode + "/se"}>Swedish</a> | </li>
+					<li><a href={"/#/books/" + mode + "/en"}>English</a></li>
 				</ul>
-
+				<br/>	
+				<br/>						
 				<BooksList {...this.props} books={books} />
 			</div>
 		);
@@ -73,12 +74,8 @@ export default React.createClass({
 		}
 
 		return title;
-	},
-
-	onFilterByLanguage(language, e) {
-		e.preventDefault();
-		this.props.bookActions.filterByLanguage(language);
 	}
+
 	/*,
 
 	shouldComponentUpdate(nextProps, nextState) {

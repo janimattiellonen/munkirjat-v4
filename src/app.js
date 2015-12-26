@@ -51,7 +51,7 @@ ReactDOM.render(
 	            <Route name="newBook" path="book/new" component={NewBookViewContainer} />
 	            <Route name="editBook" path="book/:id/edit" component={UpdateBookViewContainer} />
 				<Route name="book" path="book/:id" component={BookViewContainer} />
-				<Route name="listBooks" path="books(/:mode)" component={BooksViewContainer} />
+				<Route name="listBooks" path="books(/:mode)(/:language)" component={BooksViewContainer} />
 				<Route name="listAuthors" path="authors" component={AuthorsViewContainer} />
 				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
 				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />

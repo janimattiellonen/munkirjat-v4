@@ -25,5 +25,26 @@ export default class MunkirjatApp extends React.Component {
     componentWillMount() {
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
+       // this.setupAjax();
     }
+
+    componenDidMount() {
+        let self = this;
+        $( document ).ajaxSend(function() {
+            self.setupAjax();
+        });
+    }
+
+    setupAjax() {
+        console.log("MunkirjatApp::setupAjax");
+        $.ajaxSetup({
+            'beforeSend': function(xhr) {
+                console.log("ajaxSetup::beforeSend");
+                if (localStorage.getItem('userToken')) {
+                    xhr.setRequestHeader('Authorization',
+                    'Bearer ' + localStorage.getItem('userToken'));
+                }
+            }
+        });
+    }        
 }

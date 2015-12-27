@@ -36,7 +36,7 @@
                     <li><a href="/#/book/new">New book</a></li>
                     <li><a href="/#/author/new">New author</a></li>
                     <li><a href="/#/login">Login</a></li>
-                    <li><a href="/#/logout">Logout</a></li>
+                    <li><a href="/#/logout" id="logout-link">Logout</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>       
@@ -52,5 +52,14 @@
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
     {% } %}
+
+    <script type="text/javascript">
+        $(document).on('click', '#logout-link', function(e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'https://munkirjat.eu.auth0.com/v2/logout'
+            });
+        });
+    </script
 </body>
 </html>

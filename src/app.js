@@ -57,6 +57,7 @@ ReactDOM.render(
 				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />
 				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
 				<Route name="login" path="login" component={LoginViewContainer} />
+				<Route name="afterLogin" path="access_token/:id" component={LoginViewContainer} />
 	        </Route>
 	    </Router>	
 	</Provider>,

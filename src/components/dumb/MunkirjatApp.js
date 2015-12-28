@@ -3,6 +3,7 @@ import Router, {RouteHandler} from 'react-router';
 import { connect } from 'react-redux';
 
 import StatisticsView from './StatisticsView';
+import Menubar from '../dumb/Menubar';
 
 export default class MunkirjatApp extends React.Component {
     static contextTypes = {
@@ -13,7 +14,7 @@ export default class MunkirjatApp extends React.Component {
        // alert('https://www.npmjs.com/package/basic-authorization-header');
         return (
             <div id="page-inner">
-
+                <Menubar />
                 {this.props.children}
 
                 <StatisticsView books={this.props.books} authors={this.props.authors} />

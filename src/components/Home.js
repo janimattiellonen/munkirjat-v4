@@ -17,6 +17,8 @@ export default React.createClass({
 
 		return (
 			<div className="stats-main">
+				<p>{this.foo()}</p>
+
 				<div className="box h_taller">
 					<h2>Currently reading</h2>
 
@@ -56,6 +58,10 @@ export default React.createClass({
 
 			</div>
 		);
+	},
+
+	foo() {
+		return localStorage.getItem('userToken');
 	},
 
 	renderAuthorItem(item) {

@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Button} from 'react-bootstrap';
+import history from '../history';
 
 export default class LoginView extends Component {
   	showLock() {
@@ -17,11 +18,8 @@ export default class LoginView extends Component {
 		  	}
 
 		  	localStorage.setItem('userToken', id_token);
-		  	console.log("token: " + id_token);
-		  	console.log("token 2: " + self.props.lock.parseHash(id_token));
-		  	console.log("Hey dude", profile);
-			}
-		)
+		  	history.pushState(null, '/');
+		});
   	}
 
 	render() {

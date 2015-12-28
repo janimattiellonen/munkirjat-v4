@@ -105,7 +105,7 @@ server.get('/books/:mode', function (req, res) {
     });
 });
 
-server.post('/book', function(req, res) {
+server.post('/book', authenticate, function(req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -150,7 +150,7 @@ server.post('/book', function(req, res) {
 
 });
 
-server.put('book/:id', function(req, res) {
+server.put('book/:id', authenticate, function(req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -193,7 +193,7 @@ server.put('book/:id', function(req, res) {
     });
 });
 
-server.del('/author/:id', function(req, res) {
+server.del('/author/:id', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 
@@ -210,7 +210,7 @@ server.del('/author/:id', function(req, res) {
     });
 });
 
-server.post('/author', function(req, res) {
+server.post('/author', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
     let newAuthor = {
@@ -247,7 +247,7 @@ server.post('/author', function(req, res) {
     });
 });
 
-server.put('/author/:id', function(req, res) {
+server.put('/author/:id', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 

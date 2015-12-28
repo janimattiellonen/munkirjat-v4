@@ -23,10 +23,9 @@ export default class Menubar extends Component {
 		                    <li><a href="/#books/unread">Unread books</a></li>
 		                    <li><a href="/#authors">Authors</a></li>
 
-		                    <li><a href="/#/book/new">New book</a></li>
-		                    <li><a href="/#/author/new">New author</a></li>
+		                    {this.renderNewBookMenuitem()}
+		                    {this.renderNewAuthorMenuitem()}
 		                    {this.renderUserMenuitem()}
-		                    
 		                </ul>
 		            </div>
 		        </div>       
@@ -34,15 +33,38 @@ export default class Menubar extends Component {
 		)
 	}
 
-	renderUserMenuitem() {
-		if (localStorage.getItem("userToken") == null) {
+	renderNewBookMenuitem() {
+		if (this.isLoggedIn()) {
 			return (
-				<li><a href="/#/login">Login</a></li>
+				<li><a href="/#/book/new">New book</a></li>
+				
+			)
+		}
+	}
+
+	renderNewAuthorMenuitem() {
+		if (this.isLoggedIn()) {
+			return (
+				<li><a href="/#/author/new">New author</a></li>
+				
+			)
+		}
+	}
+
+	renderUserMenuitem() {
+		if (this.isLoggedIn()) {
+			return (
+				<li><a href="/#/logout" id="logout-link">Logout</a></li>
+				
 			)
 		} else {
 			return (
-				<li><a href="/#/logout" id="logout-link">Logout</a></li>
+				<li><a href="/#/login">Login</a></li>
 			)
 		}
+	}
+
+	isLoggedIn() {
+		return localStorage.getItem("userToken") != null;
 	}
 };

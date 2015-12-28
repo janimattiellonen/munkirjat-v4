@@ -2,9 +2,19 @@ import config from './config';
 import axios from 'axios';
 import { List } from 'immutable';
 
+function getAuthorizationHeaders() {
+	return {
+		headers: {
+			'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+		}
+	};
+};
+
+var headers = getAuthorizationHeaders();
+
 export default {
+
 	testProtected() {
-		console.log("token: " + localStorage.getItem('userToken'));
 		return axios.get('/protected', {
 			headers: {
 				'Authorization': 'Bearer ' + localStorage.getItem('userToken')
@@ -13,15 +23,15 @@ export default {
 	},
 
 	removeAuthor(id) {
-		return axios.delete('/author/' + id).then(res => res.data);
+		return axios.delete('/author/' + id, headers).then(res => res.data);
 	},
 
 	saveAuthor(author) {
-		return axios.post('/author', author).then(res => res.data);
+		return axios.post('/author', author, headers).then(res => res.data);
 	},
 
 	updateAuthor(author) {
-		return axios.put('/author/' + author.id, author).then(res => res.data);
+		return axios.put('/author/' + author.id, author, headers).then(res => res.data);
 	},
 
 	getAuthor(id) {
@@ -29,12 +39,7 @@ export default {
 	},
 
 	getAuthors() {
-		this.testProtected();
-		return axios.get('/authors', {
-			headers: {
-				'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-			}
-		}).then(res => List(res.data));
+		return axios.get('/authors').then(res => List(res.data));
 	},
 
 	searchAuthors(term) {
@@ -50,10 +55,11 @@ export default {
 	},
 
 	saveBook(book) {
-		return axios.post('/book', book).then(res => res.data);
+		return axios.post('/book', book, headers).then(res => res.data);
 	},
 
 	updateBook(book) {
-		return axios.put('/book/' + book.id, book).then(res => res.data);
-	},
+		return axios.put('/book/' + book.id, book, headers).then(res => res.data);
+	}
+
 };

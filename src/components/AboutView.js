@@ -19,19 +19,37 @@ export default React.createClass({
                     <p>I could certainly have just produced a simple list of all my books but that's not fun to code, is it. ;)
 
                     </p><p>I wanted to create a web app that I have use for and that is fun to code and helps me to learn new stuff.</p>
+                    
+                    <h2>History</h2>
 
-                    <h2>Technology used</h2>
+                    <h3>Munkirjat v4 (current version)</h3>
+
+                    <p>The development process of the previous version was really, really slow and when I was introduced to React, well, bye bye Scala. Of course, I could just have replaced AngularJS with React and still have Scala, but I also decided to, once again, rewrite the backend. This time using node.js.</p>
+
 
                     <ul className="use-dots">
-                        <li><a target="_blank" href="http://www.scala-lang.org/">Scala</a></li><a target="_blank" href="http://www.scala-lang.org/">
-                        </a><li><a target="_blank" href="http://www.scala-lang.org/"></a><a target="_blank" href="http://www.mysql.com">MySql</a></li>
+                        <li><a target="_blank" href="https://facebook.github.io/react/">React</a></li>
+                        <li><a target="_blank" href="http://nodejs.org/">Node.js</a></li>
+                        <li><a target="_blank" href="http://restify.com/">Restify</a></li>
+                        <li><a target="_blank" href="http://www.mysql.com">MySql</a></li>
+                        <li><a target="_blank" href="http://www.lesscss.org">Less</a></li>
+                        <li><a target="_blank" href="http://en.wikipedia.org/wiki/Single-page_application">Single-page application</a>
+                    </li></ul>
+
+                    <h3>Munkirjat v3</h3>
+
+                    <p>This was a rather unfortunate version. I originally intended to rewrite and continue using Scala as the backend language. First together with AngularJs and later on with React.</p>
+
+                    <p>I struggled through with Scala even though I hardly knew the language. I really took it on as a learning process this time. I successfully released a Scala/AngularJS version but it was quite rawish and lacked some of the old features.</p>
+                    
+                    <ul className="use-dots">
+                        <li><a target="_blank" href="http://www.scala-lang.org/">Scala</a></li>
+                        <li><a target="_blank" href="http://www.mysql.com">MySql</a></li>
                         <li><a target="_blank" href="https://angularjs.org/">AngularJS</a></li>
                         <li><a target="_blank" href="http://www.lesscss.org">Less</a></li>
                         <li><a target="_blank" href="http://en.wikipedia.org/wiki/Single-page_application">Single-page application</a>
                     </li></ul>
-                    
-                    <h2>History</h2>
-                    
+
                     <h3>Munkirjat v2</h3>
                     
                     <ul>

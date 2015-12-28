@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import history from '../history';
 
 export default class Menubar extends Component {
 	render() {
@@ -37,7 +38,6 @@ export default class Menubar extends Component {
 		if (this.isLoggedIn()) {
 			return (
 				<li><a href="/#/book/new">New book</a></li>
-				
 			)
 		}
 	}
@@ -46,7 +46,6 @@ export default class Menubar extends Component {
 		if (this.isLoggedIn()) {
 			return (
 				<li><a href="/#/author/new">New author</a></li>
-				
 			)
 		}
 	}
@@ -54,8 +53,7 @@ export default class Menubar extends Component {
 	renderUserMenuitem() {
 		if (this.isLoggedIn()) {
 			return (
-				<li><a href="/#/logout" id="logout-link">Logout</a></li>
-				
+				<li><a href="#" id="logout-link" onClick={this.logout}>Logout</a></li>
 			)
 		} else {
 			return (
@@ -66,5 +64,12 @@ export default class Menubar extends Component {
 
 	isLoggedIn() {
 		return localStorage.getItem("userToken") != null;
+	}
+
+	logout(e) {
+		e.preventDefault();
+
+        localStorage.removeItem('userToken');
+        history.pushState(null, '/');
 	}
 };

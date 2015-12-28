@@ -4,11 +4,6 @@ import history from '../history';
 
 export default class LoginView extends Component {
   	showLock() {
-    	/*this.props.lock.show({
-    		callbackURL: 'http://localhost:5688',
-    		responseType: 'token'
-    	});
-*/
 
 		let self = this;
     	this.props.lock.show(function(err, profile, id_token) {

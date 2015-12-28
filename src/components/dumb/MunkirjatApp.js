@@ -5,13 +5,15 @@ import { connect } from 'react-redux';
 import StatisticsView from './StatisticsView';
 import Menubar from '../dumb/Menubar';
 
+import config from '../../config.js';
+
 export default class MunkirjatApp extends React.Component {
     static contextTypes = {
         history: React.PropTypes.object.isRequired
     }
 
     render() {
-       // alert('https://www.npmjs.com/package/basic-authorization-header');
+        console.log("port: " + config.server.port);
         return (
             <div id="page-inner">
                 <Menubar />
@@ -30,6 +32,7 @@ export default class MunkirjatApp extends React.Component {
     }
 
     componenDidMount() {
+
         let self = this;
         $( document ).ajaxSend(function() {
             self.setupAjax();

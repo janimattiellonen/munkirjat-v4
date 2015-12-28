@@ -22,18 +22,5 @@
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
     {% } %}
-
-    <script type="text/javascript">
-        $(document).on('click', '#logout-link', function(e) {
-            e.preventDefault();
-            localStorage.removeItem('userToken');
-            /*
-            $.ajax({
-                url: 'https://munkirjat.eu.auth0.com/v2/logout'
-            });
-*/
-            location.href = "/";
-        });
-    </script
 </body>
 </html>

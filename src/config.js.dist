@@ -1,6 +1,10 @@
 var port = 8766;
 
 module.exports = {
+    'auth0': {
+        'client_id': '',
+        'domain': ''
+    },
     'server': {
         'port': port,
         'url': 'http://localhost:' + port
@@ -12,5 +16,3 @@ module.exports = {
     	'database': ''
     }
 };
-
-

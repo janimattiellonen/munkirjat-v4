@@ -9,11 +9,13 @@ var BookService = require('./components/service/BookService');
 var Immutable = require('immutable');
 var Utils   = require('./components/utils');
 var jwt     = require('restify-jwt');
-//var Buffer  = require('buffer/').Buffer;
+var dotenv = require('dotenv');
+
+dotenv.load();
 
 var authenticate = jwt({
-  secret: new Buffer('Kl-tAfT1Zj-caO3IEL1NDKpAw90BQ8-IbKMmK9fxgBDNUs_RPdpYNr7YL7-p6Elw', 'base64'),
-  audience: 'I8BCbPj0NoYE2jk4YR1t2eZkDJjGdmmN'
+  secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
+  audience: process.env.AUTH0_CLIENT_ID
 });
 
 server.use(restify.CORS());
@@ -23,7 +25,7 @@ server.use(restify.bodyParser());
 let authorService = new AuthorService();
 let bookService = new BookService();
 
-server.get('/book/:id', function(req, res) {
+server.get('/book/:id', function(req, res) {    
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -314,7 +316,6 @@ server.get('/authors/:term', function(req, res) {
 });
 
 server.get('/authors', function(req, res) {
-    console.log("HEADERS: " + JSON.stringify(req.headers));
     var connection = getConnection();
     authorService.setConnection(connection);
 

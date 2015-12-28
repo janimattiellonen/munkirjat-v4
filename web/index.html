@@ -22,5 +22,13 @@
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
     {% } %}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".navbar-nav li a").click(function(event) {
+                $(".navbar-collapse").collapse('hide');
+            });
+        });
+    </script>
 </body>
 </html>

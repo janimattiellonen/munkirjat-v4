@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-export default React.createClass({
+export default class Menubar extends Component {
 	render() {
 		return (
 		    <div className="navbar navbar-inverse navbar-fixed-top" >
@@ -25,12 +25,24 @@ export default React.createClass({
 
 		                    <li><a href="/#/book/new">New book</a></li>
 		                    <li><a href="/#/author/new">New author</a></li>
-		                    <li><a href="/#/login">Login</a></li>
-		                    <li><a href="/#/logout" id="logout-link">Logout</a></li>
+		                    {this.renderUserMenuitem()}
+		                    
 		                </ul>
 		            </div>
 		        </div>       
 		    </div>
 		)
 	}
-});
+
+	renderUserMenuitem() {
+		if (localStorage.getItem("userToken") == null) {
+			return (
+				<li><a href="/#/login">Login</a></li>
+			)
+		} else {
+			return (
+				<li><a href="/#/logout" id="logout-link">Logout</a></li>
+			)
+		}
+	}
+};

@@ -292,24 +292,54 @@ a.is-read {
 	.navbar-brand {
 		display: block;
 	}
+
+	.box {
+		h2 {
+			font-size: 18px;
+		}
+	}
+}
+
+@media screen and (max-width: 785px) {
+	.stats-main {
+		width: 100%;
+
+		.box {
+			margin: 5px;
+			width: 47%;
+		}
+	}
 }
 
 @media screen and (max-width: 920px) {
+	div#app #page {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+
 	.stats {
 		display: none;
 	}
 
 	.component {
 		width: 100%;
-	}
+	}	
+}
 
-	div#app #page {
-		padding-left: 20px;
-		padding-right: 20px;
+
+@media screen and (min-width: 786px) and (max-width: 920px) {
+	.stats-main {
+		width: 100%;
+
+		.box {
+			margin: 5px;
+			width: 48%;
+		}
 	}
 }
 
-@media screen and (max-width: 973px) {
+@media screen and (min-width: 921px) and (max-width: 973px) {
 	.stats-main {
 		.box {
 			width: 42%;
@@ -335,7 +365,6 @@ a.is-read {
 
     .box {
     	width: 80%;
-    	clear: both;
         height: auto;
     }
     

@@ -48,6 +48,9 @@ article {
 	article {
 		margin-right: 25px;
 	}
+
+	float: left;
+	width: 80%;
 }
 
 body {
@@ -56,73 +59,69 @@ body {
 	background-position: center 0px;
 	background-repeat: no-repeat;
 	min-width: 630px;
-	
-	header {
-		img#header-image {
-			background-image: url('./assets/images/books2.jpg');
-  			background-repeat: no-repeat;
-			width: 100%;
-			position: absolute;
-		}
-	}
-    
-    div#app {
+}	
 
-		background: #f6f6f6;
-		opacity: 1;
-	    width: 70%;
-	    max-width: 1200px;
-	
-	    min-height: 100%;
-	    height: auto !important;
-	    margin: 0 auto;
-	    margin-bottom: -50px;
-	    padding: 0;
-	    position: relative;
-	    
-	    #page {
-	    	float: left;
-	    	width: 100%;
-			padding: 80px 50px 75px 50px;
-
-			#page-inner {
-				float: left;
-				width: 100%;
-
-				div.component {
-					float: left;
-					width: 80%;
-				}
-			}
-		}
-    }
-
-    #single-author {
-	    .data-list {
-	 		margin-bottom: 20px;   
-	    }
-    }
-    
-   	div#app:after {
-	  	content: "";
-	  	display: block;
-	}
-    
-    footer {
-	    height: 50px;
-	    background: black;
-	    width: 100%;
-	    padding-left: 75px;
-	    color: white;
-	    height: 50px;
-	    position: absolute;
-	    bottom: 0;
-	    
-	    p {
-	    	margin: 1em 0;
-	    }
+header {
+	img#header-image {
+		background-image: url('./assets/images/books2.jpg');
+			background-repeat: no-repeat;
+		width: 100%;
+		position: absolute;
 	}
 }
+
+div#app {
+
+	background: #f6f6f6;
+	opacity: 1;
+    width: 70%;
+    max-width: 1200px;
+
+    min-height: 100%;
+    height: auto !important;
+    margin: 0 auto;
+    margin-bottom: -50px;
+    padding: 0;
+    position: relative;
+    
+    #page {
+    	float: left;
+    	width: 100%;
+		padding: 80px 50px 75px 50px;
+
+		#page-inner {
+			float: left;
+			width: 100%;
+		}
+	}
+}
+
+#single-author {
+    .data-list {
+ 		margin-bottom: 20px;   
+    }
+}
+
+	div#app:after {
+  	content: "";
+  	display: block;
+}
+
+footer {
+    height: 50px;
+    background: black;
+    width: 100%;
+    padding-left: 75px;
+    color: white;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    
+    p {
+    	margin: 1em 0;
+    }
+}
+
 
 .box {
 	float: left;
@@ -295,6 +294,28 @@ a.is-read {
 	}
 }
 
+@media screen and (max-width: 920px) {
+	.stats {
+		display: none;
+	}
+
+	.component {
+		width: 100%;
+	}
+
+	div#app #page {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
+
+@media screen and (max-width: 973px) {
+	.stats-main {
+		.box {
+			width: 42%;
+		}
+	}
+}
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
 	.navbar-brand {

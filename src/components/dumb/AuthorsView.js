@@ -2,6 +2,8 @@ import React from 'react';
 import Immutable from 'immutable';
 import _ from "lodash";
 import {Button, Modal} from 'react-bootstrap';
+import SmartSearch from 'smart-search';
+import classNames from 'classnames';
 
 export default React.createClass({
 
@@ -36,16 +38,18 @@ export default React.createClass({
 			search: searchTerm.length > 0,
 			searchTerm: searchTerm.length > 0 ? searchTerm : ""
 		});
-
 	},
 
 	filterAuthors(authors, searchTerm) {
-		return authors.filter(a => a.firstname == searchTerm || a.lastname == searchTerm);
+		let patterns = [searchTerm];
+		let fields = ['firstname', 'lastname'];
+		let results = SmartSearch(authors, patterns, fields);
+
+		return Immutable.List(results).map(a => a.entry);
 	},
 
 	render() {
 
-		alert('https://www.npmjs.com/package/smart-search');
 		let authors = this.props.authors
 
 		if (this.state.search) {
@@ -58,12 +62,14 @@ export default React.createClass({
 			<div className="component">
 				<h1>Authors</h1>
 
-				<span>Sort by: </span>
-				<ul className="horizontal-list">
-					<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
-					<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
-				</ul>
-				
+				<div className={classNames("sort-box", {"hidden": this.state.search})}>
+					<span>Sort by: </span>
+					<ul className="horizontal-list">
+						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
+						<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
+					</ul>
+				</div>
+
 				<div className="search-box">
 					<input type="text" value={this.state.searchTerm} onChange={this.handleSearch}/>
 				</div>

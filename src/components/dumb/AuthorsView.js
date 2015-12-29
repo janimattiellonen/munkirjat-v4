@@ -8,7 +8,9 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			showModal: false,
-			removableId: null
+			removableId: null,
+			searchTerm: "",
+			search: false
 		}
 	},
 
@@ -27,21 +29,44 @@ export default React.createClass({
 		}
 	},
 
+	handleSearch(e) {
+		let searchTerm = e.target.value;
+
+		this.setState({
+			search: searchTerm.length > 0,
+			searchTerm: searchTerm.length > 0 ? searchTerm : ""
+		});
+
+	},
+
+	filterAuthors(authors, searchTerm) {
+		return authors.filter(a => a.firstname == searchTerm || a.lastname == searchTerm);
+	},
+
 	render() {
 
-		let authors = _.chunk(this.props.authors.toArray(), Math.ceil(this.props.authors.count() / 2));
+		alert('https://www.npmjs.com/package/smart-search');
+		let authors = this.props.authors
+
+		if (this.state.search) {
+			authors = this.filterAuthors(authors, this.state.searchTerm);
+		} 
+
+		authors = _.chunk(authors.toArray(), Math.ceil(this.props.authors.count() / 2));
 
 		return (
 			<div className="component">
 				<h1>Authors</h1>
 
-					<span>Sort by: </span>
-					<ul className="horizontal-list">
-						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
-						<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
-					</ul>
-				<br/>	
-				<br/>			
+				<span>Sort by: </span>
+				<ul className="horizontal-list">
+					<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
+					<li><a href="#" onClick={this.onSortByBookCount}>book count</a></li>
+				</ul>
+				
+				<div className="search-box">
+					<input type="text" value={this.state.searchTerm} onChange={this.handleSearch}/>
+				</div>
 
 				<div className="data-list">
 					{authors.map((set, i) => {

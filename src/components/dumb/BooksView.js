@@ -41,7 +41,6 @@ export default React.createClass({
 		} else if (mode == 'read') {
 			books = allBooks.filter(b => b.is_read == 1);
 		} else {
-			mode = "all";
 			books = allBooks;
 		}
 
@@ -58,8 +57,12 @@ export default React.createClass({
 		return books;
 	},
 
+	getMode(mode) {
+		return mode != 'read' && mode != 'unread' ? 'all' : mode;
+	},
+
 	render() {
-		let mode = this.props.params.mode;
+		let mode = this.getMode(this.props.params.mode);
 		let books = this.filterBooks(mode);
 
 		return (

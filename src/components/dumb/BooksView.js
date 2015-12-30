@@ -3,6 +3,8 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 import history from '../history'
 import BooksList from './BooksList';
+import SmartSearch from 'smart-search';
+import classNames from 'classnames';
 
 export default React.createClass({
 
@@ -12,8 +14,27 @@ export default React.createClass({
 
 	getInitialState() {
 		return {
-			mode: undefined
+			mode: undefined,
+			searchTerm: "",
+			search: false
 		}
+	},
+
+	handleSearch(e) {
+		let searchTerm = e.target.value;
+
+		this.setState({
+			search: searchTerm.length > 0,
+			searchTerm: searchTerm.length > 0 ? searchTerm : ""
+		});
+	},
+
+	filterBooks(books, searchTerm) {
+		let patterns = [searchTerm];
+		let fields = ['title'];
+		let results = SmartSearch(books, patterns, fields);
+
+		return Immutable.List(results).map(b => b.entry);
 	},
 
 	render() {
@@ -37,22 +58,29 @@ export default React.createClass({
 			books = books.filter(b => b.language_id == language);
 		}
 
+		if (this.state.search) {
+			books = this.filterBooks(books, this.state.searchTerm);
+		} 		
+
 		return (
 			<div className="component">
-				
 
 				<h1>{this.getTitle()}</h1>
 
-				<span>By language: </span>
-				<ul className="horizontal-list">
-					<li><a href={"/#/books/" + mode + "/fi"}>Finnish</a> | </li>
-					<li><a href={"/#/books/" + mode + "/se"}>Swedish</a> | </li>
-					<li><a href={"/#/books/" + mode + "/en"}>English</a> | </li>
-					<li><a href={"/#/books/" + mode}>None</a></li>
+				<div className={classNames("sort-box", {"hidden": this.state.search})}>
+					<span>By language: </span>
+					<ul className="horizontal-list">
+						<li><a href={"/#/books/" + mode + "/fi"}>Finnish</a> | </li>
+						<li><a href={"/#/books/" + mode + "/se"}>Swedish</a> | </li>
+						<li><a href={"/#/books/" + mode + "/en"}>English</a> | </li>
+						<li><a href={"/#/books/" + mode}>None</a></li>
+					</ul>
+				</div>
 
-				</ul>
-				<br/>	
-				<br/>						
+				<div className="search-box">
+					<input type="text" value={this.state.searchTerm} onChange={this.handleSearch}/>
+				</div>	
+
 				<BooksList {...this.props} books={books} />
 			</div>
 		);

@@ -1,15 +1,18 @@
 import React from 'react';
-import Immutable from 'immutable';
 import _ from 'lodash';
 import history from '../history'
 import BooksList from './BooksList';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
+import {List} from 'immutable';
+
+import * as Utils from '../utils';
+
 
 export default React.createClass({
 
 	getDefaultProps() {
-		books: Immutable.List([])
+		books: List([])
 	},
 
 	getInitialState() {
@@ -29,24 +32,14 @@ export default React.createClass({
 		});
 	},
 
-	filterBooks(books, searchTerm) {
-		let patterns = [searchTerm];
-		let fields = ['title'];
-		let results = SmartSearch(books, patterns, fields);
-
-		return Immutable.List(results).map(b => b.entry);
-	},
-
-	render() {
-
-		let mode = this.props.params.mode;
+	filterBooks(mode) {
 		let books = null;
 		let allBooks = this.props.books;
 
 		if (mode == 'unread') {
-			books = allBooks.filter(n => n.is_read == 0);
+			books = allBooks.filter(b => b.is_read == 0);
 		} else if (mode == 'read') {
-			books = allBooks.filter(n => n.is_read == 1);
+			books = allBooks.filter(b => b.is_read == 1);
 		} else {
 			mode = "all";
 			books = allBooks;
@@ -59,8 +52,15 @@ export default React.createClass({
 		}
 
 		if (this.state.search) {
-			books = this.filterBooks(books, this.state.searchTerm);
-		} 		
+			books = Utils.filter(books, this.state.searchTerm, ['title']);
+		} 	
+
+		return books;
+	},
+
+	render() {
+		let mode = this.props.params.mode;
+		let books = this.filterBooks(mode);
 
 		return (
 			<div className="component">
@@ -105,15 +105,4 @@ export default React.createClass({
 
 		return title;
 	}
-
-	/*,
-
-	shouldComponentUpdate(nextProps, nextState) {
-		if (this.props.params.mode != nextProps.params.mode) {
-			this.props.bookActions.fetchBooks(nextProps.params.mode);
-		}
-
-		return this.props.params.mode != nextProps.params.mode || this.state.mode == undefined;
-	},
-	*/
 });

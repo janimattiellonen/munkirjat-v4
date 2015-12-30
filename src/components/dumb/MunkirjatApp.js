@@ -13,7 +13,6 @@ export default class MunkirjatApp extends React.Component {
     }
 
     render() {
-        console.log("port: " + config.server.port);
         return (
             <div id="page-inner">
                 <Menubar />

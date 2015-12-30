@@ -1,5 +1,7 @@
 import moment from 'moment';
 import numeral from 'numeral';
+import SmartSearch from 'smart-search';
+import {List} from 'immutable';
 
 export function date_format(date, format = "D.M.YYYY") {
 	return date != null && date != undefined ? moment(date).format(format) : '';
@@ -68,4 +70,11 @@ export function mysql_date(date) {
 	}
 	
 	return moment(date, "DD.MM.YYYY").format('YYYY-MM-DD 00:00:00');
+}
+
+export function filter(items, searchTerm, fields) {
+	let patterns = [searchTerm];
+	let results = SmartSearch(items, patterns, fields, {maxInsertions: 2});
+
+	return List(results).map(a => a.entry);
 }

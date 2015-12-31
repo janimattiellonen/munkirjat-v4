@@ -1,5 +1,4 @@
 import React from 'react';
-import Immutable from 'immutable';
 import _ from "lodash";
 import {Button, Modal} from 'react-bootstrap';
 import SmartSearch from 'smart-search';
@@ -42,16 +41,7 @@ export default React.createClass({
 	},
 
 	filterAuthors(authors, searchTerm) {
-
 		return Utils.filter(authors, searchTerm, ['firstname', 'lastname']);
-
-		/*
-		let patterns = [searchTerm];
-		let fields = ['firstname', 'lastname'];
-		let results = SmartSearch(authors, patterns, fields, {maxInsertions: 2});
-
-		return Immutable.List(results).map(a => a.entry);
-		*/
 	},
 
 	render() {

@@ -40,3 +40,7 @@ See files `.env` and `src/config.js`:
         'client_id': '',
         'domain': ''
     }`   
+
+## Caveats
+
+These installation instructions are not complete and may not be presented in proper order. They mainly act as a reminder tomyself, should I need to re-install it later on, much later on...

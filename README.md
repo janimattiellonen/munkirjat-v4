@@ -15,6 +15,10 @@ Munkirjat V4...V5
 * `npm run deploy`
 * Visit website
 
+## Database
+
+You can use `docs/munkirjat.sql` as a base.
+
 ## PM2 settings
 
 pm2 start src/server.js --interpreter ./node_modules/.bin/babel-node --log munkirjat.log

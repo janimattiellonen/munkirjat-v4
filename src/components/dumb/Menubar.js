@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import history from '../history';
+import * as Utils from '../utils';
 
 export default class Menubar extends Component {
 	render() {
@@ -35,7 +36,7 @@ export default class Menubar extends Component {
 	}
 
 	renderNewBookMenuitem() {
-		if (this.isLoggedIn()) {
+		if (Utils.isLoggedIn()) {
 			return (
 				<li><a href="/#/book/new">New book</a></li>
 			)
@@ -43,7 +44,7 @@ export default class Menubar extends Component {
 	}
 
 	renderNewAuthorMenuitem() {
-		if (this.isLoggedIn()) {
+		if (Utils.isLoggedIn()) {
 			return (
 				<li><a href="/#/author/new">New author</a></li>
 			)
@@ -51,7 +52,7 @@ export default class Menubar extends Component {
 	}
 
 	renderUserMenuitem() {
-		if (this.isLoggedIn()) {
+		if (Utils.isLoggedIn()) {
 			return (
 				<li><a href="#" id="logout-link" onClick={this.logout}>Logout</a></li>
 			)
@@ -60,10 +61,6 @@ export default class Menubar extends Component {
 				<li><a href="/#/login">Login</a></li>
 			)
 		}
-	}
-
-	isLoggedIn() {
-		return localStorage.getItem("userToken") != null;
 	}
 
 	logout(e) {

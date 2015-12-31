@@ -106,14 +106,16 @@ export default React.createClass({
 	},
 
 	getEditAuthorLink(author) {
-		return (
-			<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-		)
+		if (Utils.isLoggedIn()) {
+			return (
+				<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+			)
+		}
 	},
 
 	getRemoveAuthorLink(author) {
 
-		if (author.amount === 0) {
+		if (author.amount === 0 && Utils.isLoggedIn()) {
 			return (
 				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			) 

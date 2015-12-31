@@ -2,6 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
+import * as Utils from '../utils';
 
 export default React.createClass({
 
@@ -40,9 +41,11 @@ export default React.createClass({
 	},
 
 	getEditBookLink(book) {
-		return (
-			<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-		)
+		if (Utils.isLoggedIn() ) {
+			return (
+				<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+			)
+		}
 	},
 
 	loadBookInfo(bookId, e) {

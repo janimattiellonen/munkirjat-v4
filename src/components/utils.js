@@ -78,3 +78,7 @@ export function filter(items, searchTerm, fields) {
 
 	return List(results).map(a => a.entry);
 }
+
+export function isLoggedIn() {
+	return localStorage.getItem("userToken") != null;
+}

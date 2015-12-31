@@ -31,7 +31,7 @@ See files `.env` and `src/config.js`:
 
 * `AUTH0_CLIENT_ID=`
 * `AUTH0_CLIENT_SECRET=`
-* `AUTH0_DOMAIN=munkirjat.eu.auth0.com`
+* `AUTH0_DOMAIN=`
 * `'auth0': {
         'client_id': '',
         'domain': ''

@@ -25,7 +25,7 @@ server.use(restify.bodyParser());
 let authorService = new AuthorService();
 let bookService = new BookService();
 
-server.get('/book/:id', function(req, res) {    
+server.get('/api/book/:id', function(req, res) {    
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -46,12 +46,12 @@ server.get('/book/:id', function(req, res) {
     });
 });
 
-server.get('/protected', authenticate, function( req, res) {
+server.get('/api/protected', authenticate, function( req, res) {
     res.charSet('utf8');
     res.send(200, {status: "AUTHENTICATED"});
 });
 
-server.get('/books/:mode', function (req, res) {
+server.get('/api/books/:mode', function (req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -107,7 +107,7 @@ server.get('/books/:mode', function (req, res) {
     });
 });
 
-server.post('/book', authenticate, function(req, res) {
+server.post('/api/book', authenticate, function(req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -152,7 +152,7 @@ server.post('/book', authenticate, function(req, res) {
 
 });
 
-server.put('book/:id', authenticate, function(req, res) {
+server.put('/api/book/:id', authenticate, function(req, res) {
     var connection = getConnection();
     bookService.setConnection(connection);
 
@@ -195,7 +195,7 @@ server.put('book/:id', authenticate, function(req, res) {
     });
 });
 
-server.del('/author/:id', authenticate, function(req, res) {
+server.del('/api/author/:id', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 
@@ -212,7 +212,7 @@ server.del('/author/:id', authenticate, function(req, res) {
     });
 });
 
-server.post('/author', authenticate, function(req, res) {
+server.post('/api/author', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
     let newAuthor = {
@@ -249,7 +249,7 @@ server.post('/author', authenticate, function(req, res) {
     });
 });
 
-server.put('/author/:id', authenticate, function(req, res) {
+server.put('/api/author/:id', authenticate, function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 
@@ -291,14 +291,14 @@ function loadAuthorWithBooks(authorId, connection, res) {
     });
 }
 
-server.get('/author/:id', function(req, res) {
+server.get('/api/author/:id', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
     
     loadAuthorWithBooks(req.params.id, connection, res);
 });
 
-server.get('/authors/:term', function(req, res) {
+server.get('/api/authors/:term', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 
@@ -315,7 +315,7 @@ server.get('/authors/:term', function(req, res) {
     });
 });
 
-server.get('/authors', function(req, res) {
+server.get('/api/authors', function(req, res) {
     var connection = getConnection();
     authorService.setConnection(connection);
 

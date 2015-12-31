@@ -13,53 +13,43 @@ function getAuthorizationHeaders() {
 var headers = getAuthorizationHeaders();
 
 export default {
-
-	testProtected() {
-		return axios.get('/protected', {
-			headers: {
-				'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-			}
-		})
-	},
-
 	removeAuthor(id) {
-		return axios.delete('/author/' + id, headers).then(res => res.data);
+		return axios.delete('/api/author/' + id, headers).then(res => res.data);
 	},
 
 	saveAuthor(author) {
-		return axios.post('/author', author, headers).then(res => res.data);
+		return axios.post('/api/author', author, headers).then(res => res.data);
 	},
 
 	updateAuthor(author) {
-		return axios.put('/author/' + author.id, author, headers).then(res => res.data);
+		return axios.put('/api/author/' + author.id, author, headers).then(res => res.data);
 	},
 
 	getAuthor(id) {
-		return axios.get('/author/' + id).then(res => res.data);
+		return axios.get('/api/author/' + id).then(res => res.data);
 	},
 
 	getAuthors() {
-		return axios.get('/authors').then(res => List(res.data));
+		return axios.get('/api/authors').then(res => List(res.data));
 	},
 
 	searchAuthors(term) {
-		return axios.get('/authors/' + term).then(res => List(res.data));
+		return axios.get('/api/authors/' + term).then(res => List(res.data));
 	},
 
 	getBook(id) {
-		return axios.get('/book/' + id).then(res => res.data);
+		return axios.get('/api/book/' + id).then(res => res.data);
 	},
 
 	getBooks: (mode = null) => {
-		return axios.get('/books/' + mode).then(res => List(res.data));
+		return axios.get('/api/books/' + mode).then(res => List(res.data));
 	},
 
 	saveBook(book) {
-		return axios.post('/book', book, headers).then(res => res.data);
+		return axios.post('/api/book', book, headers).then(res => res.data);
 	},
 
 	updateBook(book) {
-		return axios.put('/book/' + book.id, book, headers).then(res => res.data);
+		return axios.put('/api/book/' + book.id, book, headers).then(res => res.data);
 	}
-
 };

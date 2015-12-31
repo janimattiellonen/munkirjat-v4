@@ -1,19 +1,19 @@
-var config 	= require('./config');
-var restify = require('restify');
-var http 	= require('follow-redirects').http;
-var uuid 	= require('node-uuid');
-var server 	= restify.createServer();
-var mysql 	= require('mysql');
-var AuthorService = require('./components/service/AuthorService');
-var BookService = require('./components/service/BookService');
-var Immutable = require('immutable');
-var Utils   = require('./components/utils');
-var jwt     = require('restify-jwt');
-var dotenv = require('dotenv');
+import config from './config';
+import restify from 'restify';
+import {http} from 'follow-redirects';
+import uuid from 'node-uuid';
+let server = restify.createServer();
+import mysql from 'mysql';
+import AuthorService from './components/service/AuthorService';
+import BookService from './components/service/BookService';
+import Immutable from 'immutable';
+import Utils from './components/utils';
+import jwt from 'restify-jwt';
+import dotenv from 'dotenv';
 
 dotenv.load();
 
-var authenticate = jwt({
+let authenticate = jwt({
   secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
   audience: process.env.AUTH0_CLIENT_ID
 });
@@ -26,7 +26,7 @@ let authorService = new AuthorService();
 let bookService = new BookService();
 
 server.get('/api/book/:id', function(req, res) {    
-    var connection = getConnection();
+    let connection = getConnection();
     bookService.setConnection(connection);
 
     let id = req.params.id;
@@ -52,7 +52,7 @@ server.get('/api/protected', authenticate, function( req, res) {
 });
 
 server.get('/api/books/:mode', function (req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     bookService.setConnection(connection);
 
     let mode = req.params.mode;
@@ -64,7 +64,7 @@ server.get('/api/books/:mode', function (req, res) {
             return;
         }
 
-        let books = Immutable.Map();
+        let books = Immutable.OrderedMap();
 
         result.map(row => {
             let book = books.get(row.id)
@@ -108,7 +108,7 @@ server.get('/api/books/:mode', function (req, res) {
 });
 
 server.post('/api/book', authenticate, function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     bookService.setConnection(connection);
 
     const {params} = req;
@@ -153,7 +153,7 @@ server.post('/api/book', authenticate, function(req, res) {
 });
 
 server.put('/api/book/:id', authenticate, function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     bookService.setConnection(connection);
 
     const {params} = req;
@@ -196,7 +196,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
 });
 
 server.del('/api/author/:id', authenticate, function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
 
     authorService.removeAuthor(req.params.id, function(err, result) {
@@ -213,7 +213,7 @@ server.del('/api/author/:id', authenticate, function(req, res) {
 });
 
 server.post('/api/author', authenticate, function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
     let newAuthor = {
         firstname: req.params.firstname,
@@ -250,7 +250,7 @@ server.post('/api/author', authenticate, function(req, res) {
 });
 
 server.put('/api/author/:id', authenticate, function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
 
     let updatedAuthor = {
@@ -292,14 +292,14 @@ function loadAuthorWithBooks(authorId, connection, res) {
 }
 
 server.get('/api/author/:id', function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
     
     loadAuthorWithBooks(req.params.id, connection, res);
 });
 
 server.get('/api/authors/:term', function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
 
     authorService.searchAuthors(req.params.term, function(err, result) {
@@ -316,7 +316,7 @@ server.get('/api/authors/:term', function(req, res) {
 });
 
 server.get('/api/authors', function(req, res) {
-    var connection = getConnection();
+    let connection = getConnection();
     authorService.setConnection(connection);
 
     authorService.getAllAuthors(function(err, result) {
@@ -347,7 +347,7 @@ function handleError(err, res) {
 }
 
 function getConnection() {
-    var connection = mysql.createConnection({
+    let connection = mysql.createConnection({
         host: config.db.host,
         user: config.db.user,
         password: config.db.password,

@@ -75,7 +75,7 @@ export default React.createClass({
 						<li><a href={'/#/books/' + mode + '/fi'}>Finnish</a> | </li>
 						<li><a href={'/#/books/' + mode + '/se'}>Swedish</a> | </li>
 						<li><a href={'/#/books/' + mode + '/en'}>English</a> | </li>
-						<li><a href={'/#/books/' + mode}>None</a></li>
+						<li><a href={'/#/books/' + mode}>All</a></li>
 					</ul>
 				</div>
 

@@ -37,7 +37,7 @@ export default class LoginViewContainer extends Component {
             }
 
             if (authHash.error) {
-                console.log("Error signing in", authHash);
+                console.log('Error signing in', authHash);
             }
         }
 

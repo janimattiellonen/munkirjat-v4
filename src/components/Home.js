@@ -1,6 +1,6 @@
-import React from "react";
-import {List} from "immutable";
-import Api from "../api";
+import React from 'react';
+import {List} from 'immutable';
+import Api from '../api';
 import Stats from "./Stats";
 import StatsList from "./dumb/StatsList";
 
@@ -60,32 +60,27 @@ export default React.createClass({
 
 	renderAuthorItem(item) {
 		if (null === item) {
-			console.log("renderAuthorItem is empty");
 			return "";
 		}
 
 		return (
-			<a href={"/#/author/" + item.id}>{item.name + " (" + item.amount + ")"}</a>
+			<a href={'/#/author/' + item.id}>{item.name + ' (' + item.amount + ')'}</a>
 		)
 	},
 
 	renderBookItem(item) {
 		if (null === item) {
-			console.log("renderBookItem is empty");
 			return "";
 		}
 
 		return (
-			<a href={"/#/book/" + item.id}>{item.title}</a>
+			<a href={'/#/book/' + item.id}>{item.title}</a>
 		)
 	},
 
 	currentlyReading(book) {
 		if (null === book) {
 			return '<p>Nothing at the moment</p>';
-		} else {
-			return "<div>lll</div>";
-		}
+		} 
 	}
-
 });

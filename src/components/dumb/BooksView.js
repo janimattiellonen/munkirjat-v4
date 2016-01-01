@@ -17,7 +17,7 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			mode: undefined,
-			searchTerm: "",
+			searchTerm: '',
 			search: false
 		}
 	},
@@ -27,7 +27,7 @@ export default React.createClass({
 
 		this.setState({
 			search: searchTerm.length > 0,
-			searchTerm: searchTerm.length > 0 ? searchTerm : ""
+			searchTerm: searchTerm.length > 0 ? searchTerm : ''
 		});
 	},
 
@@ -72,10 +72,10 @@ export default React.createClass({
 				<div className={classNames("sort-box", {"hidden": this.state.search})}>
 					<span>By language: </span>
 					<ul className="horizontal-list">
-						<li><a href={"/#/books/" + mode + "/fi"}>Finnish</a> | </li>
-						<li><a href={"/#/books/" + mode + "/se"}>Swedish</a> | </li>
-						<li><a href={"/#/books/" + mode + "/en"}>English</a> | </li>
-						<li><a href={"/#/books/" + mode}>None</a></li>
+						<li><a href={'/#/books/' + mode + '/fi'}>Finnish</a> | </li>
+						<li><a href={'/#/books/' + mode + '/se'}>Swedish</a> | </li>
+						<li><a href={'/#/books/' + mode + '/en'}>English</a> | </li>
+						<li><a href={'/#/books/' + mode}>None</a></li>
 					</ul>
 				</div>
 

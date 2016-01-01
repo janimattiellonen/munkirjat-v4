@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from "lodash";
+import _ from 'lodash';
 import {Button, Modal} from 'react-bootstrap';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ export default React.createClass({
 		return {
 			showModal: false,
 			removableId: null,
-			searchTerm: "",
+			searchTerm: '',
 			search: false
 		}
 	},
@@ -36,7 +36,7 @@ export default React.createClass({
 
 		this.setState({
 			search: searchTerm.length > 0,
-			searchTerm: searchTerm.length > 0 ? searchTerm : ""
+			searchTerm: searchTerm.length > 0 ? searchTerm : ''
 		});
 	},
 
@@ -58,7 +58,7 @@ export default React.createClass({
 			<div className="component">
 				<h1>Authors</h1>
 
-				<div className={classNames("sort-box", {"hidden": this.state.search})}>
+				<div className={classNames('sort-box', {'hidden': this.state.search})}>
 					<span>Sort by: </span>
 					<ul className="horizontal-list">
 						<li><a href="#" onClick={this.onSortByAuthorName}>author name</a> | </li>
@@ -101,14 +101,14 @@ export default React.createClass({
 
 	getViewAuthorLink(author) {
 		return (
-			<a key={"view-" + author.id} href={"/#/author/" + author.id}>{author.name}</a>
+			<a key={'view-' + author.id} href={'/#/author/' + author.id}>{author.name}</a>
 		)
 	},
 
 	getEditAuthorLink(author) {
 		if (Utils.isLoggedIn()) {
 			return (
-				<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<a key={'edit-' + author.id} href={'/#/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 			)
 		}
 	},
@@ -120,7 +120,7 @@ export default React.createClass({
 				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			) 
 		} else {
-			return "";
+			return '';
 		}
 	},	
 

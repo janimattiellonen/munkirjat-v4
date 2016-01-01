@@ -5,10 +5,9 @@ import history from '../history';
 export default class LoginView extends Component {
   	showLock() {
 
-		let self = this;
     	this.props.lock.show(function(err, profile, id_token) {
 		  	if (err) {
-		    	console.log("There was an error :/", err);
+		    	console.log('There was an error :/', err);
 		    	return;
 		  	}
 
@@ -19,10 +18,8 @@ export default class LoginView extends Component {
 
 	render() {
 		return (
-			<div>
-				<p>Login</p>
-
-				<a onClick={::this.showLock} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
+			<div className="component">
+				<a onClick={::this.showLock} className="btn btn-primary btn-lg btn-login">Sign In</a>
 			</div>
 		)
 	}

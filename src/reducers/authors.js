@@ -2,13 +2,6 @@ import { handleActions } from 'redux-actions';
 import { List, Map} from 'immutable';
 import _ from 'lodash';
 
-const defaultState = Map({
-    authors: List(),
-    books: List(),
-    book: {},
-    author: {}
-});
-
 function sortAuthors(authors) {
 	return _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
 }

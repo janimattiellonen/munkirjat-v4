@@ -1,11 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, ButtonGroup} from 'react-bootstrap';
-import Select from "react-select";
+import Select from 'react-select';
 import moment from 'moment';
 import numeral from 'numeral';
 import Immutable from 'immutable';
-import * as Utils from '../utils';
-import Api from "../../api";
+import Api from '../../api';
 import _ from 'underscore';
 import jqueryui from 'jquery-ui';
 
@@ -110,10 +109,9 @@ export default class BookForm extends Component {
 	}
 
 	handleChange(e, name, field) {
-		let nextState = {}
 		let value = null;
 
-		if (e.target.type == "checkbox") {
+		if (e.target.type == 'checkbox') {
 			value = e.target.checked;
 		} else {
 			value = e.target.value;
@@ -139,7 +137,7 @@ export default class BookForm extends Component {
 	componentDidMount() {
 		let self = this;
 		let datePickerConfig = {
-			dateFormat: "dd.mm.yy"
+			dateFormat: 'dd.mm.yy'
 		};
 
 		$('#startedReading').datepicker(datePickerConfig).on('change', function(e) {

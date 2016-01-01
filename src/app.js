@@ -1,30 +1,25 @@
-import $ from "jquery";
+import $ from 'jquery';
 
 window.jQuery = require('jquery');
 window.$ = window.jQuery;
 
-import React from "react";
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
 import history from './components/history';
 
-import MunkirjatAppContainer from "./components/smart/MunkirjatAppContainer";
-import About from "./components/AboutView";
-import HomeContainer from "./components/smart/HomeContainer";
-import NewAuthorViewContainer from "./components/smart/NewAuthorViewContainer";
-import UpdateAuthorViewContainer from "./components/smart/UpdateAuthorViewContainer";
-import AuthorViewContainer from "./components/smart/AuthorViewContainer";
-import AuthorsViewContainer from "./components/smart/AuthorsViewContainer";
-import BookViewContainer from "./components/smart/BookViewContainer";
-import BooksViewContainer from "./components/smart/BooksViewContainer";
-import NewBookViewContainer from "./components/smart/NewBookViewContainer";
-import UpdateBookViewContainer from "./components/smart/UpdateBookViewContainer";
-import LoginViewContainer from "./components/smart/LoginViewContainer";
-
-import GameView from "./components/GameView";
-import PlayerSelectionView from "./components/Game/PlayerSelectionView";
-import ConfirmSelectionsView from "./components/Game/ConfirmSelectionsView";
-import GamePlayView from "./components/Game/GamePlayView";
+import MunkirjatAppContainer from './components/smart/MunkirjatAppContainer';
+import About from './components/AboutView';
+import HomeContainer from './components/smart/HomeContainer';
+import NewAuthorViewContainer from './components/smart/NewAuthorViewContainer';
+import UpdateAuthorViewContainer from './components/smart/UpdateAuthorViewContainer';
+import AuthorViewContainer from './components/smart/AuthorViewContainer';
+import AuthorsViewContainer from './components/smart/AuthorsViewContainer';
+import BookViewContainer from './components/smart/BookViewContainer';
+import BooksViewContainer from './components/smart/BooksViewContainer';
+import NewBookViewContainer from './components/smart/NewBookViewContainer';
+import UpdateBookViewContainer from './components/smart/UpdateBookViewContainer';
+import LoginViewContainer from './components/smart/LoginViewContainer';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';

@@ -3,6 +3,7 @@ import { List } from 'immutable';
 import Noty from '../components/Noty';
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
 import history from '../components/history';
+import * as Errors from './Errors';
 
 export function deleteAuthor(id) {
 	return {
@@ -23,13 +24,12 @@ export function sortByAuthorName() {
 	}
 }
 
-
 export function removeAuthor(id) {
 	return function(dispatch, getState) {
 		api.removeAuthor(id).then(result => {
 			dispatch(deleteAuthor(id));
 			Noty.info('Author removed');
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -63,7 +63,7 @@ export function updateAuthor(author) {
 		api.updateAuthor(author).then(author => {
 			dispatch(replaceAuthor(author));
 			Noty.info('Author updated');
-		});
+		}).catch(Errors.handleError);
 	}
 }
 
@@ -78,7 +78,7 @@ export function fetchAuthor(id) {
 	return function(dispatch, getState) {
 		api.getAuthor(id).then(author => {
 			dispatch(setAuthor(author));
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -86,7 +86,7 @@ export function fetchAuthors() {
 	return function(dispatch, getState) {
 		api.getAuthors().then(authors => {
 			dispatch(setAuthors(authors));
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -103,13 +103,13 @@ export function createAuthor(author) {
 			dispatch(addAuthor(author));
 			history.replaceState(null, '/authors');
 			Noty.info('Author Created');
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
 export function searchAuthors(input) {
 	return function(dispatch, getState) {
 		api.searchAuthors(input).then(authors => {
-		});
+		}).catch(Errors.handleError);
 	}
 }

@@ -1,6 +1,7 @@
 import api from '../api';
 import history from '../components/history';
 import Noty from '../components/Noty';
+import * as Errors from './Errors';
 
 export function addBook(book) {
 	return {
@@ -35,7 +36,7 @@ export function fetchBookInfo(bookId) {
 	return function(dispatch, getState) {
 		api.getBook(bookId).then(book => {
 			dispatch(setBookInfo(book));
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -59,7 +60,7 @@ export function createBook(book) {
 		api.saveBook(book).then(book => {
 			dispatch(addBook(book));
 			history.pushState(null, '/book/' + book.id);
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -69,6 +70,6 @@ export function updateBook(book) {
 		api.updateBook(book).then(book => {
 			dispatch(replaceBook(book));
 			Noty.info('Book updated');
-		});
+		}).catch(Errors.handleError);
 	}
 }

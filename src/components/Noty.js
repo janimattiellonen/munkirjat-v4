@@ -6,6 +6,10 @@ export default class Noty {
 		this.message(text, 'information');
 	}
 
+	static error(text) {
+		this.message(text, 'error');
+	}
+
 	static message(text, type) {
 		noty({
 			text: text,

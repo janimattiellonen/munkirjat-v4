@@ -18,10 +18,8 @@ export default class LoginView extends Component {
 
 	render() {
 		return (
-			<div>
-				<p>Login</p>
-
-				<a onClick={::this.showLock} className="btn btn-primary btn-lg btn-login btn-block">Sign In</a>
+			<div className="component">
+				<a onClick={::this.showLock} className="btn btn-primary btn-lg btn-login">Sign In</a>
 			</div>
 		)
 	}

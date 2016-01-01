@@ -19,7 +19,7 @@ export default class AuthorForm extends Component {
 		let nextState = {}
 		let value = null;
 
-		if (e.target.type == "checkbox") {
+		if (e.target.type == 'checkbox') {
 			value = e.target.checked;
 		} else {
 			value = e.target.value;

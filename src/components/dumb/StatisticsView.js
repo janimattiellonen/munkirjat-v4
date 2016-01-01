@@ -83,18 +83,18 @@ export default React.createClass({
 	},
 
 	getTimeTakenToReadAllUnreadBooks() {
-		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books)).format("0.00") + " year(s)";
+		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(this.props.books)).format('0.00') + ' year(s)';
 	},
 
 	getAverageBookPrice(books) {
 		let avg = Stats.getAverageBookPrice(this.props.books);
-		return avg > 0 ? numeral(avg).format("0.00") + "€" : "0€";
+		return avg > 0 ? numeral(avg).format('0.00') + '€' : '0€';
 	},
 
 	getMoneySpentOnBooks() {
 		let sum = Stats.getMoneySpentOnBooks(this.props.books);
 
-		return sum > 0 ? numeral(sum).format("0.00") + "€" : "0€";
+		return sum > 0 ? numeral(sum).format('0.00') + '€' : '0€';
 	},
 
 	getPagesReadSoFar() {
@@ -102,13 +102,10 @@ export default React.createClass({
 	},
 
 	formatDays(days, isDecimal = false) {
-
-		let suffix = days > 1 ? " days" : " day";
-
 		if (isDecimal) {
-			days = numeral(days).format("0.00");
+			days = numeral(days).format('0.00');
 		}
 
-		return days > 1 ? days + " days" : days + " day";
+		return days > 1 ? days + ' days' : days + ' day';
 	}		
 });

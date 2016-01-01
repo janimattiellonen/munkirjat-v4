@@ -42,7 +42,6 @@ export default class MunkirjatApp extends React.Component {
         console.log("MunkirjatApp::setupAjax");
         $.ajaxSetup({
             'beforeSend': function(xhr) {
-                console.log("ajaxSetup::beforeSend");
                 if (localStorage.getItem('userToken')) {
                     xhr.setRequestHeader('Authorization',
                     'Bearer ' + localStorage.getItem('userToken'));

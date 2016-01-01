@@ -5,10 +5,9 @@ import history from '../history';
 export default class LoginView extends Component {
   	showLock() {
 
-		let self = this;
     	this.props.lock.show(function(err, profile, id_token) {
 		  	if (err) {
-		    	console.log("There was an error :/", err);
+		    	console.log('There was an error :/', err);
 		    	return;
 		  	}
 

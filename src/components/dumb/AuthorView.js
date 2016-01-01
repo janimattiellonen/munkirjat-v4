@@ -1,6 +1,6 @@
 import React from 'react';
 import Immutable from 'immutable';
-import _ from "lodash";
+import _ from 'lodash';
 import BooksList from './BooksList';
 import BookInfoView from './BookInfoView';
 import * as Utils from '../utils';
@@ -51,7 +51,7 @@ export default React.createClass({
 		if (Utils.isLoggedIn()) {
 			const {author} = this.props;
 			return (
-				<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<a key={'edit-' + author.id} href={'/#/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 			)
 		}
 	},

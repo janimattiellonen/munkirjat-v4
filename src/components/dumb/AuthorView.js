@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import _ from "lodash";
 import BooksList from './BooksList';
 import BookInfoView from './BookInfoView';
+import * as Utils from '../utils';
 
 export default React.createClass({
 
@@ -33,7 +34,7 @@ export default React.createClass({
                     }
                 )}
 				<h1>Author</h1>
-				{author.name} <a href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>  
+				{author.name} {this.getEditAuthorLink()}  
 
 				{this.getRemoveAuthorLink()}
 				
@@ -46,15 +47,25 @@ export default React.createClass({
 		);
 	},
 
-	getRemoveAuthorLink() {
-		const {author} = this.props;
-
-		if (!author.books || author.books && author.books.count() == 0) {
+	getEditAuthorLink(author) {
+		if (Utils.isLoggedIn()) {
+			const {author} = this.props;
 			return (
-				<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-			) 
-		} else {
-			return "";
+				<a key={"edit-" + author.id} href={"/#/author/" + author.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+			)
+		}
+	},
+
+	getRemoveAuthorLink() {
+
+		if (Utils.isLoggedIn()) {
+			const {author} = this.props;
+
+			if (!author.books || author.books && author.books.count() == 0) {
+				return (
+					<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+				) 
+			} 
 		}
 	},
 

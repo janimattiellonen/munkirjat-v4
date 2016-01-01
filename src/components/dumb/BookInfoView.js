@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
 
-import * as utils from '../utils';
+import * as Utils from '../utils';
 
 export default React.createClass({
 
@@ -27,7 +27,7 @@ export default React.createClass({
 
 				<div className="row">
 					<div className="title">Language</div>
-					<div>{utils.language(book.language_id)}</div>
+					<div>{Utils.language(book.language_id)}</div>
 				</div>
 				
 				<div className="row">
@@ -37,32 +37,34 @@ export default React.createClass({
 
 				<div className="row">
 					<div className="title">Price</div>
-					<div>{utils.money(book.price)}</div>
+					<div>{Utils.money(book.price)}</div>
 				</div>
 				
 				<div className="row">
 					<div className="title">Is read</div>
-					<div>{utils.yes_no(book.is_read)}</div>
+					<div>{Utils.yes_no(book.is_read)}</div>
 				</div>
 
 
 				<div className="row">
 					<div className="title">Started reading</div>
-					<div>{utils.date_format(book.started_reading)}</div>
+					<div>{Utils.date_format(book.started_reading)}</div>
 				</div>
 
 				<div className="row">
 					<div className="title">Finished reading</div>
-					<div>{utils.date_format(book.finished_reading)}</div>
+					<div>{Utils.date_format(book.finished_reading)}</div>
 				</div>
 			</div>
 		);
 	},
 
 	getEditBookLink(book) {
-		return (
-			<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-		)
+		if (Utils.isLoggedIn() ) {
+			return (
+				<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+			)
+		}
 	},
 
 	getTitleElement(book) {

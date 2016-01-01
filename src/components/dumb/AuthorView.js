@@ -34,9 +34,9 @@ export default React.createClass({
                     }
                 )}
 				<h1>Author</h1>
-				{author.name} {this.getEditAuthorLink()}  
+				{author.name} {this.getEditAuthorLink(author)}  
 
-				{this.getRemoveAuthorLink()}
+				{this.getRemoveAuthorLink(author)}
 				
 				<h2>Books</h2>
 
@@ -56,11 +56,8 @@ export default React.createClass({
 		}
 	},
 
-	getRemoveAuthorLink() {
-
+	getRemoveAuthorLink(author) {
 		if (Utils.isLoggedIn()) {
-			const {author} = this.props;
-
 			if (!author.books || author.books && author.books.count() == 0) {
 				return (
 					<a href="#" onClick={this.onAuthorRemove.bind(this, author.id)}><span className="glyphicon glyphicon-remove" aria-hidden="true"></span></a>

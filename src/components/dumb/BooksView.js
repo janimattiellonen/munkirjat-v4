@@ -5,7 +5,6 @@ import BooksList from './BooksList';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
 import {List} from 'immutable';
-
 import * as Utils from '../utils';
 
 

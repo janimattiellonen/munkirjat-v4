@@ -71,11 +71,25 @@ export default React.createClass({
 	},
 
 	getSlowestReadTime() {
-		return this.formatDays(Stats.getSlowestReadTime(this.props.books));
+		const {book, readTime} = Stats.getSlowestReadTime(this.props.books);
+
+		return this.getBookLink(book, this.formatDays(readTime));
 	},	
 
 	getFastestReadTime() {
-		return this.formatDays(Stats.getFastestReadTime(this.props.books));
+		const {book, readTime} = Stats.getFastestReadTime(this.props.books);
+
+		return this.getBookLink(book, this.formatDays(readTime));
+	},
+
+	getBookLink(book, title) {
+		if (null != book) {
+			return (
+				<a href={'/#/book/' + book.id}>{title}</a>
+			)	
+		} else {
+			return 0;
+		}
 	},
 
 	getAverageReadTime() {

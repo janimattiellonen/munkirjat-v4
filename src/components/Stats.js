@@ -59,6 +59,7 @@ export default class Stats {
 
 	static getSlowestReadTime(books) {
 		let readTime = null;
+		let slowestBook = null;
 
 		this.getReadBooks(books).map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
@@ -67,15 +68,20 @@ export default class Stats {
 				
 				if (null == readTime || endDate.diff(startDate) > readTime) {
 					readTime = endDate.diff(startDate);
+					slowestBook = book;
 				}
 			}
 		});
 
-		return readTime / 1000 / 86400;
+		return {
+			readTime: readTime / 1000 / 86400,
+			book: slowestBook 
+		}
 	}
 
 	static getFastestReadTime(books) {
 		let readTime = null;
+		let fastestBook = null;
 
 		this.getReadBooks(books).map(book => {
 			if (null != book.started_reading && null != book.finished_reading) {
@@ -84,11 +90,15 @@ export default class Stats {
 				
 				if (null == readTime || endDate.diff(startDate) < readTime) {
 					readTime = endDate.diff(startDate);
+					fastestBook = book;
 				}
 			}
 		});
 
-		return readTime / 1000 / 86400;
+		return {
+			readTime: readTime / 1000 / 86400,
+			book: fastestBook 
+		}
 	}
 
 	static getAverageReadTime(books) {

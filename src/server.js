@@ -341,7 +341,7 @@ server.get('/api/authors', function(req, res) {
     let connection = getConnection();
     authorService.setConnection(connection);
 
-    authorService.searchAuthors(function(err, result) {
+    authorService.getAllAuthors(function(err, result) {
         if (err) {
             handleError(err, res);
             connection.end();

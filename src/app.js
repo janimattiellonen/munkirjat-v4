@@ -20,6 +20,7 @@ import BooksViewContainer from './components/smart/BooksViewContainer';
 import NewBookViewContainer from './components/smart/NewBookViewContainer';
 import UpdateBookViewContainer from './components/smart/UpdateBookViewContainer';
 import LoginViewContainer from './components/smart/LoginViewContainer';
+import GenresViewContainer from './components/smart/GenresViewContainer';
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
@@ -50,6 +51,7 @@ ReactDOM.render(
 				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
 				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />
 				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
+				<Route name="listGenres" path="genres" component={GenresViewContainer} />
 				<Route name="login" path="login" component={LoginViewContainer} />
 				<Route name="afterLogin" path="access_token/:id" component={LoginViewContainer} />
 	        </Route>

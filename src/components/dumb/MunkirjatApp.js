@@ -27,7 +27,7 @@ export default class MunkirjatApp extends React.Component {
     componentWillMount() {
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
-       // this.setupAjax();
+        this.props.genreActions.fetchGenres();
     }
 
     componenDidMount() {
@@ -36,17 +36,5 @@ export default class MunkirjatApp extends React.Component {
         $( document ).ajaxSend(function() {
             self.setupAjax();
         });
-    }
-
-    setupAjax() {
-        console.log("MunkirjatApp::setupAjax");
-        $.ajaxSetup({
-            'beforeSend': function(xhr) {
-                if (localStorage.getItem('userToken')) {
-                    xhr.setRequestHeader('Authorization',
-                    'Bearer ' + localStorage.getItem('userToken'));
-                }
-            }
-        });
-    }        
+    }     
 }

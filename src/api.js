@@ -56,4 +56,8 @@ export default {
 	searchGenres(term) {
 		return axios.get('/api/genres/' + term).then(res => List(res.data));
 	},
+
+	getGenres() {
+		return axios.get('/api/genres').then(res => List(res.data));
+	}
 };

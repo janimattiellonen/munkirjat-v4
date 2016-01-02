@@ -5,6 +5,19 @@ export default class GenreService {
         this.connection = connection;
     }
 
+    getAllGenres(callback) {
+        this.connection.query(
+            `SELECT
+                g.id,
+                g.name
+            FROM
+                xi_tag AS g 
+            ORDER BY 
+                g.name ASC`,
+            callback
+        );
+    }
+
 	searchGenres(term, callback) {
         let query = `SELECT
               g.id,

@@ -177,21 +177,6 @@ export default class BookService {
         );
     }
 
-    getGenresFor(bookId) {
-        this.connection.query(
-            `SELECT
-                g.id,
-                g.name,
-            FROM
-                xi_tag AS g
-                JOIN xi_tagging AS bg ON bg.tag_id = g.id
-            WHERE
-                bg.resource_id = :bookId`,
-            {bookId: bookId},
-            callback
-        );
-    }
-
     getBooks(mode, callback) {
         switch (mode) {
             case 'read': 

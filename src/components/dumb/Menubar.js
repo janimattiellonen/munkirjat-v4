@@ -20,13 +20,16 @@ export default class Menubar extends Component {
 		                <ul className="nav navbar-nav">
 		                    <li><a href="/#">Home</a></li>
 		                    <li><a href="/#/about">About</a></li>
-		                    <li><a href="/#books">Books</a></li>
-		                    <li><a href="/#books/read">Read books</a></li>
-		                    <li><a href="/#books/unread">Unread books</a></li>
-		                    <li><a href="/#authors">Authors</a></li>
+		                    <li><a href="/#/books">Books</a></li>
+		                    <li><a href="/#/books/read">Read books</a></li>
+		                    <li><a href="/#/books/unread">Unread books</a></li>
+		                    <li><a href="/#/authors">Authors</a></li>
 
 		                    {this.renderNewBookMenuitem()}
 		                    {this.renderNewAuthorMenuitem()}
+
+		                    <li><a href="/#/genres">Genres</a></li>
+
 		                    {this.renderUserMenuitem()}
 		                </ul>
 		            </div>

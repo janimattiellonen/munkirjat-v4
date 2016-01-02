@@ -354,10 +354,27 @@ server.get('/api/authors', function(req, res) {
     });
 });
 
+server.get('/api/genres', function(req, res) {
+    let connection = getConnection();
+    genreService.setConnection(connection);
+
+    genreService.getAllGenres((err, result) => {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+        
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    });
+});
+
 server.get('/api/genres/:term', function(req, res) {
     let connection = getConnection();
     genreService.setConnection(connection);
-    console.log("/api/genres/" + req.params.term);
+
     genreService.searchGenres(req.params.term, function(err, result) {
         if (err) {
             handleError(err, res);

@@ -24,10 +24,5 @@ export default React.createClass({
 
 	componentDidMount() {
 		this.props.bookActions.fetchBookInfo(this.props.params.id);	
-	},
-/*
-	shouldComponentUpdate(nextProps, nextState) {
-		return this.props.book.id == null;
-	},
-*/
+	}
 });

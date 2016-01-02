@@ -26,6 +26,7 @@ NewBookViewContainer.defaultProps = {
         title: null,
         language: null,
         authors: null,
+        genres: null,
         pageCount: null,
         price: null,
         isRead: false,

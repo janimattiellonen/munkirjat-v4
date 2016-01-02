@@ -23,6 +23,8 @@ export default React.createClass({
 			<div className="book-info col-md-12 component">
 				{this.getTitleElement(book)}
 
+				<p>{this.renderAuthors(book)}</p>
+
 				<p>{this.getEditBookLink(book)}</p> 
 
 				<div className="row">
@@ -57,6 +59,20 @@ export default React.createClass({
 				</div>
 			</div>
 		);
+	},
+
+	renderAuthors(book) {
+		if (null != book.authors) {
+			return (
+				<ul>
+					{book.authors.map(author => {
+						return (
+							<li>{author.name}</li>	
+						)
+					})}
+				</ul>
+			)
+		}
 	},
 
 	getEditBookLink(book) {

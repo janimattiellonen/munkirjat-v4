@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {OrderedMap} from 'immutable';
 
 export default class BookService {
     constructor(db) {
@@ -45,11 +46,11 @@ export default class BookService {
                 id = :id`,
             {
                 title: book.title,
-                language_id: book.language_id,
-                page_count: book.page_count,
-                is_read: book.is_read,
-                started_reading: book.started_reading,
-                finished_reading: book.finished_reading,
+                language_id: book.language,
+                page_count: book.pageCount,
+                is_read: book.isRead,
+                started_reading: book.startedReading,
+                finished_reading: book.finishedReading,
                 price: book.price,
                 id: id
             },
@@ -161,13 +162,32 @@ export default class BookService {
                 b.started_reading,
                 b.finished_reading,
                 b.rating,
-                b.price
+                b.price,
+                g.id AS genre_id,
+                g.name AS genre_name
             FROM 
                 book AS b LEFT JOIN book_author AS ba ON b.id = ba.book_id
                 LEFT JOIN author AS a ON a.id = ba.author_id
+                LEFT JOIN xi_tagging AS bg ON b.id = bg.resource_id
+                LEFT JOIN xi_tag AS g ON g.id = bg.tag_id
             WHERE
                 b.id = :id`,
             {id: id},
+            callback
+        );
+    }
+
+    getGenresFor(bookId) {
+        this.connection.query(
+            `SELECT
+                g.id,
+                g.name,
+            FROM
+                xi_tag AS g
+                JOIN xi_tagging AS bg ON bg.tag_id = g.id
+            WHERE
+                bg.resource_id = :bookId`,
+            {bookId: bookId},
             callback
         );
     }
@@ -248,7 +268,12 @@ export default class BookService {
     }
 
     createBookObject(result) {
-        let authors = [];
+        if (result.length == 0) {
+            return null;
+        }
+
+        let authors = OrderedMap();
+        let genres = OrderedMap();
         let book = null;
 
         result.map(row => {
@@ -261,23 +286,27 @@ export default class BookService {
                     is_read: row.is_read,
                     started_reading: row.started_reading,
                     finished_reading: row.finished_reading,
-                    price: row.price,
-                    authors: [{
-                        id: row.author_id,
-                        firstname: row.firstname,
-                        lastname: row.lastname,
-                        name: row.author_name
-                    }]
+                    price: row.price
                 };
-            } else {
-                book.authors.push({
-                    id: row.author_id,
-                    firstname: row.firstname,
-                    lastname: row.lastname,
-                    name: row.author_name
-                });
+            } 
+
+            authors = authors.set(row.author_id, {
+                id: row.author_id,
+                firstname: row.firstname,
+                lastname: row.lastname,
+                name: row.author_name
+            });
+
+            if (null != row.genre_id) {
+                genres = genres.set(row.genre_id, {
+                    id: row.genre_id,
+                    name: row.genre_name
+                });   
             }
-        }); 
+        });
+
+        book.authors = authors.toArray();
+        book.genres = genres.toArray();
 
         return book;       
     }

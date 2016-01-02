@@ -1,0 +1,22 @@
+import _ from 'lodash';
+
+export default class GenreService {
+    setConnection(connection) {
+        this.connection = connection;
+    }
+
+	searchGenres(term, callback) {
+        let query = `SELECT
+              g.id,
+              g.name,
+              g.slug
+            FROM
+              xi_tag g
+            WHERE
+              g.name LIKE :term
+            ORDER BY
+              g.name ASC`;
+
+        this.connection.query(query, {term: term + '%'}, callback);
+	}
+}

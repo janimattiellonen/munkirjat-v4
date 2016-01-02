@@ -101,6 +101,48 @@ export default class BookService {
         );
     }
 
+    addGenres(bookId, genres, callback) {
+        let params = {};
+        let placeholders = "";
+
+        genres.map((genreId, i) => {
+            let bookParam = "bookId" + i;
+            let genreParam = "genreId" + i;
+
+            placeholders += "(:" + bookParam + ", :" + genreParam + ", 'book'),";
+
+            params[bookParam] = bookId;
+            params[genreParam] = genreId;
+        });
+
+        let placeHolders = _.trimRight(placeholders, ',');
+        this.connection.query(
+
+            `INSERT INTO xi_tagging (resource_id, tag_id, resource_type) VALUES ${placeHolders}`,
+            params,
+            callback
+        ); 
+    }
+
+    setGenres(id, genres, callback) {
+
+        this.removeGenres(id, (err, result) => {
+            if (err) {
+                throw err;
+            }
+                        
+            this.addGenres(id, genres, callback);
+        });
+    }    
+
+    removeGenres(bookId, callback) {
+        this.connection.query(
+            `DELETE bg FROM xi_tagging AS bg WHERE bg.resource_id = :bookId`,
+            {bookId: bookId},
+            callback
+        );
+    }
+
     getBook(id, callback) {
         this.connection.query(
             `SELECT

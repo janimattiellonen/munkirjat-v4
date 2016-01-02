@@ -6,8 +6,9 @@ let server = restify.createServer();
 import mysql from 'mysql';
 import AuthorService from './components/service/AuthorService';
 import BookService from './components/service/BookService';
+import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
-import Utils from './components/utils';
+import * as Utils from './components/utils';
 import jwt from 'restify-jwt';
 import dotenv from 'dotenv';
 
@@ -24,6 +25,7 @@ server.use(restify.bodyParser());
 
 let authorService = new AuthorService();
 let bookService = new BookService();
+let genreService = new GenreService();
 
 server.get('/api/book/:id', function(req, res) {    
     let connection = getConnection();
@@ -132,10 +134,15 @@ server.post('/api/book', authenticate, function(req, res) {
 
         let createdBookId   = result.insertId;
         let authors         = [];
+        let genres          = [];
 
         req.params.authors.map(author => {
             authors.push(author.value);
         });
+
+        req.params.genres.map(genre => {
+            genres.push(genre.value);
+        });      
 
         bookService.addAuthors(createdBookId, authors, function(err, result) {
             if (err) {
@@ -144,12 +151,18 @@ server.post('/api/book', authenticate, function(req, res) {
                 return;
             }
 
-            res.charSet('utf8');
-            res.send(200, {"status": "OK", "id": createdBookId});
-            connection.end();
+            bookService.addGenres(createdBookId, genres, function(err, result) {
+                if (err) {
+                    handleError(err, res);
+                    connection.end();
+                    return;
+                }                
+                res.charSet('utf8');
+                res.send(200, {"status": "OK", "id": createdBookId});
+                connection.end();
+            });
         });
     });
-
 });
 
 server.put('/api/book/:id', authenticate, function(req, res) {
@@ -319,7 +332,24 @@ server.get('/api/authors', function(req, res) {
     let connection = getConnection();
     authorService.setConnection(connection);
 
-    authorService.getAllAuthors(function(err, result) {
+    authorService.searchAuthors(function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
+        }
+
+        connection.end();
+        res.charSet('utf8');
+        res.send(200, result);
+    });
+});
+
+server.get('/api/genres/:term', function(req, res) {
+    let connection = getConnection();
+    genreService.setConnection(connection);
+    console.log("/api/genres/" + req.params.term);
+    genreService.searchGenres(req.params.term, function(err, result) {
         if (err) {
             handleError(err, res);
             connection.end();

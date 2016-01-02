@@ -76,5 +76,9 @@ export default {
 
 	updateBook(book) {
 		return axios.put('/api/book/' + book.id, book, headers).then(res => res.data);
-	}
+	},
+
+	searchGenres(term) {
+		return axios.get('/api/genres/' + term).then(res => List(res.data));
+	},
 };

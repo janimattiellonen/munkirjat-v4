@@ -24,6 +24,7 @@ export default class BookForm extends Component {
 			title: book.title,
 			language: book.language_id,
 			authors: this.mapAuthors(book.authors),
+			genres: this.mapGenres(book.genres),
 			pageCount: book.page_count,
 			price: book.price,
 			isRead: book.is_read,
@@ -41,6 +42,20 @@ export default class BookForm extends Component {
 
 		items = authors.map(author => {
 			return {value: author.id, label: author.name};
+		});
+
+		return items;
+	}
+
+	mapGenres(genres) {
+		if (!genres) {
+			return [];
+		}
+
+		let items = [];
+
+		items = genres.map(genre => {
+			return {value: genre.id, label: genre.name};
 		});
 
 		return items;
@@ -64,7 +79,27 @@ export default class BookForm extends Component {
 		});
 	}
 
-	getOptions(input, callback) {	
+	searchGenres(input, callback) {
+		const {d} = this.props;
+		Api.searchGenres(input).then(genres => {
+
+			let mapped = Immutable.List();
+
+			genres.map(genre => {
+				mapped = mapped.push({
+					value: genre.id,
+					label: genre.name,
+				})
+			});
+
+			console.log("mapped genres: " + JSON.stringify(mapped));
+
+    		let selections = {options: mapped.toArray()};
+			callback(null, selections);
+		});
+	}	
+
+	getAuthorOptions(input, callback) {	
 		var self = this;
 
 	    setTimeout(() => {
@@ -72,19 +107,33 @@ export default class BookForm extends Component {
 	    }, 500);
 	}
 
-	renderOption(author) {
+	getGenreOptions(input, callback) {	
+		var self = this;
+
+	    setTimeout(() => {
+	    	self.searchGenres(input, callback);
+	    }, 500);
+	}	
+
+	renderOption(item) {
 		return (
 			<div>
-				<p key={author.value}>
-					{author.label}
+				<p key={item.value}>
+					{item.label}
 				</p>
 			</div>
 		);
 	}
 
-	onAuthorChanged(selectioString, selectionObj) {
+	onAuthorChanged(selectionString, selectionObj) {
 		this.setState({
 			authors: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
+		});
+	}
+
+	onGenreChanged(selectionString, selectionObj) {
+		this.setState({
+			genres: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
 		});
 	}
 
@@ -95,6 +144,7 @@ export default class BookForm extends Component {
 			id: this.state.id,
 			title: this.state.title,
 			authors: this.state.authors,
+			genres: this.state.genres,
 			language: this.state.language,
 			pageCount: this.state.pageCount,
 			price: this.state.price,
@@ -211,12 +261,31 @@ export default class BookForm extends Component {
 							autoload={false}
 							cacheAsyncResults={false}
 							value={this.state.authors}
-							asyncOptions={::this.getOptions}
+							asyncOptions={::this.getAuthorOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onAuthorChanged}
 						></Select>
 				    	</div>
 				    </div>
+
+				    <div className="form-group">
+				    	<label className="col-sm-2">Genres</label>
+				    	<div className={'col-sm-8'}>
+						<Select
+							valueKey="value"
+							labelKey="label"
+							name="genres"
+							multi={true}
+							searchable={true}
+							autoload={false}
+							cacheAsyncResults={false}
+							value={this.state.genres}
+							asyncOptions={::this.getGenreOptions}
+							optionRenderer={this.renderOption}
+							onChange={::this.onGenreChanged}
+						></Select>
+				    	</div>
+				    </div>				    
     				
 					{renderInput(this.state.pageCount, 'pageCount', 'Page count')}
 

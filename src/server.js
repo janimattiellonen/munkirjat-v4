@@ -182,7 +182,8 @@ server.put('/api/book/:id', authenticate, function(req, res) {
     }
 
     let authors = params.authors.map(author => { return author.value });
-    let id = params.id;
+    let genres  = params.genres.map(genre => { return genre.value});
+    let id      = params.id;
 
     bookService.updateBook(id, updatedBook, function(err, result) {
         if (err) {
@@ -198,11 +199,19 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                 return;
             }
 
-            bookService.getBook(id, function(err, result) {
-                let book = bookService.createBookObject(result);
-                res.charSet('utf8');
-                res.send(200, book);
-                connection.end();
+            bookService.setGenres(id, genres, function(err, result) {
+                if (err) {
+                    handleError(err, res);
+                    connection.end();
+                    return;
+                }     
+
+                bookService.getBook(id, function(err, result) {
+                    let book = bookService.createBookObject(result);
+                    res.charSet('utf8');
+                    res.send(200, book);
+                    connection.end();
+                });
             });
         });
     });

@@ -199,20 +199,28 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                 return;
             }
 
-            bookService.setGenres(id, genres, function(err, result) {
-                if (err) {
-                    handleError(err, res);
-                    connection.end();
-                    return;
-                }     
-
+            let handleGetBook = function(id) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
                     res.charSet('utf8');
                     res.send(200, book);
                     connection.end();
-                });
-            });
+                }); 
+            };
+
+            if (null != genres && genres.length > 0) {
+                bookService.setGenres(id, genres, function(err, result) {
+                    if (err) {
+                        handleError(err, res);
+                        connection.end();
+                        return;
+                    }     
+
+                    handleGetBook(id);
+                }); 
+            } else {
+                handleGetBook(id);
+            }
         });
     });
 });

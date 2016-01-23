@@ -17,7 +17,7 @@ export default class Stats {
 
 	static getLatestAddedBooks(books, amount = 10) {
 		return books.sort((a, b) => {
-			return moment(a.created_at).unix() < moment(b.created_at).unix();
+			return a.id < b.id;
 		}).take(amount);
 	}
 
@@ -33,7 +33,7 @@ export default class Stats {
 		let filtered = books.filter(b => b.is_read == 0 && (b.started_reading === null || b.finished_reading === null));
 
 		let sorted = filtered.sort((a, b) => {
-			return moment(a.created_at).unix() < moment(b.created_at).unix();
+			return a.id < b.id;
 		});
 
 		return null !== amount ? sorted.take(amount) : sorted;

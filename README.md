@@ -12,6 +12,9 @@ Munkirjat V4...V5
 
 ## Production
 
+* `git fetch --all`
+* `git merge origin/master`
+* `npm install`
 * `npm run deploy`
 * Visit website
 

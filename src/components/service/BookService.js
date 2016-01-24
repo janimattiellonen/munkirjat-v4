@@ -73,7 +73,7 @@ export default class BookService {
             params[authorParam] = authorId;
         });
 
-        let placeHolders = _.trimRight(placeholders, ',');
+        let placeHolders = _.trimEnd(placeholders, ',');
         this.connection.query(
 
             `INSERT INTO book_author (book_id, author_id) VALUES ${placeHolders}`,
@@ -116,7 +116,7 @@ export default class BookService {
             params[genreParam] = genreId;
         });
 
-        let placeHolders = _.trimRight(placeholders, ',');
+        let placeHolders = _.trimEnd(placeholders, ',');
         this.connection.query(
 
             `INSERT INTO xi_tagging (resource_id, tag_id, resource_type) VALUES ${placeHolders}`,

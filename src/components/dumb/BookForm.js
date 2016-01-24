@@ -27,7 +27,7 @@ export default class BookForm extends Component {
 			genres: this.mapGenres(book.genres),
 			pageCount: book.page_count,
 			price: book.price,
-			isRead: book.is_read,
+			isRead: book.is_read ? book.is_read : false,
 			startedReading: book.started_reading ? moment(book.started_reading).format('DD.MM.YYYY') : null,
 			finishedReading: book.finished_reading ? moment(book.finished_reading).format('DD.MM.YYYY') : null
 		}

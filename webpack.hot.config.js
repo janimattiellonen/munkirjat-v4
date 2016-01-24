@@ -31,8 +31,7 @@ module.exports = assign({}, webpackConfig, {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'web/index.html',
-            favicon: 'web/favicon.ico',
-            inject: 'body',
+            favicon: 'web/favicon.ico'
         }),
         new webpack.HotModuleReplacementPlugin()
     ],

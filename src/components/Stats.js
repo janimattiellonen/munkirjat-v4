@@ -1,6 +1,7 @@
 import moment from 'moment';
 import numeral from 'numeral';
 import _ from 'lodash';
+import {List} from 'immutable';
 
 export default class Stats {
 
@@ -16,33 +17,37 @@ export default class Stats {
 	}
 
 	static getLatestAddedBooks(books, amount = 10) {
-		return books.sort((a, b) => {
-			return a.id < b.id;
-		}).take(amount);
+
+		return List(_.orderBy(books.toArray(), ['id'], 'desc')).take(amount);
 	}
 
 	static getRecentlyReadBooks(books, amount = 10) {
 		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
 
 		return filtered.sort((a, b) => {
-			return moment(a.finished_reading).unix() < moment(b.finished_reading).unix();
+			const dateA = moment(a.finished_reading).unix();
+			const dateB = moment(b.finished_reading).unix();
+
+			if (dateA < dateB) {
+				return 1;
+			} else if (dateA > dateB) {
+				return -1
+			} else {
+				return 0;
+			}
 		}).take(amount);
 	}
 
 	static getUnreadBooks(books, amount = 10) {
 		let filtered = books.filter(b => b.is_read == 0 && (b.started_reading === null || b.finished_reading === null));
 
-		let sorted = filtered.sort((a, b) => {
-			return a.id < b.id;
-		});
+		let sorted = List(_.orderBy(filtered.toArray(), ['id'], 'desc'));
 
 		return null !== amount ? sorted.take(amount) : sorted;
 	}
 
 	static getFavouriteAuthors(authors, amount = 10) {
-		return authors.sort((a, b) => {
-			return a.amount < b.amount;
-		}).take(amount);
+		return List(_.orderBy(authors.toArray(), ['amount'], 'desc')).take(amount);
 	}
 
 	static getUnreadBookCount(books) {
@@ -129,15 +134,11 @@ export default class Stats {
 	}
 
 	static getMoneySpentOnBooks(books) {
-		return _.sum(this.getBooksWithValidPrice(books).toArray(), function(book) {
-			return book.price;
-		});
+		return _.sumBy(this.getBooksWithValidPrice(books).toArray(), book => book.price);
 	}
 
 	static getPagesReadSoFar(books) {
-		return _.sum(this.getReadBooks(books).toArray(), function(book) {
-			return book.page_count;
-		});
+		return _.sumBy(this.getReadBooks(books).toArray(), book => book.page_count);
 	}
 }
 

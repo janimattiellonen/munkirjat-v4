@@ -9,11 +9,15 @@ export default class GenreService {
         this.connection.query(
             `SELECT
                 g.id,
-                g.name
+                g.name,
+                count(bg.resource_id) as amount
             FROM
                 xi_tag AS g 
+                JOIN xi_tagging AS bg ON g.id = bg.tag_id AND bg.resource_type = 'book'
+            GROUP BY
+              bg.tag_id
             ORDER BY 
-                g.name ASC`,
+                amount DESC , g.name ASC;`,
             callback
         );
     }

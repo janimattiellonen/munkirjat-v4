@@ -11,7 +11,7 @@ export default class GenresView extends Component {
 				<ul>
 					{genres.map(genre => {
 						return (
-							<li>{genre.name}</li>
+							<li>{genre.name} ({genre.amount})</li>
 						)
 					})}
 

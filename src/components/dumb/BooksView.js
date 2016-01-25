@@ -31,19 +31,20 @@ export default React.createClass({
 		});
 	},
 
-	filterBooks(mode) {
+	filterBooks(mode, language) {
 		let books = null;
 		let allBooks = this.props.books;
 
-		if (mode == 'unread') {
+		if (mode == 'genre') {
+
+		}
+		else if (mode == 'unread') {
 			books = allBooks.filter(b => b.is_read == 0);
 		} else if (mode == 'read') {
 			books = allBooks.filter(b => b.is_read == 1);
 		} else {
 			books = allBooks;
 		}
-
-		let language = this.props.params.language;
 
 		if (null != language) {
 			books = books.filter(b => b.language_id == language);
@@ -62,7 +63,7 @@ export default React.createClass({
 
 	render() {
 		let mode = this.getMode(this.props.params.mode);
-		let books = this.filterBooks(mode);
+		let books = this.filterBooks(mode, this.props.params.language);
 
 		return (
 			<div className="component">

@@ -230,13 +230,18 @@ export default class BookService {
                 b.finished_reading,
                 b.rating,
                 b.price,
+                a.id AS author_id,
                 a.firstname,
                 a.lastname,
-                CONCAT(firstname, ' ', lastname) AS author_name
+                CONCAT(firstname, ' ', lastname) AS author_name,
+                g.id AS genre_id,
+                g.name AS genre_name
         FROM 
             book AS b
             LEFT JOIN book_author AS ba ON ba.book_id = b.id
             LEFT JOIN author AS a ON ba.author_id = a.id
+            LEFT JOIN xi_tagging AS bg ON b.id = bg.resource_id
+            LEFT JOIN xi_tag AS g ON g.id = bg.tag_id
         `;
 
         if (null !== isRead) {
@@ -257,6 +262,11 @@ export default class BookService {
             return null;
         }
 
+        let books = this.createBookObjects(result);
+
+        return books.first();
+
+/*
         let authors = OrderedMap();
         let genres = OrderedMap();
         let book = null;
@@ -292,7 +302,48 @@ export default class BookService {
 
         book.authors = authors.toArray();
         book.genres = genres.toArray();
-
+*/
         return book;       
+    }
+
+    createBookObjects(result) {
+        let books = OrderedMap();
+
+        result.map(row => {
+            var book = books.get(row.id);
+
+            if (null == book) {
+                book = {
+                    id: row.id,
+                    title: row.title,
+                    language_id: row.language_id,
+                    page_count: row.page_count,
+                    is_read: row.is_read,
+                    started_reading: row.started_reading,
+                    finished_reading: row.finished_reading,
+                    price: row.price,
+                    authors: OrderedMap(),
+                    genres: OrderedMap()
+                };
+            }
+
+            book.authors = book.authors.set(row.author_id, {
+                id: row.author_id,
+                firstname: row.firstname,
+                lastname: row.lastname,
+                name: row.author_name
+            });
+
+            if (null != row.genre_id) {
+                book.genres = book.genres.set(row.genre_id, {
+                    id: row.genre_id,
+                    name: row.genre_name
+                });   
+            }
+
+            books = books.set(book.id, book);
+        });
+
+        return books;
     }
 };

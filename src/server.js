@@ -66,10 +66,12 @@ server.get('/api/books/:mode', function (req, res) {
             return;
         }
 
+/*
         let books = Immutable.OrderedMap();
 
         result.map(row => {
             let book = books.get(row.id)
+
 
             if (!book) {
                 book = {
@@ -89,7 +91,8 @@ server.get('/api/books/:mode', function (req, res) {
                         firstname: row.firstname,
                         lastname: row.lastname,
                         author_name: row.author_name
-                    }]
+                    }],
+                    genres: []
                 };
             } else {
                 book.authors.push({
@@ -101,9 +104,10 @@ server.get('/api/books/:mode', function (req, res) {
 
             books = books.set(row.id, book);
         });
+*/
 
         res.charSet('utf8');
-        res.send(200, books.toArray());
+        res.send(200, bookService.createBookObjects(result).toArray());
         connection.end();
 
     });

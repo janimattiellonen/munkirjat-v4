@@ -30,7 +30,9 @@ export default class Stats {
 	static getUnreadBooks(books, amount = 10) {
 		let filtered = books.filter(book => book.is_read == 0 && (book.started_reading === null || book.finished_reading === null));
 
-		return filtered.sortBy(book => book.id).reverse().take(amount);
+		let reversed = filtered.sortBy(book => book.id).reverse();
+
+		return null !== amount ? reversed.take(amount) : reversed;
 	}
 
 	static getFavouriteAuthors(authors, amount = 10) {

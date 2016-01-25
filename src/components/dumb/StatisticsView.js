@@ -73,13 +73,13 @@ export default React.createClass({
 	getSlowestReadTime() {
 		const {book, readTime} = Stats.getSlowestReadTime(this.props.books);
 
-		return this.getBookLink(book, this.formatDays(readTime));
+		return this.getBookLink(book, this.formatDays(readTime, true));
 	},	
 
 	getFastestReadTime() {
 		const {book, readTime} = Stats.getFastestReadTime(this.props.books);
 
-		return this.getBookLink(book, this.formatDays(readTime));
+		return this.getBookLink(book, this.formatDays(readTime, true));
 	},
 
 	getBookLink(book, title) {

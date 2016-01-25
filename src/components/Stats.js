@@ -6,7 +6,8 @@ import {List} from 'immutable';
 export default class Stats {
 
 	static getCurrentlyReadBook(books) {
-		let filtered = books.filter(b => b.is_read == 0 && b.started_reading !== null && b.finished_reading === null);
+		let filtered = books.filter(book => book.is_read == 0 && book.started_reading !== null && book.finished_reading === null);
+
 		return filtered.count() === 1 ? filtered.first() : null;
 	}
 
@@ -17,33 +18,19 @@ export default class Stats {
 	}
 
 	static getLatestAddedBooks(books, amount = 10) {
-
-		return List(_.orderBy(books.toArray(), ['id'], 'desc')).take(amount);
+		return books.sortBy(book => book.id).reverse().take(amount);
 	}
 
 	static getRecentlyReadBooks(books, amount = 10) {
-		let filtered = books.filter(b => b.is_read == 1 && b.started_reading !== null && b.finished_reading !== null);
+		let filtered = books.filter(book => book.is_read == 1 && book.started_reading !== null && book.finished_reading !== null);
 
-		return filtered.sort((a, b) => {
-			const dateA = moment(a.finished_reading).unix();
-			const dateB = moment(b.finished_reading).unix();
-
-			if (dateA < dateB) {
-				return 1;
-			} else if (dateA > dateB) {
-				return -1
-			} else {
-				return 0;
-			}
-		}).take(amount);
+		return filtered.sortBy(book => moment(book.finished_reading).unix()).reverse().take(amount);
 	}
 
 	static getUnreadBooks(books, amount = 10) {
-		let filtered = books.filter(b => b.is_read == 0 && (b.started_reading === null || b.finished_reading === null));
+		let filtered = books.filter(book => book.is_read == 0 && (book.started_reading === null || book.finished_reading === null));
 
-		let sorted = List(_.orderBy(filtered.toArray(), ['id'], 'desc'));
-
-		return null !== amount ? sorted.take(amount) : sorted;
+		return filtered.sortBy(book => book.id).reverse().take(amount);
 	}
 
 	static getFavouriteAuthors(authors, amount = 10) {
@@ -59,7 +46,7 @@ export default class Stats {
 	}
 
 	static getReadBooks(books) {
-		return books.filter(n => n.is_read == 1);
+		return books.filter(book => book.is_read == 1);
 	}
 
 	static getSlowestReadTime(books) {
@@ -141,6 +128,3 @@ export default class Stats {
 		return _.sumBy(this.getReadBooks(books).toArray(), book => book.page_count);
 	}
 }
-
-
-

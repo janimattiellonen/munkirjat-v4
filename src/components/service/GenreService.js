@@ -17,7 +17,7 @@ export default class GenreService {
             GROUP BY
               bg.tag_id
             ORDER BY 
-                amount DESC , g.name ASC;`,
+                amount DESC , g.name ASC`,
             callback
         );
     }

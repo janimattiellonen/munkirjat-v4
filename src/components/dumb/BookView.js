@@ -13,8 +13,7 @@ export default React.createClass({
 
 	render() {
 		const {book} = this.props;
-		console.log("BOOK: " + book.id);
-console.log("INFO: " + JSON.stringify(book));
+
 		return (
 			<div className="component" id="single-book">
 

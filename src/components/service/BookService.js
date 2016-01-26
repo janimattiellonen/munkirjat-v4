@@ -257,6 +257,13 @@ export default class BookService {
         return query;
     }
 
+    toArray(book) {
+        book.genres = book.genres.toArray();
+        book.authors = book.authors.toArray();
+
+        return book;
+    }
+
     createBookObject(result) {
         if (result.length == 0) {
             return null;
@@ -265,45 +272,6 @@ export default class BookService {
         let books = this.createBookObjects(result);
 
         return books.first();
-
-/*
-        let authors = OrderedMap();
-        let genres = OrderedMap();
-        let book = null;
-
-        result.map(row => {
-            if (null == book) {
-                book = {
-                    id: row.id,
-                    title: row.title,
-                    language_id: row.language_id,
-                    page_count: row.page_count,
-                    is_read: row.is_read,
-                    started_reading: row.started_reading,
-                    finished_reading: row.finished_reading,
-                    price: row.price
-                };
-            } 
-
-            authors = authors.set(row.author_id, {
-                id: row.author_id,
-                firstname: row.firstname,
-                lastname: row.lastname,
-                name: row.author_name
-            });
-
-            if (null != row.genre_id) {
-                genres = genres.set(row.genre_id, {
-                    id: row.genre_id,
-                    name: row.genre_name
-                });   
-            }
-        });
-
-        book.authors = authors.toArray();
-        book.genres = genres.toArray();
-*/
-        return book;       
     }
 
     createBookObjects(result) {

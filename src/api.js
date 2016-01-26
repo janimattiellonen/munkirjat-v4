@@ -1,6 +1,6 @@
 import config from './config';
 import axios from 'axios';
-import { List } from 'immutable';
+import { List, OrderedMap} from 'immutable';
 
 function getAuthorizationHeaders() {
 	return {
@@ -42,7 +42,7 @@ export default {
 	},
 
 	getBooks: (mode = null) => {
-		return axios.get('/api/books/' + mode).then(res => List(res.data));
+		return axios.get('/api/books/' + mode).then(res => OrderedMap(res.data));
 	},
 
 	saveBook(book) {

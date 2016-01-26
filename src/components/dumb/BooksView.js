@@ -4,7 +4,7 @@ import history from '../history'
 import BooksList from './BooksList';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import * as Utils from '../utils';
 
 
@@ -34,11 +34,14 @@ export default React.createClass({
 	filterBooks(mode, language) {
 		let books = null;
 		let allBooks = this.props.books;
+		/*
+		console.log("COUNT: " + allBooks.count());
+		console.log("BOOKS: " + JSON.stringify(allBooks));
 
-		if (mode == 'genre') {
-
-		}
-		else if (mode == 'unread') {
+		//let ff = Map(allBooks);
+		console.log("ii: " + JSON.stringify(allBooks.filter(book => book.genres.has(8))));
+		*/
+		if (mode == 'unread') {
 			books = allBooks.filter(b => b.is_read == 0);
 		} else if (mode == 'read') {
 			books = allBooks.filter(b => b.is_read == 1);

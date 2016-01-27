@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import Immutable, { List, Map, OrderedMap} from 'immutable';
+import { List, Map, OrderedMap} from 'immutable';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -55,7 +55,7 @@ export default handleActions({
 			book.genres = genres;
 
 			books = books.set(book.id, book);
-		});
+		});	
 
 		return {
 			...state,

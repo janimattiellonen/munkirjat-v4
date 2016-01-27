@@ -11,7 +11,7 @@ export default class GenresView extends Component {
 				<ul>
 					{genres.map(genre => {
 						return (
-							<li>{genre.name} ({genre.amount})</li>
+							<li>{this.getUrl(genre)}</li>
 						)
 					})}
 
@@ -19,4 +19,10 @@ export default class GenresView extends Component {
 			</div>
 		)
 	}
+
+	getUrl(genre) {
+		return (
+			<a href={'/#/books/all/all/' + genre.id}>{genre.name} ({genre.amount})</a>
+		)
+	}	
 }

@@ -1,6 +1,6 @@
 import config from './config';
 import axios from 'axios';
-import { List } from 'immutable';
+import { List, OrderedMap} from 'immutable';
 
 function getAuthorizationHeaders() {
 	return {

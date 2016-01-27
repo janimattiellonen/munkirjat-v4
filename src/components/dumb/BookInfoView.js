@@ -18,7 +18,7 @@ export default React.createClass({
 
 	render() {
 		const {book} = this.props;
-
+		
 		return (
 			<div className="book-info col-md-12 component">
 				{this.getTitleElement(book)}

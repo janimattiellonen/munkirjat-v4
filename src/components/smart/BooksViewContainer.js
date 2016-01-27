@@ -9,7 +9,8 @@ export default connect(
     function(state) {
         return {
             books: state.books.books,
-            mode: state.books.mode
+            mode: state.books.mode,
+            genres: state.genres.genres
         };
     },
     function mapDispatchToProps(dispatch) {

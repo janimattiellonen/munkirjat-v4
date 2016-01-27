@@ -92,8 +92,6 @@ export default class BookForm extends Component {
 				})
 			});
 
-			console.log("mapped genres: " + JSON.stringify(mapped));
-
     		let selections = {options: mapped.toArray()};
 			callback(null, selections);
 		});

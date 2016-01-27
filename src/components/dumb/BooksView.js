@@ -4,9 +4,8 @@ import history from '../history'
 import BooksList from './BooksList';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import * as Utils from '../utils';
-
 
 export default React.createClass({
 
@@ -31,9 +30,12 @@ export default React.createClass({
 		});
 	},
 
-	filterBooks(mode) {
+	filterBooks(allBooks, mode, language, genre) {
 		let books = null;
-		let allBooks = this.props.books;
+
+		if (null != genre && genre != 'all') {
+			allBooks = allBooks.filter(book => book.genres.has(parseInt(genre)));
+		}
 
 		if (mode == 'unread') {
 			books = allBooks.filter(b => b.is_read == 0);
@@ -43,9 +45,7 @@ export default React.createClass({
 			books = allBooks;
 		}
 
-		let language = this.props.params.language;
-
-		if (null != language) {
+		if (null != language && language != 'all') {
 			books = books.filter(b => b.language_id == language);
 		}
 
@@ -61,8 +61,10 @@ export default React.createClass({
 	},
 
 	render() {
+		const {language, genre} = this.props.params;
+
 		let mode = this.getMode(this.props.params.mode);
-		let books = this.filterBooks(mode);
+		let books = this.filterBooks(this.props.books, mode, language, genre);
 
 		return (
 			<div className="component">
@@ -72,11 +74,15 @@ export default React.createClass({
 				<div className={classNames("sort-box", {"hidden": this.state.search})}>
 					<span>By language: </span>
 					<ul className="horizontal-list">
-						<li><a href={'/#/books/' + mode + '/fi'}>Finnish</a> | </li>
-						<li><a href={'/#/books/' + mode + '/se'}>Swedish</a> | </li>
-						<li><a href={'/#/books/' + mode + '/en'}>English</a> | </li>
-						<li><a href={'/#/books/' + mode}>All</a></li>
+						<li><a href={this.getUrl(mode, 'fi', genre)}>Finnish</a> | </li>
+						<li><a href={this.getUrl(mode, 'se', genre)}>Swedish</a> | </li>
+						<li><a href={this.getUrl(mode, 'en', genre)}>English</a> | </li>
+						<li><a href={this.getUrl(mode, null, genre)}>All</a></li>
 					</ul>
+				</div>
+
+				<div>
+					{this.getSelectedGenre(genre)}
 				</div>
 
 				<div className="search-box">
@@ -86,6 +92,17 @@ export default React.createClass({
 				<BooksList {...this.props} books={books} />
 			</div>
 		);
+	},
+
+	getSelectedGenre(genre) {
+		const {genres} = this.props;
+
+		if (null != genres && null != genre && genre != 'all') {
+			genre = parseInt(genre);
+			if (genres.has(genre)) {
+				return 'By genre: ' + genres.get(genre).name;
+			}
+		}
 	},
 
 	getTitle() {
@@ -106,5 +123,9 @@ export default React.createClass({
 		}
 
 		return title;
+	},
+
+	getUrl(mode, language, genre) {
+		return '/#/books/' + mode + (null != language ? '/' + language : '/all') + (null != genre ? '/' + genre : '	');
 	}
 });

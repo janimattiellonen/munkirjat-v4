@@ -36,19 +36,26 @@ export default handleActions({
 	},
 
 	BOOKS_FETCH: (state, action) => {
-		let books = action.books;
+		let booksList = action.books;
+		let books = OrderedMap();
+		
+		booksList.map(book => {
+			let authors = OrderedMap();
+			let genres = OrderedMap();
 
-		console.log("ooo: " + JSON.stringify(books));
-		books = books.map(book => {
-			//console.log("PP: " + JSON.stringify(book));
+			book.authors.map(book => {
+				authors = authors.set(book.id, book);
+			});
 
-			book.authors = Immutable.fromJS(book.authors);
-			book.genres = Immutable.fromJS(book.genres);
+			book.genres.map(genre => {
+				genres = genres.set(genre.id, genre);
+			});
 
-			return book;
+			book.authors = authors;
+			book.genres = genres;
+
+			books = books.set(book.id, book);
 		});
-
-		console.log("luts: " + JSON.stringify(books.get(251)));
 
 		return {
 			...state,

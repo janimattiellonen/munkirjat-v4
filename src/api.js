@@ -42,7 +42,7 @@ export default {
 	},
 
 	getBooks: (mode = null) => {
-		return axios.get('/api/books/' + mode).then(res => OrderedMap(res.data));
+		return axios.get('/api/books/' + mode).then(res => List(res.data));
 	},
 
 	saveBook(book) {

@@ -23,6 +23,6 @@ export default React.createClass({
 	},
 
 	componentDidMount() {
-		this.props.bookActions.fetchBookInfo(this.props.params.id);	
+		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
 });

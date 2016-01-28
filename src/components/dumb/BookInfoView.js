@@ -23,7 +23,7 @@ export default React.createClass({
 			<div className="book-info col-md-12 component">
 				{this.getTitleElement(book)}
 
-				<p>{this.renderAuthors(book)}</p>
+				<div>{this.renderAuthors(book)}</div>
 
 				<p>{this.getEditBookLink(book)}</p> 
 
@@ -67,7 +67,7 @@ export default React.createClass({
 				<ul>
 					{book.authors.map(author => {
 						return (
-							<li>{author.name}</li>	
+							<li><a className={!this.props.singleMode ? 'hidden' : ''} href={'/#/author/' + author.id}>{author.name}</a></li>	
 						)
 					})}
 				</ul>

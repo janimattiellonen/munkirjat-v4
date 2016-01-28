@@ -79,7 +79,7 @@ export default handleActions({
 		};
 	},
 
-	BOOK_INFO_FETCH: (state, action) => {
+	SET_BOOK_INFO: (state, action) => {
 		return {
 			...state,
 			book: action.book,

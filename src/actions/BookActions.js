@@ -25,9 +25,22 @@ export function setBooks(books, mode = null) {
 	};
 }
 
+export function setSelectedBook(bookId) {
+	return function(dispatch, getState) {
+		let books = getState().books.books.filter(book => book.id == bookId);
+		let selectedBook = null;
+
+		if (books.count() == 1) {
+			selectedBook = books.first();
+		} 
+
+		dispatch(setBookInfo(selectedBook));
+	};
+}
+
 export function setBookInfo(book) {
 	return {
-		type: 'BOOK_INFO_FETCH',
+		type: 'SET_BOOK_INFO',
 		book: book
 	};
 }

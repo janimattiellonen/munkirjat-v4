@@ -23,6 +23,11 @@ export default React.createClass({
 	},
 
 	componentDidMount() {
+		window.dataLayer = window.dataLayer || [];
+		dataLayer.push({
+		'event' : 'view-book'
+		});
+
 		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
-});
+});	

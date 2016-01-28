@@ -21,14 +21,13 @@
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5SNBGD');</script>
     <!-- End Google Tag Manager -->
-    
+
 	 <div id="app" class="container">
         <div id="page"></div>   
 
         <footer><p>&copy; Janimatti Ellonen</p></footer>
      </div>
 
-	 
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
         <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
     {% } %}

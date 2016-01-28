@@ -30,7 +30,7 @@ module.exports = assign({}, webpackConfig, {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'web/index.html',
+            template: 'web/index.dev.html',
             favicon: 'web/favicon.ico'
         }),
         new webpack.HotModuleReplacementPlugin()

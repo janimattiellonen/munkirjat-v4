@@ -71,7 +71,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'web/index.html',
+            template: 'web/index.prod.html',
             favicon: 'web/favicon.ico'
         }),
         new webpack.optimize.UglifyJsPlugin({

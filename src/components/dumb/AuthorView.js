@@ -72,7 +72,7 @@ export default React.createClass({
 	},
 
 	componentDidMount() {
-		this.props.authorActions.fetchAuthor(this.props.params.id);
 		this.props.bookActions.setSelectedBook(null);
+		this.props.authorActions.fetchAuthor(this.props.params.id);
 	},
 });

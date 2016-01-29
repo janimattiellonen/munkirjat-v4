@@ -27,6 +27,9 @@ export function setBooks(books, mode = null) {
 
 export function setSelectedBook(bookId) {
 	return function(dispatch, getState) {
+		if (null == bookId) {
+			return dispatch(setBookInfo(null));
+		}
 		let books = getState().books.books.filter(book => book.id == bookId);
 		let selectedBook = null;
 

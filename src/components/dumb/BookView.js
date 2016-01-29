@@ -22,12 +22,18 @@ export default React.createClass({
 		);
 	},
 
-	componentDidMount() {
-		window.dataLayer = window.dataLayer || [];
-		dataLayer.push({
-		'event' : 'view-book'
-		});
+	componentWillReceiveProps: function(nextProps) {
+		if (nextProps.params.id != null && nextProps.params.id != this.props.params.id) {
+			window.dataLayer = window.dataLayer || [];
+			dataLayer.push({
+				'event' : 'view-book'
+			});	
 
+			this.props.bookActions.setSelectedBook(nextProps.params.id);
+		}
+	},
+
+	componentDidMount() {
 		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
 });	

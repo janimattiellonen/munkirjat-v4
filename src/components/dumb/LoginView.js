@@ -12,6 +12,7 @@ export default class LoginView extends Component {
 		  	}
 
 		  	localStorage.setItem('userToken', id_token);
+		  	//location.href = "/";
 		  	history.pushState(null, '/');
 		});
   	}

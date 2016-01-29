@@ -67,7 +67,7 @@ export default React.createClass({
 				<ul>
 					{book.authors.map(author => {
 						return (
-							<li><a className={!this.props.singleMode ? 'hidden' : ''} href={'/#/author/' + author.id}>{author.name}</a></li>	
+							<li key={author.id}><a className={!this.props.singleMode ? 'hidden' : ''} href={'/#/author/' + author.id}>{author.name}</a></li>	
 						)
 					})}
 				</ul>

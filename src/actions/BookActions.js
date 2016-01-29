@@ -32,9 +32,10 @@ export function setSelectedBook(bookId) {
 
 		if (books.count() == 1) {
 			selectedBook = books.first();
-		} 
-
-		dispatch(setBookInfo(selectedBook));
+			dispatch(setBookInfo(selectedBook));
+		} else {
+			dispatch(fetchBookInfo(bookId));
+		}
 	};
 }
 

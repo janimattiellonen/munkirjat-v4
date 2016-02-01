@@ -73,9 +73,11 @@ export function fetchBooks(mode = null) {
 
 export function createBook(book) {
 	return function(dispatch, getState) {
-
+		console.log("CREATING BOOK...");
 		api.saveBook(book).then(book => {
-			dispatch(addBook(book));
+			console.log("CREATED	 BOOK 1...");
+			//dispatch(addBook(book));
+			console.log("CREATED	 BOOK 2...");
 			history.pushState(null, '/book/' + book.id);
 		}).catch(Errors.handleError);
 	};

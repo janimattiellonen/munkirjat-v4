@@ -67,16 +67,27 @@ server.get('/api/books/:mode', function (req, res) {
             return;
         }
 
-        res.charSet('utf8');
-
         let books = bookService.createBookObjects(result);
 
-        books.map(book => {
-            book = bookService.toArray(book);
+        /*
+        console.log("BOOKS:\n\n");
 
-            return book;
-        });
+        console.log(JSON.stringify(books));
 
+        console.log("BOOKS.toJSON():\n\n");
+
+        console.log(JSON.stringify(books.toJS()));
+
+        console.log("BOOKS.toObject():\n\n");
+
+        console.log(JSON.stringify(books.toObject()));
+
+        console.log("BOOKS.toArray():\n\n");
+
+        console.log(JSON.stringify(books.toArray()));
+        */
+
+        res.charSet('utf8');
         res.send(200, books.toArray());
         connection.end();
 

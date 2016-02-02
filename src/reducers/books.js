@@ -62,7 +62,7 @@ export default handleActions({
 				authors = authors.set(book.id, book);
 			});
 */
-
+			// currently must use _.forEach()
 			book.genres.map(genre => {
 				genres = genres.set(genre.id, genre);
 			});

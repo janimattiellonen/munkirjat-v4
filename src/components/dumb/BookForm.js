@@ -63,6 +63,7 @@ export default class BookForm extends Component {
 
 	searchAuthors(input, callback) {
 		const {d} = this.props;
+		console.log("searchAuthors: " + JSON.stringify(input));
 		Api.searchAuthors(input).then(authors => {
 
 			let mapped = Immutable.List();
@@ -81,6 +82,7 @@ export default class BookForm extends Component {
 
 	searchGenres(input, callback) {
 		const {d} = this.props;
+		console.log("searchGenres: " + JSON.stringify(d));
 		Api.searchGenres(input).then(genres => {
 
 			let mapped = Immutable.List();
@@ -258,7 +260,7 @@ export default class BookForm extends Component {
 							searchable={true}
 							autoload={false}
 							cacheAsyncResults={false}
-							value={this.state.authors}
+							value={this.state.authors.toArray()}
 							asyncOptions={::this.getAuthorOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onAuthorChanged}
@@ -277,7 +279,7 @@ export default class BookForm extends Component {
 							searchable={true}
 							autoload={false}
 							cacheAsyncResults={false}
-							value={this.state.genres}
+							value={this.state.genres.toArray()}
 							asyncOptions={::this.getGenreOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onGenreChanged}

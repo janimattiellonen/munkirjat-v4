@@ -125,16 +125,28 @@ server.post('/api/book', authenticate, function(req, res) {
                 return;
             }
 
-            bookService.addGenres(createdBookId, genres, function(err, result) {
-                if (err) {
-                    handleError(err, res);
+            let handleGetBook = function(id) {
+                bookService.getBook(id, function(err, result) {
+                    let book = bookService.createBookObject(result);
+                    res.charSet('utf8');
+                    res.send(200, book);
                     connection.end();
-                    return;
-                }                
-                res.charSet('utf8');
-                res.send(200, {"status": "OK", "id": createdBookId});
-                connection.end();
-            });
+                }); 
+            };        
+
+            if (null != genres && genres.length > 0) {
+                bookService.addGenres(createdBookId, genres, function(err, result) {
+                    if (err) {
+                        handleError(err, res);
+                        connection.end();
+                        return;
+                    }                
+
+                    handleGetBook(createdBookId);
+                });
+            } else {
+                handleGetBook(createdBookId);
+            }
         });
     });
 });

@@ -31,10 +31,9 @@ export function setSelectedBook(bookId) {
 			return dispatch(setBookInfo(null));
 		}
 		let books = getState().books.books.filter(book => book.id == bookId);
-		let selectedBook = null;
 
 		if (books.count() == 1) {
-			selectedBook = books.first();
+			let selectedBook = books.first();
 			dispatch(setBookInfo(selectedBook));
 		} else {
 			dispatch(fetchBookInfo(bookId));
@@ -75,11 +74,20 @@ export function createBook(book) {
 	return function(dispatch, getState) {
 		console.log("CREATING BOOK...");
 		api.saveBook(book).then(book => {
-			console.log("CREATED	 BOOK 1...");
-			//dispatch(addBook(book));
+			dispatch(addBook(book));
 			console.log("CREATED	 BOOK 2...");
 			history.pushState(null, '/book/' + book.id);
-		}).catch(Errors.handleError);
+		}).catch(function (response) {
+			if (response instanceof Error) {
+				console.log("createBook, error? " + JSON.stringify(response.message));
+			} else {
+				console.log(response.data);
+				console.log(response.status);
+				console.log(response.headers);
+				console.log(response.config);
+			}
+			
+		});
 	};
 }
 

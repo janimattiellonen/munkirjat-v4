@@ -9,10 +9,24 @@ function sortBooks(books) {
 
 export default handleActions({
 	BOOK_ADD: (state, action) => {
+		let book = action.book;
+		let authors = List();
+		let genres = OrderedMap();
+
+		_.forEach(book.authors, function (key, value) {
+			authors = authors.push(value);
+		});
+
+		_.forEach(book.genres, function (key, genre) {
+			genres = genres.set(genre.id, genre);
+		});
+
+		book.authors = authors;
+		book.genres = genres;
 
 		return {
 			...state,
-			books: List(state.books.push(action.book))
+			books: state.books.push(book)
 		}
 	},
 
@@ -37,24 +51,27 @@ export default handleActions({
 
 	BOOKS_FETCH: (state, action) => {
 		let booksList = action.books;
-		let books = OrderedMap();
+		let books = List();
 		
-		booksList.map(book => {
+		booksList.map((book, i) => {
 			let authors = OrderedMap();
 			let genres = OrderedMap();
 
+/*
 			book.authors.map(book => {
 				authors = authors.set(book.id, book);
 			});
+*/
 
 			book.genres.map(genre => {
 				genres = genres.set(genre.id, genre);
 			});
 
-			book.authors = authors;
+			book.authors = List(book.authors);
+			console.log("ss: " + JSON.stringify(book.authors.get(i)));
 			book.genres = genres;
 
-			books = books.set(book.id, book);
+			books = books.push(book);
 		});	
 
 		return {

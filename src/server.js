@@ -87,6 +87,10 @@ server.get('/api/books/:mode', function (req, res) {
         console.log(JSON.stringify(books.toArray()));
         */
 
+        books = books.map(book => {
+            return bookService.toArray(book);
+        });
+
         res.charSet('utf8');
         res.send(200, books.toArray());
         connection.end();

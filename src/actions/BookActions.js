@@ -51,8 +51,19 @@ export function setBookInfo(book) {
 export function fetchBookInfo(bookId) {
 	return function(dispatch, getState) {
 		api.getBook(bookId).then(book => {
+			console.log("fetchBookInfo: " + JSON.stringify(book));
 			dispatch(setBookInfo(book));
-		}).catch(Errors.handleError);
+		}).catch(function (response) {
+			if (response instanceof Error) {
+				console.log("fetchBookInfo, error? " + JSON.stringify(response.message));
+			} else {
+				console.log(response.data);
+				console.log(response.status);
+				console.log(response.headers);
+				console.log(response.config);
+			}
+			
+		});
 	};
 }
 

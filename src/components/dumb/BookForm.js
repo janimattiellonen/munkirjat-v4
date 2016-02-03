@@ -34,31 +34,35 @@ export default class BookForm extends Component {
 	}
 
 	mapAuthors(authors) {
-		let items = OrderedMap();
-
 		if (!authors) {
-			return items;
+			return [];
 		}
+
+		let items = OrderedMap();
 
 		items = authors.map(author => {
 			return {value: author.id, label: author.name};
 		});
 
-		return items;
+		return items.toArray();
 	}
 
 	mapGenres(genres) {
+		if (!genres) {
+			return [];
+		}
+
 		let items = OrderedMap();
 
-		if (!genres) {
-			return items;
-		}
+		console.log("mapGenres 1: " + JSON.stringify(genres));
 		
 		items = genres.map(genre => {
 			return {value: genre.id, label: genre.name};
 		});
 
-		return items;
+		console.log("mapGenres 2: " + JSON.stringify(items));
+
+		return items.toArray();
 	}
 
 	searchAuthors(input, callback) {
@@ -143,8 +147,8 @@ export default class BookForm extends Component {
 		let formData = {
 			id: this.state.id,
 			title: this.state.title,
-			authors: this.state.authors.toArray(),
-			genres: this.state.genres.toArray(),
+			authors: this.state.authors,
+			genres: this.state.genres,
 			language: this.state.language,
 			pageCount: this.state.pageCount,
 			price: this.state.price,
@@ -260,7 +264,7 @@ export default class BookForm extends Component {
 							searchable={true}
 							autoload={false}
 							cacheAsyncResults={false}
-							value={this.state.authors.toArray()}
+							value={this.state.authors}
 							asyncOptions={::this.getAuthorOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onAuthorChanged}
@@ -279,7 +283,7 @@ export default class BookForm extends Component {
 							searchable={true}
 							autoload={false}
 							cacheAsyncResults={false}
-							value={this.state.genres.toArray()}
+							value={this.state.genres}
 							asyncOptions={::this.getGenreOptions}
 							optionRenderer={this.renderOption}
 							onChange={::this.onGenreChanged}

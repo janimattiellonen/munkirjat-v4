@@ -3,6 +3,8 @@ import { List, Map, OrderedMap} from 'immutable';
 import _ from 'lodash';
 import moment from 'moment';
 
+//import {Suite} from 'Benchmark';
+
 function sortBooks(books) {
 	return _.sortByOrder(books.toArray(), ['title'], ['asc']);
 }
@@ -13,11 +15,12 @@ export default handleActions({
 		let authors = List();
 		let genres = OrderedMap();
 
-		_.forEach(book.authors, function (key, value) {
+		_.forEach(book.authors, function (value, key) {
 			authors = authors.push(value);
 		});
 
-		_.forEach(book.genres, function (key, genre) {
+		_.forEach(book.genres, function (genre, key) {
+			console.log("sakka: " + JSON.stringify(genre) + ", " + JSON.stringify(key));
 			genres = genres.set(genre.id, genre);
 		});
 
@@ -43,32 +46,37 @@ export default handleActions({
 	},	
 
 	SET_BOOK_INFO: (state, action) => {
+
+		let book = action.book;
+		let genres = OrderedMap();
+		console.log("rekka: " + JSON.stringify(book));
+		_.forEach(book.genres, function (genre, key) {
+			console.log("ragnars: " + JSON.stringify(genre) + ", " + JSON.stringify(key));
+			genres = genres.set(genre.id, genre);
+		});
+
+		book.genres = genres;
+		book.authors = List(book.authors);
+
 		return {
 			...state,
-			book: action.book
+			book: book
 		};
 	},
 
 	BOOKS_FETCH: (state, action) => {
+		console.log("BOOKS_FETCH");
 		let booksList = action.books;
 		let books = List();
 		
 		booksList.map((book, i) => {
-			let authors = OrderedMap();
 			let genres = OrderedMap();
 
-/*
-			book.authors.map(book => {
-				authors = authors.set(book.id, book);
-			});
-*/
-			// currently must use _.forEach()
-			book.genres.map(genre => {
+			_.forEach(book.genres, function(genre, key) {
 				genres = genres.set(genre.id, genre);
 			});
 
 			book.authors = List(book.authors);
-			console.log("ss: " + JSON.stringify(book.authors.get(i)));
 			book.genres = genres;
 
 			books = books.push(book);

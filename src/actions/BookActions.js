@@ -29,12 +29,12 @@ export function setSelectedBook(bookId) {
 	return function(dispatch, getState) {
 		if (null == bookId) {
 			return null;
-			//return dispatch(setBookInfo(null));
 		}
 		let books = getState().books.books.filter(book => book.id == bookId);
 
 		if (books.count() == 1) {
 			let selectedBook = books.first();
+			console.log("setBookInfo(selectedBook): " + JSON.stringify(selectedBook));
 			dispatch(setBookInfo(selectedBook));
 		} else {
 			dispatch(fetchBookInfo(bookId));

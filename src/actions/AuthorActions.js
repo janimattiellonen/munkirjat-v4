@@ -77,6 +77,7 @@ export function setAuthors(authors) {
 export function fetchAuthor(id) {
 	return function(dispatch, getState) {
 		api.getAuthor(id).then(author => {
+			console.log("fetchAuthor: " + id);
 			dispatch(setAuthor(author));
 		}).catch(Errors.handleError);
 	};

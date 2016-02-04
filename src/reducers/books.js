@@ -51,6 +51,7 @@ export default handleActions({
 
 		if (null != book) {
 			_.forEach(book.genres.toArray(), function (genre, key) {
+
 				genres = genres.set(genre.id, genre);
 			});
 

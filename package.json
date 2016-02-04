@@ -78,10 +78,7 @@
     "underscore": "^1.8.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0",
-
-
-    "benchmark": "^2.1.0"
+    "webpack-dev-server": "^1.14.0"
   }
 }
     

@@ -12,15 +12,16 @@ export default React.createClass({
 			book: {
 				id: null,
 				title: null
-			}
+			},
+			showBookInfo: true
 		}
 	},
 
 	render() {
-		const {book} = this.props;
-		
+		const {book, showBookInfo} = this.props;
+
 		return (
-			<div className="book-info col-md-12 component">
+			<div className={classNames("book-info col-md-12 component", {hidden: !showBookInfo})}>
 				{this.getTitleElement(book)}
 
 				<div>{this.renderAuthors(book)}</div>

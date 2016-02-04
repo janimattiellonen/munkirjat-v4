@@ -27,6 +27,10 @@ let authorService = new AuthorService();
 let bookService = new BookService();
 let genreService = new GenreService();
 
+server.get('/', restify.serveStatic({
+    directory: __dirname + '/../web',
+    default: 'index.dev.html'
+}));
 server.get('/api/book/:id', function(req, res) {    
     let connection = getConnection();
     bookService.setConnection(connection);
@@ -67,16 +71,13 @@ server.get('/api/books/:mode', function (req, res) {
             return;
         }
 
-        res.charSet('utf8');
-
         let books = bookService.createBookObjects(result);
 
-        books.map(book => {
-            book = bookService.toArray(book);
-
-            return book;
+        books = books.map(book => {
+            return bookService.toArray(book);
         });
 
+        res.charSet('utf8');
         res.send(200, books.toArray());
         connection.end();
 
@@ -125,16 +126,28 @@ server.post('/api/book', authenticate, function(req, res) {
                 return;
             }
 
-            bookService.addGenres(createdBookId, genres, function(err, result) {
-                if (err) {
-                    handleError(err, res);
+            let handleGetBook = function(id) {
+                bookService.getBook(id, function(err, result) {
+                    let book = bookService.createBookObject(result);
+                    res.charSet('utf8');
+                    res.send(200, book);
                     connection.end();
-                    return;
-                }                
-                res.charSet('utf8');
-                res.send(200, {"status": "OK", "id": createdBookId});
-                connection.end();
-            });
+                }); 
+            };        
+
+            if (null != genres && genres.length > 0) {
+                bookService.addGenres(createdBookId, genres, function(err, result) {
+                    if (err) {
+                        handleError(err, res);
+                        connection.end();
+                        return;
+                    }                
+
+                    handleGetBook(createdBookId);
+                });
+            } else {
+                handleGetBook(createdBookId);
+            }
         });
     });
 });

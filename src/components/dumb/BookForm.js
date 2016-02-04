@@ -3,7 +3,7 @@ import {Button, ButtonGroup} from 'react-bootstrap';
 import Select from 'react-select';
 import moment from 'moment';
 import numeral from 'numeral';
-import Immutable from 'immutable';
+import Immutable, {List, OrderedMap, Seq} from 'immutable';
 import Api from '../../api';
 import _ from 'underscore';
 import jqueryui from 'jquery-ui';
@@ -38,13 +38,13 @@ export default class BookForm extends Component {
 			return [];
 		}
 
-		let items = [];
+		let items = OrderedMap();
 
 		items = authors.map(author => {
 			return {value: author.id, label: author.name};
 		});
 
-		return items;
+		return items.toArray();
 	}
 
 	mapGenres(genres) {
@@ -52,20 +52,21 @@ export default class BookForm extends Component {
 			return [];
 		}
 
-		let items = [];
-
+		let items = OrderedMap();
+		
 		items = genres.map(genre => {
 			return {value: genre.id, label: genre.name};
 		});
 
-		return items;
+		return items.toArray();
 	}
 
 	searchAuthors(input, callback) {
 		const {d} = this.props;
+
 		Api.searchAuthors(input).then(authors => {
 
-			let mapped = Immutable.List();
+			let mapped = List();
 
 			authors.map(author => {
 				mapped = mapped.push({
@@ -81,9 +82,10 @@ export default class BookForm extends Component {
 
 	searchGenres(input, callback) {
 		const {d} = this.props;
+
 		Api.searchGenres(input).then(genres => {
 
-			let mapped = Immutable.List();
+			let mapped = List();
 
 			genres.map(genre => {
 				mapped = mapped.push({
@@ -125,13 +127,13 @@ export default class BookForm extends Component {
 
 	onAuthorChanged(selectionString, selectionObj) {
 		this.setState({
-			authors: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
+			authors: Seq(selectionObj).filter(x => x.value).toArray()
 		});
 	}
 
 	onGenreChanged(selectionString, selectionObj) {
 		this.setState({
-			genres: Immutable.Seq(selectionObj).filter(x => x.value).toArray()
+			genres: Seq(selectionObj).filter(x => x.value).toArray()
 		});
 	}
 

@@ -29,11 +29,13 @@ export default React.createClass({
 				'event' : 'view-book'
 			});	
 
-			this.props.bookActions.setSelectedBook(nextProps.params.id);
+			
 		}
+		this.props.bookActions.setSelectedBook(nextProps.params.id);
 	},
 
-	componentDidMount() {
+	componentWillMount() {
+		console.log("component will wount: " + this.props.params.id);
 		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
 });	

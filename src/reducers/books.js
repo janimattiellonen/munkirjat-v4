@@ -50,13 +50,16 @@ export default handleActions({
 		let book = action.book;
 		let genres = OrderedMap();
 		console.log("rekka: " + JSON.stringify(book));
-		_.forEach(book.genres, function (genre, key) {
-			console.log("ragnars: " + JSON.stringify(genre) + ", " + JSON.stringify(key));
-			genres = genres.set(genre.id, genre);
-		});
 
-		book.genres = genres;
-		book.authors = List(book.authors);
+		if (null != book) {
+			_.forEach(book.genres, function (genre, key) {
+				console.log("ragnars: " + JSON.stringify(genre) + ", " + JSON.stringify(key));
+				genres = genres.set(genre.id, genre);
+			});
+
+			book.genres = genres;
+			book.authors = List(book.authors);	
+		}
 
 		return {
 			...state,

@@ -28,7 +28,8 @@ export function setBooks(books, mode = null) {
 export function setSelectedBook(bookId) {
 	return function(dispatch, getState) {
 		if (null == bookId) {
-			return dispatch(setBookInfo(null));
+			return null;
+			//return dispatch(setBookInfo(null));
 		}
 		let books = getState().books.books.filter(book => book.id == bookId);
 
@@ -51,19 +52,8 @@ export function setBookInfo(book) {
 export function fetchBookInfo(bookId) {
 	return function(dispatch, getState) {
 		api.getBook(bookId).then(book => {
-			console.log("fetchBookInfo: " + JSON.stringify(book));
 			dispatch(setBookInfo(book));
-		}).catch(function (response) {
-			if (response instanceof Error) {
-				console.log("fetchBookInfo, error? " + JSON.stringify(response.message));
-			} else {
-				console.log(response.data);
-				console.log(response.status);
-				console.log(response.headers);
-				console.log(response.config);
-			}
-			
-		});
+		}).catch(Errors.handleError);
 	};
 }
 
@@ -83,22 +73,10 @@ export function fetchBooks(mode = null) {
 
 export function createBook(book) {
 	return function(dispatch, getState) {
-		console.log("CREATING BOOK...");
 		api.saveBook(book).then(book => {
 			dispatch(addBook(book));
-			console.log("CREATED	 BOOK 2...");
 			history.pushState(null, '/book/' + book.id);
-		}).catch(function (response) {
-			if (response instanceof Error) {
-				console.log("createBook, error? " + JSON.stringify(response.message));
-			} else {
-				console.log(response.data);
-				console.log(response.status);
-				console.log(response.headers);
-				console.log(response.config);
-			}
-			
-		});
+		}).catch(Errors.handleError);
 	};
 }
 

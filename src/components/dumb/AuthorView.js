@@ -8,7 +8,9 @@ import * as Utils from '../utils';
 export default React.createClass({
 
 	getInitialState: function() {
-        return { showBookInfo: false };
+        return { 
+        	showBookInfo: false 
+        };
     },
 
 	getDefaultProps() {
@@ -40,9 +42,9 @@ export default React.createClass({
 				
 				<h2>Books</h2>
 
-				<BooksList enableEvent={true} books={author.books} {...this.props}/>
+				<BooksList enableEvent={true} loadBookInfo={this.loadBookInfo} books={author.books} {...this.props}/>
 				
-                { book ? <BookInfoView key={book.id} book={book} singleMode={false} {...this.props}/> : null }
+                { book ? <BookInfoView showBookInfo={this.state.showBookInfo} key={book.id} book={book} singleMode={false} {...this.props}/> : null }
 			</div>
 		);
 	},
@@ -71,8 +73,15 @@ export default React.createClass({
 		this.props.authorActions.removeAuthor(id);
 	},
 
+	loadBookInfo(bookId) {
+		this.props.bookActions.setSelectedBook(bookId);	
+		
+		this.setState({
+			showBookInfo: true
+		});
+	},
+
 	componentDidMount() {
-		this.props.bookActions.setSelectedBook(null);
 		this.props.authorActions.fetchAuthor(this.props.params.id);
 	},
 });

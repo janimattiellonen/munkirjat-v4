@@ -53,21 +53,17 @@ export default class BookForm extends Component {
 		}
 
 		let items = OrderedMap();
-
-		console.log("mapGenres 1: " + JSON.stringify(genres));
 		
 		items = genres.map(genre => {
 			return {value: genre.id, label: genre.name};
 		});
-
-		console.log("mapGenres 2: " + JSON.stringify(items));
 
 		return items.toArray();
 	}
 
 	searchAuthors(input, callback) {
 		const {d} = this.props;
-		console.log("searchAuthors: " + JSON.stringify(input));
+
 		Api.searchAuthors(input).then(authors => {
 
 			let mapped = List();
@@ -86,7 +82,7 @@ export default class BookForm extends Component {
 
 	searchGenres(input, callback) {
 		const {d} = this.props;
-		console.log("searchGenres: " + JSON.stringify(d));
+
 		Api.searchGenres(input).then(genres => {
 
 			let mapped = List();

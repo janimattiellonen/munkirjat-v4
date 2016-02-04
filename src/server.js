@@ -69,24 +69,6 @@ server.get('/api/books/:mode', function (req, res) {
 
         let books = bookService.createBookObjects(result);
 
-        /*
-        console.log("BOOKS:\n\n");
-
-        console.log(JSON.stringify(books));
-
-        console.log("BOOKS.toJSON():\n\n");
-
-        console.log(JSON.stringify(books.toJS()));
-
-        console.log("BOOKS.toObject():\n\n");
-
-        console.log(JSON.stringify(books.toObject()));
-
-        console.log("BOOKS.toArray():\n\n");
-
-        console.log(JSON.stringify(books.toArray()));
-        */
-
         books = books.map(book => {
             return bookService.toArray(book);
         });

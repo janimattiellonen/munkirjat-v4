@@ -34,7 +34,6 @@ export function setSelectedBook(bookId) {
 
 		if (books.count() == 1) {
 			let selectedBook = books.first();
-			console.log("setBookInfo(selectedBook): " + JSON.stringify(selectedBook));
 			dispatch(setBookInfo(selectedBook));
 		} else {
 			dispatch(fetchBookInfo(bookId));

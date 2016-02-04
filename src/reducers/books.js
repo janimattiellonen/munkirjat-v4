@@ -20,7 +20,6 @@ export default handleActions({
 		});
 
 		_.forEach(book.genres, function (genre, key) {
-			console.log("sakka: " + JSON.stringify(genre) + ", " + JSON.stringify(key));
 			genres = genres.set(genre.id, genre);
 		});
 

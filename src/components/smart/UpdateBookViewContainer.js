@@ -8,14 +8,12 @@ import * as BookActions from '../../actions/BookActions';
 class UpdateBookViewContainer extends React.Component {
     componentDidMount() {
         if (this.props.params.id) {
-            console.log("111111");
             this.props.bookActions.fetchBookInfo(this.props.params.id);
         }   
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.params.id && nextProps.params.id && this.props.params.id != nextProps.params.id) {
-            console.log("222222");
             this.props.bookActions.fetchBookInfo(nextProps.params.id);
         } 
     }

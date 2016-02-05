@@ -1,16 +1,19 @@
 import config from './config';
-import restify from 'restify';
+import express from 'express';
+//import restify from 'restify';
 import {http} from 'follow-redirects';
 import uuid from 'node-uuid';
-let server = restify.createServer();
+//let server = restify.createServer();
+const server = express();
 import mysql from 'mysql';
 import AuthorService from './components/service/AuthorService';
 import BookService from './components/service/BookService';
 import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
 import * as Utils from './components/utils';
-import jwt from 'restify-jwt';
+import jwt from 'express-jwt';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 
 dotenv.load();
 
@@ -19,9 +22,16 @@ let authenticate = jwt({
   audience: process.env.AUTH0_CLIENT_ID
 });
 
-server.use(restify.CORS());
-server.use(restify.authorizationParser());
-server.use(restify.bodyParser());
+server.use(bodyParser.json());
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+//server.use(express.authorizationParser());
+server.use(bodyParser.json());
 
 let authorService = new AuthorService();
 let bookService = new BookService();
@@ -210,7 +220,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
     });
 });
 
-server.del('/api/author/:id', authenticate, function(req, res) {
+server.delete('/api/author/:id', authenticate, function(req, res) {
     let connection = getConnection();
     authorService.setConnection(connection);
 
@@ -381,10 +391,9 @@ server.get('/api/genres/:term', function(req, res) {
     });
 });
 
-server.get('/.*', restify.serveStatic({
-    directory: __dirname + '/../web',
-    default: 'index.dev2.html'
-}));
+server.get('*', function(req, res, next) {
+  res.sendFile(path.join(__dirname, '/../web/index.dev.html'));
+});
 
 function handleError(err, res) {
     if(err) {

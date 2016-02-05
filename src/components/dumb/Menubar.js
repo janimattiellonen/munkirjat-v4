@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import history from '../history';
 import * as Utils from '../utils';
+import {Link} from 'react-router';
 
 export default class Menubar extends Component {
 	render() {
@@ -18,17 +19,17 @@ export default class Menubar extends Component {
 		            </div>
 		            <div className="collapse navbar-collapse">
 		                <ul className="nav navbar-nav">
-		                    <li><a href="/#">Home</a></li>
-		                    <li><a href="/#/about">About</a></li>
-		                    <li><a href="/#/books">Books</a></li>
-		                    <li><a href="/#/books/read">Read books</a></li>
-		                    <li><a href="/#/books/unread">Unread books</a></li>
-		                    <li><a href="/#/authors">Authors</a></li>
+		                    <li><Link to="/">Home</Link></li>
+		                    <li><Link to="/about">About</Link></li>
+		                    <li><Link to="/books">Books</Link></li>
+		                    <li><Link to="/books/read">Read books</Link></li>
+		                    <li><Link to="/books/unread">Unread books</Link></li>
+		                    <li><Link to="/authors">Authors</Link></li>
 
 		                    {this.renderNewBookMenuitem()}
 		                    {this.renderNewAuthorMenuitem()}
 
-		                    <li><a href="/#/genres">Genres</a></li>
+		                    <li><Link to="/genres">Genres</Link></li>
 
 		                    {this.renderUserMenuitem()}
 		                </ul>
@@ -41,7 +42,7 @@ export default class Menubar extends Component {
 	renderNewBookMenuitem() {
 		if (Utils.isLoggedIn()) {
 			return (
-				<li><a href="/#/book/new">New book</a></li>
+				<li><Link to="/book/new">New book</Link></li>
 			)
 		}
 	}
@@ -49,7 +50,7 @@ export default class Menubar extends Component {
 	renderNewAuthorMenuitem() {
 		if (Utils.isLoggedIn()) {
 			return (
-				<li><a href="/#/author/new">New author</a></li>
+				<li><Link to="/author/new">New author</Link></li>
 			)
 		}
 	}
@@ -61,7 +62,7 @@ export default class Menubar extends Component {
 			)
 		} else {
 			return (
-				<li><a href="/#/login">Login</a></li>
+				<li><Link to="/login">Login</Link></li>
 			)
 		}
 	}

@@ -27,10 +27,8 @@ let authorService = new AuthorService();
 let bookService = new BookService();
 let genreService = new GenreService();
 
-server.get('/', restify.serveStatic({
-    directory: __dirname + '/../web',
-    default: 'index.dev.html'
-}));
+
+
 server.get('/api/book/:id', function(req, res) {    
     let connection = getConnection();
     bookService.setConnection(connection);
@@ -382,6 +380,11 @@ server.get('/api/genres/:term', function(req, res) {
         res.send(200, result);
     });
 });
+
+server.get('/.*', restify.serveStatic({
+    directory: __dirname + '/../web',
+    default: 'index.dev2.html'
+}));
 
 function handleError(err, res) {
     if(err) {

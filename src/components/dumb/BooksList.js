@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
 import * as Utils from '../utils';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -36,7 +37,7 @@ export default React.createClass({
 
 	getViewBookLink(book) {
 		return (
-			<a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a>
+			<a className={classNames({'is-read': book.is_read})} href={"book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a>
 		)
 	},
 

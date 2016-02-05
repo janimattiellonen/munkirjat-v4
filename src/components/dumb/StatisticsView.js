@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import moment from 'moment';
 import numeral from 'numeral';
 import Stats from '../Stats';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -85,7 +86,7 @@ export default React.createClass({
 	getBookLink(book, title) {
 		if (null != book) {
 			return (
-				<a href={'/#/book/' + book.id}>{title}</a>
+				<Link to={"/book/" + book.id}>{title}</Link>
 			)	
 		} else {
 			return 0;

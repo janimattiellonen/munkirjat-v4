@@ -1,10 +1,11 @@
-import config from './config';
+import appConfig from './config';
+import config from '../webpack.config';
 import express from 'express';
-//import restify from 'restify';
-import {http} from 'follow-redirects';
+import webpack from 'webpack';
+import path from 'path';
 import uuid from 'node-uuid';
-//let server = restify.createServer();
 const server = express();
+var http = require('http').Server(server);
 import mysql from 'mysql';
 import AuthorService from './components/service/AuthorService';
 import BookService from './components/service/BookService';
@@ -12,6 +13,7 @@ import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
 import * as Utils from './components/utils';
 import jwt from 'express-jwt';
+const compiler = webpack(config);
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 
@@ -22,16 +24,21 @@ let authenticate = jwt({
   audience: process.env.AUTH0_CLIENT_ID
 });
 
-server.use(bodyParser.json());
-
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-//server.use(express.authorizationParser());
+server.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: false,
+  publicPath: config.output.publicPath
+}));
+
 server.use(bodyParser.json());
+
+
+server.use(require('webpack-hot-middleware')(compiler));
 
 let authorService = new AuthorService();
 let bookService = new BookService();
@@ -55,14 +62,14 @@ server.get('/api/book/:id', function(req, res) {
         let book = bookService.createBookObject(result);
         book = bookService.toArray(book);
 
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, book);
         connection.end();
     });
 });
 
 server.get('/api/protected', authenticate, function( req, res) {
-    res.charSet('utf8');
+    res.charSet = 'utf8';
     res.send(200, {status: "AUTHENTICATED"});
 });
 
@@ -85,7 +92,7 @@ server.get('/api/books/:mode', function (req, res) {
             return bookService.toArray(book);
         });
 
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, books.toArray());
         connection.end();
 
@@ -137,7 +144,7 @@ server.post('/api/book', authenticate, function(req, res) {
             let handleGetBook = function(id) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
-                    res.charSet('utf8');
+                    res.charSet = 'utf8';
                     res.send(200, book);
                     connection.end();
                 }); 
@@ -197,7 +204,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
             let handleGetBook = function(id) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
-                    res.charSet('utf8');
+                    res.charSet = 'utf8';
                     res.send(200, book);
                     connection.end();
                 }); 
@@ -231,7 +238,7 @@ server.delete('/api/author/:id', authenticate, function(req, res) {
             return;
         }
 
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, {status: "OK"});
         connection.end();
     });
@@ -267,7 +274,7 @@ server.post('/api/author', authenticate, function(req, res) {
                 author = authorService.createAuthorObject(result);
             }
 
-            res.charSet('utf8');
+            res.charSet = 'utf8';
             res.send(200, author);
             connection.end();
         });
@@ -310,7 +317,7 @@ function loadAuthorWithBooks(authorId, connection, res) {
             author = authorService.createAuthorObject(result);
         }
 
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, author);
         connection.end();
     });
@@ -335,7 +342,7 @@ server.get('/api/authors/:term', function(req, res) {
         }
 
         connection.end();
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, result);
     });
 });
@@ -352,7 +359,7 @@ server.get('/api/authors', function(req, res) {
         }
 
         connection.end();
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, result);
     });
 });
@@ -369,7 +376,7 @@ server.get('/api/genres', function(req, res) {
         }
         
         connection.end();
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, result);
     });
 });
@@ -386,13 +393,17 @@ server.get('/api/genres/:term', function(req, res) {
         }
 
         connection.end();
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(200, result);
     });
 });
 
 server.get('*', function(req, res, next) {
   res.sendFile(path.join(__dirname, '/../web/index.dev.html'));
+});
+
+http.listen(appConfig.port, function(){
+  console.log('listening on *:' + appConfig.port);
 });
 
 function handleError(err, res) {
@@ -404,17 +415,17 @@ function handleError(err, res) {
             message: 'Request failed due to server error'
         };
 
-        res.charSet('utf8');
+        res.charSet = 'utf8';
         res.send(500, result);
     }
 }
 
 function getConnection() {
     let connection = mysql.createConnection({
-        host: config.db.host,
-        user: config.db.user,
-        password: config.db.password,
-        database: config.db.database
+        host: appConfig.db.host,
+        user: appConfig.db.user,
+        password: appConfig.db.password,
+        database: appConfig.db.database
     });
 
     connection.config.queryFormat = function (query, values) {
@@ -433,13 +444,5 @@ function getConnection() {
 
     return connection;
 }
-
-server.listen(config.server.port, function(err) {
-    if (err) {
-        console.log("Server error: " + err);
-        return;
-    }
-    console.log('%s listening at %s', server.name, server.url);
-});
 
 export default server;

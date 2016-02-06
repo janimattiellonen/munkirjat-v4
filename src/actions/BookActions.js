@@ -83,8 +83,8 @@ export function updateBook(book) {
 
 	return function(dispatch, getState) {
 		api.updateBook(book).then(book => {
-			dispatch(replaceBook(book));
 			Noty.info('Book updated');
+			dispatch(replaceBook(book));
 		}).catch(Errors.handleError);
 	}
 }

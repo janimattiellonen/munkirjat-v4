@@ -60,14 +60,14 @@ server.get('/api/book/:id', function(req, res) {
         book = bookService.toArray(book);
 
         res.charSet = 'utf8';
-        res.status(200).send(book);
+        res.status(200).json(book);
         connection.end();
     });
 });
 
 server.get('/api/protected', authenticate, function( req, res) {
     res.charSet = 'utf8';
-    res.send(200, {status: "AUTHENTICATED"});
+    res.status(200).json({status: "AUTHENTICATED"});
 });
 
 server.get('/api/books/:mode', function (req, res) {
@@ -90,7 +90,7 @@ server.get('/api/books/:mode', function (req, res) {
         });
 
         res.charSet = 'utf8';
-        res.status(200).send(books.toArray());
+        res.status(200).json(books.toArray());
         connection.end();
 
     });
@@ -142,7 +142,7 @@ server.post('/api/book', authenticate, function(req, res) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
                     res.charSet = 'utf8';
-                    res.status(200).send(book);
+                    res.status(200).json(book);
                     connection.end();
                 }); 
             };        
@@ -202,7 +202,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
                     res.charSet = 'utf8';
-                    res.status(200).send(book);
+                    res.status(200).json(book);
                     connection.end();
                 }); 
             };
@@ -236,7 +236,7 @@ server.delete('/api/author/:id', authenticate, function(req, res) {
         }
 
         res.charSet = 'utf8';
-        res.status(200).send({status: "OK"});
+        res.status(200).json({status: "OK"});
         connection.end();
     });
 });
@@ -272,7 +272,7 @@ server.post('/api/author', authenticate, function(req, res) {
             }
 
             res.charSet = 'utf8';
-            res.status(200).send(author);
+            res.status(200).json(author);
             connection.end();
         });
     });
@@ -315,7 +315,7 @@ function loadAuthorWithBooks(authorId, connection, res) {
         }
 
         res.charSet = 'utf8';
-        res.status(200).send(author);
+        res.status(200).json(author);
         connection.end();
     });
 }
@@ -340,7 +340,7 @@ server.get('/api/authors/:term', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.status(200).send(result);
+        res.status(200).json(result);
     });
 });
 
@@ -357,7 +357,7 @@ server.get('/api/authors', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.status(200).send(result);
+        res.status(200).json(result);
     });
 });
 
@@ -374,7 +374,7 @@ server.get('/api/genres', function(req, res) {
         
         connection.end();
         res.charSet = 'utf8';
-        res.status(200).send(result);
+        res.status(200).json(result);
     });
 });
 
@@ -391,7 +391,7 @@ server.get('/api/genres/:term', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.status(200).send(result);
+        res.status(200).json(result);
     });
 });
 
@@ -413,7 +413,7 @@ function handleError(err, res) {
         };
 
         res.charSet = 'utf8';
-        res.status(500).send(result);
+        res.status(500).json(result);
     }
 }
 

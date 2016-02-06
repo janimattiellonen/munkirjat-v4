@@ -31,9 +31,8 @@ export default React.createClass({
 				'event' : 'view-book'
 			});	
 
-			
+			this.props.bookActions.setSelectedBook(nextProps.params.id);
 		}
-		this.props.bookActions.setSelectedBook(nextProps.params.id);
 	},
 
 	componentWillMount() {

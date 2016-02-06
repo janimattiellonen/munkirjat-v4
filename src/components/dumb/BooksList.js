@@ -49,9 +49,9 @@ export default React.createClass({
 	},
 
 	loadBookInfo(bookId, e) {
-		this.props.bookActions.setSelectedBook(bookId);	
-
 		if (this.props.enableEvent) {
+			this.props.loadBookInfo(bookId);
+
 			e.preventDefault();
 		}
 	}

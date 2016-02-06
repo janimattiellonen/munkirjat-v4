@@ -22,7 +22,7 @@ class UpdateBookViewContainer extends React.Component {
         const {book} = this.props;
 
         return (
-            <BookForm key={book.id} book={book} params={this.props.params} handleSubmit={::this.handleSubmit} />
+            <BookForm  book={book} params={this.props.params} handleSubmit={::this.handleSubmit} />
         );
     }
 

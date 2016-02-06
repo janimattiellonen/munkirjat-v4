@@ -26,7 +26,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import promiseMiddleware from 'redux-promise';
-import createHashHistory from 'history/lib/createHashHistory';
+//import createHashHistory from 'history/lib/createHashHistory';
 import store from './store';
 
 require('bootstrap/dist/css/bootstrap.css');
@@ -42,18 +42,18 @@ ReactDOM.render(
 		<Router history={history}>
 	        <Route component={MunkirjatAppContainer} path="/">
 	        	<IndexRoute component={HomeContainer}/>
-	            <Route name="about" path="about" component={About}/>
-	            <Route name="newBook" path="book/new" component={NewBookViewContainer} />
-	            <Route name="editBook" path="book/:id/edit" component={UpdateBookViewContainer} />
-				<Route name="book" path="book/:id" component={BookViewContainer} />
-				<Route name="listBooks" path="books(/:mode)(/:language)(/:genre)" component={BooksViewContainer} />
-				<Route name="listAuthors" path="authors" component={AuthorsViewContainer} />
-				<Route name="newAuthor" path="author/new" component={NewAuthorViewContainer} />
-				<Route name="editAuthor" path="author/:id/edit" component={UpdateAuthorViewContainer} />
-				<Route name="viewAuthor" path="author/:id" component={AuthorViewContainer} />
-				<Route name="listGenres" path="genres" component={GenresViewContainer} />
-				<Route name="login" path="login" component={LoginViewContainer} />
-				<Route name="afterLogin" path="access_token/:id" component={LoginViewContainer} />
+	            <Route path="about" component={About}/>
+	            <Route path="book/new" component={NewBookViewContainer} />
+	            <Route path="book/:id/edit" component={UpdateBookViewContainer} />
+				<Route path="book/:id" component={BookViewContainer} />
+				<Route path="books(/:mode)(/:language)(/:genre)" component={BooksViewContainer} />
+				<Route path="authors" component={AuthorsViewContainer} />
+				<Route path="author/new" component={NewAuthorViewContainer} />
+				<Route path="author/:id/edit" component={UpdateAuthorViewContainer} />
+				<Route path="author/:id" component={AuthorViewContainer} />
+				<Route path="genres" component={GenresViewContainer} />
+				<Route path="login" component={LoginViewContainer} />
+				<Route path="access_token/:id" component={LoginViewContainer} />
 	        </Route>
 	    </Router>	
 	</Provider>,

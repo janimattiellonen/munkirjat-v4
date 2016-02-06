@@ -16,6 +16,7 @@ import jwt from 'express-jwt';
 const compiler = webpack(config);
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import compression from 'compression';
 
 dotenv.load();
 
@@ -35,8 +36,8 @@ server.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
+server.use(compression()); 
 server.use(bodyParser.json());
-
 server.use(require('webpack-hot-middleware')(compiler));
 
 let authorService = new AuthorService();

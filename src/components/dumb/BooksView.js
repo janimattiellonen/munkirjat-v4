@@ -6,6 +6,7 @@ import SmartSearch from 'smart-search';
 import classNames from 'classnames';
 import {List, Map} from 'immutable';
 import * as Utils from '../utils';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -32,6 +33,9 @@ export default React.createClass({
 
 	filterBooks(allBooks, mode, language, genre) {
 		let books = null;
+		if (null != language) {
+			language = language.trim();
+		}
 
 		if (null != genre && genre != 'all') {
 			allBooks = allBooks.filter(book => book.genres.has(parseInt(genre)));
@@ -48,7 +52,7 @@ export default React.createClass({
 		if (null != language && language != 'all') {
 			books = books.filter(b => b.language_id == language);
 		}
-
+		
 		if (this.state.search) {
 			books = Utils.filter(books, this.state.searchTerm, ['title']);
 		} 	
@@ -62,7 +66,6 @@ export default React.createClass({
 
 	render() {
 		const {language, genre} = this.props.params;
-
 		let mode = this.getMode(this.props.params.mode);
 		let books = this.filterBooks(this.props.books, mode, language, genre);
 
@@ -74,10 +77,10 @@ export default React.createClass({
 				<div className={classNames("sort-box", {"hidden": this.state.search})}>
 					<span>By language: </span>
 					<ul className="horizontal-list">
-						<li><a href={this.getUrl(mode, 'fi', genre)}>Finnish</a> | </li>
-						<li><a href={this.getUrl(mode, 'se', genre)}>Swedish</a> | </li>
-						<li><a href={this.getUrl(mode, 'en', genre)}>English</a> | </li>
-						<li><a href={this.getUrl(mode, null, genre)}>All</a></li>
+						<li><Link to={this.getUrl(mode, 'fi', genre)}>Finnish</Link> | </li>
+						<li><Link to={this.getUrl(mode, 'se', genre)}>Swedish</Link> | </li>
+						<li><Link to={this.getUrl(mode, 'en', genre)}>English</Link> | </li>
+						<li><Link to={this.getUrl(mode, null, genre)}>All</Link></li>
 					</ul>
 				</div>
 
@@ -126,6 +129,6 @@ export default React.createClass({
 	},
 
 	getUrl(mode, language, genre) {
-		return '/#/books/' + mode + (null != language ? '/' + language : '/all') + (null != genre ? '/' + genre : '	');
+		return '/books/' + mode + (null != language ? '/' + language : '/all') + (null != genre ? '/' + genre : '	');
 	}
 });

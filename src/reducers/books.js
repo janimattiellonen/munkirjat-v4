@@ -3,8 +3,6 @@ import { List, Map, OrderedMap} from 'immutable';
 import _ from 'lodash';
 import moment from 'moment';
 
-//import {Suite} from 'Benchmark';
-
 function sortBooks(books) {
 	return _.sortByOrder(books.toArray(), ['title'], ['asc']);
 }

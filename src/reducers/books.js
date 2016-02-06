@@ -49,8 +49,7 @@ export default handleActions({
 		let genres = OrderedMap();
 
 		if (null != book) {
-			_.forEach(book.genres, function (genre, key) {
-
+			book.genres.map(genre => {
 				genres = genres.set(genre.id, genre);
 			});
 

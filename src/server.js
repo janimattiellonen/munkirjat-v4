@@ -37,14 +37,11 @@ server.use(require('webpack-dev-middleware')(compiler, {
 
 server.use(bodyParser.json());
 
-
 server.use(require('webpack-hot-middleware')(compiler));
 
 let authorService = new AuthorService();
 let bookService = new BookService();
 let genreService = new GenreService();
-
-
 
 server.get('/api/book/:id', function(req, res) {    
     let connection = getConnection();
@@ -63,7 +60,7 @@ server.get('/api/book/:id', function(req, res) {
         book = bookService.toArray(book);
 
         res.charSet = 'utf8';
-        res.send(200, book);
+        res.status(200).send(book);
         connection.end();
     });
 });
@@ -93,7 +90,7 @@ server.get('/api/books/:mode', function (req, res) {
         });
 
         res.charSet = 'utf8';
-        res.send(200, books.toArray());
+        res.status(200).send(books.toArray());
         connection.end();
 
     });
@@ -103,16 +100,16 @@ server.post('/api/book', authenticate, function(req, res) {
     let connection = getConnection();
     bookService.setConnection(connection);
 
-    const {params} = req;
+    const {body, params} = req;
 
     let newBook = {
-        title: params.title,
-        language: params.language,
-        pageCount: params.pageCount,
-        price: params.price,
-        isRead: params.isRead,
-        startedReading: Utils.mysql_date(params.startedReading),
-        finishedReading: Utils.mysql_date(params.finishedReading)
+        title: body.title,
+        language: body.language,
+        pageCount: body.pageCount,
+        price: body.price,
+        isRead: body.isRead,
+        startedReading: Utils.mysql_date(body.startedReading),
+        finishedReading: Utils.mysql_date(body.finishedReading)
     };
 
     bookService.createBook(newBook, function(err, result) {
@@ -145,7 +142,7 @@ server.post('/api/book', authenticate, function(req, res) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
                     res.charSet = 'utf8';
-                    res.send(200, book);
+                    res.status(200).send(book);
                     connection.end();
                 }); 
             };        
@@ -171,20 +168,20 @@ server.put('/api/book/:id', authenticate, function(req, res) {
     let connection = getConnection();
     bookService.setConnection(connection);
 
-    const {params} = req;
+    const {body, params} = req;
 
     let updatedBook = {
-        title: params.title,
-        language: params.language,
-        pageCount: params.pageCount,
-        price: params.price,
-        isRead: params.isRead,
-        startedReading: Utils.mysql_date(params.startedReading),
-        finishedReading: Utils.mysql_date(params.finishedReading)
+        title: body.title,
+        language: body.language,
+        pageCount: body.pageCount,
+        price: body.price,
+        isRead: body.isRead,
+        startedReading: Utils.mysql_date(body.startedReading),
+        finishedReading: Utils.mysql_date(body.finishedReading)
     }
 
-    let authors = params.authors.map(author => { return author.value });
-    let genres  = params.genres.map(genre => { return genre.value});
+    let authors = body.authors.map(author => { return author.value });
+    let genres  = body.genres.map(genre => { return genre.value});
     let id      = params.id;
 
     bookService.updateBook(id, updatedBook, function(err, result) {
@@ -205,7 +202,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                 bookService.getBook(id, function(err, result) {
                     let book = bookService.createBookObject(result);
                     res.charSet = 'utf8';
-                    res.send(200, book);
+                    res.status(200).send(book);
                     connection.end();
                 }); 
             };
@@ -239,7 +236,7 @@ server.delete('/api/author/:id', authenticate, function(req, res) {
         }
 
         res.charSet = 'utf8';
-        res.send(200, {status: "OK"});
+        res.status(200).send({status: "OK"});
         connection.end();
     });
 });
@@ -248,8 +245,8 @@ server.post('/api/author', authenticate, function(req, res) {
     let connection = getConnection();
     authorService.setConnection(connection);
     let newAuthor = {
-        firstname: req.params.firstname,
-        lastname: req.params.lastname,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
     };
 
     authorService.createAuthor(newAuthor, function(err, result) {
@@ -275,7 +272,7 @@ server.post('/api/author', authenticate, function(req, res) {
             }
 
             res.charSet = 'utf8';
-            res.send(200, author);
+            res.status(200).send(author);
             connection.end();
         });
     });
@@ -286,8 +283,8 @@ server.put('/api/author/:id', authenticate, function(req, res) {
     authorService.setConnection(connection);
 
     let updatedAuthor = {
-        firstname: req.params.firstname,
-        lastname: req.params.lastname,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
     };
 
     let id = req.params.id;
@@ -318,7 +315,7 @@ function loadAuthorWithBooks(authorId, connection, res) {
         }
 
         res.charSet = 'utf8';
-        res.send(200, author);
+        res.status(200).send(author);
         connection.end();
     });
 }
@@ -343,7 +340,7 @@ server.get('/api/authors/:term', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.send(200, result);
+        res.status(200).send(result);
     });
 });
 
@@ -360,7 +357,7 @@ server.get('/api/authors', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.send(200, result);
+        res.status(200).send(result);
     });
 });
 
@@ -377,7 +374,7 @@ server.get('/api/genres', function(req, res) {
         
         connection.end();
         res.charSet = 'utf8';
-        res.send(200, result);
+        res.status(200).send(result);
     });
 });
 
@@ -394,7 +391,7 @@ server.get('/api/genres/:term', function(req, res) {
 
         connection.end();
         res.charSet = 'utf8';
-        res.send(200, result);
+        res.status(200).send(result);
     });
 });
 
@@ -416,7 +413,7 @@ function handleError(err, res) {
         };
 
         res.charSet = 'utf8';
-        res.send(500, result);
+        res.status(500).send(result);
     }
 }
 

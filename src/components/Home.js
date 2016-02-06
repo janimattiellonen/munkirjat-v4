@@ -3,6 +3,7 @@ import {List} from 'immutable';
 import Api from '../api';
 import Stats from "./Stats";
 import StatsList from "./dumb/StatsList";
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -64,7 +65,7 @@ export default React.createClass({
 		}
 
 		return (
-			<a href={'/#/author/' + item.id}>{item.name + ' (' + item.amount + ')'}</a>
+			<Link to={'/author/' + item.id}>{item.name + ' (' + item.amount + ')'}</Link>
 		)
 	},
 
@@ -74,7 +75,7 @@ export default React.createClass({
 		}
 
 		return (
-			<a href={'/#/book/' + item.id}>{item.title}</a>
+			<Link to={'/book/' + item.id}>{item.title}</Link>
 		)
 	},
 

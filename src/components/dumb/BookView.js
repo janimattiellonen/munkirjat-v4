@@ -1,5 +1,7 @@
 import React from 'react';
-import BookInfoView from './BookInfoView'
+import BookInfoView from './BookInfoView';
+import {Link} from 'react-router';
+
 export default React.createClass({
 
 	getDefaultProps() {

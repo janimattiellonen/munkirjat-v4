@@ -2,6 +2,7 @@ import React from 'react';
 import Immutable from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
+import {Link} from 'react-router';
 
 import * as Utils from '../utils';
 
@@ -68,7 +69,7 @@ export default React.createClass({
 				<ul>
 					{book.authors.map(author => {
 						return (
-							<li key={author.id}><a className={!this.props.singleMode ? 'hidden' : ''} href={'/#/author/' + author.id}>{author.name}</a></li>	
+							<li key={author.id}><Link className={!this.props.singleMode ? 'hidden' : ''} to={'/author/' + author.id}>{author.name}</Link></li>	
 						)
 					})}
 				</ul>
@@ -79,7 +80,7 @@ export default React.createClass({
 	getEditBookLink(book) {
 		if (Utils.isLoggedIn() ) {
 			return (
-				<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<Link key={"edit-" + book.id} to={"/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link>
 			)
 		}
 	},

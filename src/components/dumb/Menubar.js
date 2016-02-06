@@ -15,7 +15,7 @@ export default class Menubar extends Component {
 		                    <span className="icon-bar"></span>
 		                    <span className="icon-bar"></span>
 		                </button>
-		                <a className="navbar-brand" href="#">Munkirjat.com</a>
+		                <a className="navbar-brand" href="/">Munkirjat.com</a>
 		            </div>
 		            <div className="collapse navbar-collapse">
 		                <ul className="nav navbar-nav">

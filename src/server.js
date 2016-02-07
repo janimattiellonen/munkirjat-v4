@@ -124,11 +124,11 @@ server.post('/api/book', authenticate, function(req, res) {
         let authors         = [];
         let genres          = [];
 
-        req.params.authors.map(author => {
+        req.body.authors.map(author => {
             authors.push(author.value);
         });
 
-        req.params.genres.map(genre => {
+        req.body.genres.map(genre => {
             genres.push(genre.value);
         });      
 

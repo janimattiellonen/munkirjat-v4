@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class GenresView extends Component {
 	render() {
@@ -22,7 +23,7 @@ export default class GenresView extends Component {
 
 	getUrl(genre) {
 		return (
-			<a href={'/#/books/all/all/' + genre.id}>{genre.name} ({genre.amount})</a>
+			<Link to={'/books/all/all/' + genre.id}>{genre.name} ({genre.amount})</Link>
 		)
 	}	
 }

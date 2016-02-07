@@ -2,26 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Munkirjat.com V5</title>
+	<title>Munkirjat.com V4</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-    {% for (var css in o.htmlWebpackPlugin.files.css) { %}
-        <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet">
-    {% } %}
 </head>
 <body>
 	 <div id="app" class="container">
         <div id="page"></div>   
 
         <footer><p>&copy; Janimatti Ellonen</p></footer>
+        
+        <script src="/client.js"></script>
      </div>
 
-	 
-    {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
-        <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
-    {% } %}
+
 
     <script type="text/javascript">
         $(document).ready(function () {

@@ -1,5 +1,7 @@
 import React from 'react';
-import BookInfoView from './BookInfoView'
+import BookInfoView from './BookInfoView';
+import {Link} from 'react-router';
+
 export default React.createClass({
 
 	getDefaultProps() {
@@ -33,7 +35,8 @@ export default React.createClass({
 		}
 	},
 
-	componentDidMount() {
+	componentWillMount() {
+		console.log("component will wount: " + this.props.params.id);
 		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
 });	

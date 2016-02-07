@@ -1,21 +1,21 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var Clean = require('clean-webpack-plugin');
-var path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
-module.exports = {
-    devtool: 'source-map',
-    entry: [
-        './src/app.js'
-    ],
-    output: {
-        path: path.join(__dirname, 'dist'),
-        publicPath: '/',
-        filename: 'app.[hash].js'
-    },
+const ENV = process.env.NODE_ENV;
+
+const merge = require('merge');
+const PATHS = {
+    src: path.join(__dirname, 'src'),
+    build: path.join(__dirname, 'dist'),
+    modules: path.join(__dirname, 'node_modules'),
+    test: path.join(__dirname, 'test')
+};
+
+const common = {
     module: {
         loaders: [
-            {
+        {   
                 test: /node_modules\/auth0-lock\/.*\.js$/,
                 loaders: [
                     'transform-loader/cacheable?brfs',
@@ -32,8 +32,14 @@ module.exports = {
             },
             {
                 test: /\.jsx?$/,
-                loader: 'babel-loader!eslint-loader',
-                exclude: /node_modules/
+                loader: 'babel-loader',
+                include: [
+                    PATHS.src,
+                    PATHS.test
+                ],
+                exclude: [
+                    PATHS.modules,
+                ]
             },
             {
                 test: /\.less$/,
@@ -42,54 +48,125 @@ module.exports = {
                     'css-loader',
                     'autoprefixer-loader?browsers=last 2 version',
                     'less-loader'
+                ],
+                include: [
+                    PATHS.src,
+                    PATHS.modules
                 ]
             },
             {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader'
+                loader: 'style-loader!css-loader',
+                include: [
+                    PATHS.src,
+                    PATHS.modules
+                ]
             },
             {
                 test: /\.(jpe?g|png|gif)$/i,
                 loaders: [
                     'file?hash=sha512&digest=hex&name=assets/images/[hash:base58:8].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                    'img?minimize&optimizationLevel=5&progressive=true'
+                ],
+                include: [
+                    PATHS.src,
+                    PATHS.modules
                 ]
             },
-
             {
                 test: /\.(woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]'
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name].[ext]',
+                include: [
+                    PATHS.src,
+                    PATHS.modules
+                ]
             },
             {
                 test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=assets/fonts/[name].[ext]'
+                loader: 'file-loader?name=assets/fonts/[name].[ext]',
+                include: [
+                    PATHS.src,
+                    PATHS.modules
+                ]
             }
         ]
     },
     resolve: {
-        modulesDirectories: ['node_modules', 'bower_components'],
+        modulesDirectories: ['node_modules'],
         extensions: ['', '.js', '.jsx']
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: 'web/index.dev.html',
-            favicon: 'web/favicon.ico'
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            'mangle': false,
-            'compress': {
-                /* eslint-disable camelcase */
-                dead_code: false,  // discard unreachable code
-                unsafe: false, // some unsafe optimizations (see below)
-                unused: false, // drop unused variables/functions
-                hoist_vars: false, // hoist variable declarations
-                side_effects: false, // drop side-effect-free statements
-                global_defs: {} // glob
-                /* eslint-enable camelcase */
-            }
-        }),
-        new Clean(['dist']),
-        new webpack.NoErrorsPlugin()
-
-    ]
+    }
 };
+
+const envs = {
+
+    test: {
+      devtool: 'inline-source-map' //just do inline source maps instead of the default
+    },
+
+    development: {
+        devtool: 'cheap-module-source-map',
+        entry: [
+            'webpack-hot-middleware/client',
+            './src/client.js'
+        ],
+        output: {
+            path: path.join(__dirname, 'dist'),
+            publicPath: '/',
+            filename: 'client.js'
+        },
+        plugins: [
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+
+            new HtmlWebpackPlugin({
+                title: 'JavaScript SchamaScript',
+                template: 'web/index.dev.html'
+                //favicon: 'web/favicon.ico'
+            }),
+            new webpack.DefinePlugin({
+                __DEVELOPMENT__: process.env.NODE_ENV === 'development',
+                __DEVTOOLS__: false
+            }),
+        ]
+    },
+    prod: {
+        devtool: 'source-map',
+        entry: [
+            './src/client.js'
+        ],
+        output: {
+            path: path.join(__dirname, 'dist'),
+            publicPath: '/',
+            filename: 'client.[hash].js'
+        },
+        plugins: [
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new HtmlWebpackPlugin({
+                title: 'Renoirc',
+                template: 'web/index.prod.html',
+                //favicon: 'web/favicon.ico',
+                inject: 'body',
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                'mangle': false,
+                'compress': {
+                    /* eslint-disable camelcase */
+                    dead_code: true,  // discard unreachable code
+                    unsafe: false, // some unsafe optimizations (see below)
+                    unused: false, // drop unused variables/functions
+                    hoist_vars: false, // hoist variable declarations
+                    side_effects: false, // drop side-effect-free statements
+                    global_defs: {} // glob
+                    /* eslint-enable camelcase */
+                }
+            }),
+            new webpack.NoErrorsPlugin(),
+            new webpack.DefinePlugin({
+                __DEVELOPMENT__: process.env.NODE_ENV === 'development',
+                __DEVTOOLS__: false
+            }),
+        ]
+    }
+}
+
+module.exports = merge(common, envs[ENV]);

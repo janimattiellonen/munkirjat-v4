@@ -1,10 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
 export default class AuthorForm extends Component {
-    static contextTypes = {
-        history: React.PropTypes.object.isRequired
-    }
-
 	constructor(props) {
 		super(props);
 

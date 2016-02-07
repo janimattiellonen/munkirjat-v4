@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import _ from 'lodash';
 import classNames from 'classnames';
 import * as Utils from '../utils';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -36,22 +37,22 @@ export default React.createClass({
 
 	getViewBookLink(book) {
 		return (
-			<a className={classNames({'is-read': book.is_read})} href={"/#/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</a>
+			<Link className={classNames({'is-read': book.is_read})} to={"/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</Link>
 		)
 	},
 
 	getEditBookLink(book) {
 		if (Utils.isLoggedIn() ) {
 			return (
-				<a key={"edit-" + book.id} href={"/#/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<Link key={"edit-" + book.id} to={"/book/" + book.id + "/edit"} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link>
 			)
 		}
 	},
 
 	loadBookInfo(bookId, e) {
-		this.props.bookActions.setSelectedBook(bookId);	
-
 		if (this.props.enableEvent) {
+			this.props.loadBookInfo(bookId);
+
 			e.preventDefault();
 		}
 	}

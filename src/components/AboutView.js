@@ -25,11 +25,10 @@ export default React.createClass({
 
                     <p>The development process of the previous version was really, really slow and when I was introduced to React, well, bye bye Scala. Of course, I could just have replaced AngularJS with React and still have Scala, but I also decided to, once again, rewrite the backend. This time using node.js.</p>
 
-
                     <ul className="use-dots">
                         <li><a target="_blank" href="https://facebook.github.io/react/">React</a></li>
                         <li><a target="_blank" href="http://nodejs.org/">Node.js</a></li>
-                        <li><a target="_blank" href="http://restify.com/">Restify</a></li>
+                        <li><a target="_blank" href="http://expressjs.com/">Express</a></li>
                         <li><a target="_blank" href="http://www.mysql.com">MySql</a></li>
                         <li><a target="_blank" href="http://www.lesscss.org">Less</a></li>
                         <li><a target="_blank" href="http://en.wikipedia.org/wiki/Single-page_application">Single-page application</a>

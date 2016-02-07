@@ -4,6 +4,7 @@ import {Button, Modal} from 'react-bootstrap';
 import SmartSearch from 'smart-search';
 import classNames from 'classnames';
 import * as Utils from '../utils';
+import {Link} from 'react-router';
 
 export default React.createClass({
 
@@ -101,14 +102,14 @@ export default React.createClass({
 
 	getViewAuthorLink(author) {
 		return (
-			<a key={'view-' + author.id} href={'/#/author/' + author.id}>{author.name}</a>
+			<Link key={'view-' + author.id} to={'/author/' + author.id}>{author.name}</Link>
 		)
 	},
 
 	getEditAuthorLink(author) {
 		if (Utils.isLoggedIn()) {
 			return (
-				<a key={'edit-' + author.id} href={'/#/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<Link key={'edit-' + author.id} to={'/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></Link>
 			)
 		}
 	},

@@ -8,9 +8,6 @@ import Menubar from '../dumb/Menubar';
 import config from '../../config.js';
 
 export default class MunkirjatApp extends React.Component {
-    static contextTypes = {
-        history: React.PropTypes.object.isRequired
-    }
 
     render() {
         return (

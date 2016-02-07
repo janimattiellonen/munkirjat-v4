@@ -28,13 +28,12 @@ export function setBooks(books, mode = null) {
 export function setSelectedBook(bookId) {
 	return function(dispatch, getState) {
 		if (null == bookId) {
-			return dispatch(setBookInfo(null));
+			return null;
 		}
 		let books = getState().books.books.filter(book => book.id == bookId);
-		let selectedBook = null;
 
 		if (books.count() == 1) {
-			selectedBook = books.first();
+			let selectedBook = books.first();
 			dispatch(setBookInfo(selectedBook));
 		} else {
 			dispatch(fetchBookInfo(bookId));
@@ -73,7 +72,6 @@ export function fetchBooks(mode = null) {
 
 export function createBook(book) {
 	return function(dispatch, getState) {
-
 		api.saveBook(book).then(book => {
 			dispatch(addBook(book));
 			history.pushState(null, '/book/' + book.id);
@@ -85,8 +83,8 @@ export function updateBook(book) {
 
 	return function(dispatch, getState) {
 		api.updateBook(book).then(book => {
-			dispatch(replaceBook(book));
 			Noty.info('Book updated');
+			dispatch(replaceBook(book));
 		}).catch(Errors.handleError);
 	}
 }

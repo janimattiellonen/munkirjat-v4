@@ -69,7 +69,8 @@ const common = {
                     'img?minimize&optimizationLevel=5&progressive=true'
                 ],
                 include: [
-                    PATHS.src
+                    PATHS.src,
+                    PATHS.modules
                 ]
             },
             {

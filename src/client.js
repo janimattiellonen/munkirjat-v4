@@ -18,9 +18,9 @@ require('bootstrap/dist/css/bootstrap.css');
 require('react-select/dist/default.css');
 require('./app.less');
 require('bootstrap/dist/js/bootstrap.js');
-require('react-datepicker/dist/react-datepicker.min.css');
-//require('jquery-ui/themes/base/jquery-ui.css');
-//require('jquery-ui/themes/base/jquery.ui.datepicker.css');
+//require('react-datepicker/dist/react-datepicker.min.css');
+require('jquery-ui/themes/base/jquery-ui.css');
+require('jquery-ui/themes/base/jquery.ui.datepicker.css');
 
 import * as reducers from './reducers';
 const store = createStore(reducers, history);

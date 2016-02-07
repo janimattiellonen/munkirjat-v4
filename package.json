@@ -50,7 +50,7 @@
     "follow-redirects": "0.0.7",
     "fs": "^0.0.2",
     "history": "^1.17.0",
-    "html-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^2.8.1",
     "image-webpack-loader": "^1.6.1",
     "imagemin": "4.0.0",
     "img-loader": "^1.2.2",

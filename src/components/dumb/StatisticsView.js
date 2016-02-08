@@ -31,9 +31,8 @@ export default React.createClass({
 		}
 	},
 
-	componentsWillReceivProps(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		const {authors, books} = nextProps;
-
 		this.setState({
 			unreadBookCount: this.getUnreadBookCount(books),
 			readBookCount: this.getReadBookCount(books),

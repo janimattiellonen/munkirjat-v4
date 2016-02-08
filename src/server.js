@@ -5,7 +5,7 @@ import webpack from 'webpack';
 import path from 'path';
 import uuid from 'node-uuid';
 const server = express();
-var http = require('http').Server(server);
+//var http = require('http').Server(server);
 import mysql from 'mysql';
 import AuthorService from './components/service/AuthorService';
 import BookService from './components/service/BookService';
@@ -17,13 +17,28 @@ const compiler = webpack(config);
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-
+console.log("PP: " + config.output.path);
 dotenv.load();
+
+const ENV = process.env.NODE_ENV;
 
 let authenticate = jwt({
   secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
   audience: process.env.AUTH0_CLIENT_ID
 });
+
+let devMiddleware;
+
+if (ENV === 'development') {
+
+    devMiddleware = require('webpack-dev-middleware')(compiler, {
+        noInfo: true,
+        publicPath: config.output.publicPath
+    });
+
+    server.use(devMiddleware);
+    server.use(require('webpack-hot-middleware')(compiler));
+}
 
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -396,11 +411,24 @@ server.get('/api/genres/:term', function(req, res) {
     });
 });
 
+
+if (ENV === 'development') {
+
+    server.get('*', function(req, res) {
+
+        const index = devMiddleware.fileSystem.readFileSync(
+            path.join(config.output.path, 'index.html')
+        );
+        res.end(index);
+    });
+
+}
+/*
 server.get('*', function(req, res, next) {
   res.sendFile(path.join(__dirname, '/../web/index.dev.html'));
 });
-
-http.listen(appConfig.port, function(){
+*/
+server.listen(appConfig.port, function(){
   console.log('listening on *:' + appConfig.port);
 });
 

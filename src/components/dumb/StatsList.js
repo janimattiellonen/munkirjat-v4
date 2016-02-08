@@ -11,7 +11,6 @@ export default class StatsList extends Component {
 
 		return (
 			<ul>
-				<li>Luts</li>
 				{items.map((item, i) => {
 					return (
 						<li key={item.id}>

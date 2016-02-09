@@ -13,7 +13,7 @@ import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
 import * as Utils from './components/utils';
 import jwt from 'express-jwt';
-const compiler = webpack(config);
+
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import compression from 'compression';
@@ -26,6 +26,8 @@ let authenticate = jwt({
   secret: new Buffer(process.env.AUTH0_CLIENT_SECRET, 'base64'),
   audience: process.env.AUTH0_CLIENT_ID
 });
+
+const compiler = webpack(config);
 
 let devMiddleware;
 
@@ -428,8 +430,13 @@ server.get('*', function(req, res, next) {
   res.sendFile(path.join(__dirname, '/../web/index.dev.html'));
 });
 */
-server.listen(appConfig.port, function(){
-  console.log('listening on *:' + appConfig.port);
+server.listen(appConfig.port, 'localhost', function(err){
+    if (err) {
+        console.log(err);
+        return;
+    }
+
+    console.log('listening on *:' + appConfig.port);
 });
 
 function handleError(err, res) {

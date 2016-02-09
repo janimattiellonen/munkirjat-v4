@@ -16,7 +16,5 @@ export function createStore(reducers, history) {
 
 	const store = createStoreWithMiddleware(reducer);
 
-	syncReduxAndRouter(history, store);
-
 	return store;
 }

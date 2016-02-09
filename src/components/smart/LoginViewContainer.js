@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import LoginView from '../dumb/LoginView';
 import Auth0Lock from 'auth0-lock';
-import config from '../../config';
+import config from '../../../config.server';
 
 export default class LoginViewContainer extends Component {
 

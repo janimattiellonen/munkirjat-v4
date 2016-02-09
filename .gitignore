@@ -5,8 +5,9 @@ dist
 /.idea_modules
 /.settings
 .DS_Store
-src/config.js
+config.server.js
 node_modules
 npm-debug.log
 munkirjatscala.sql
 .env
+webpack-assets.json

@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import StatisticsView from './StatisticsView';
 import Menubar from '../dumb/Menubar';
 
-import config from '../../config.js';
-
 export default class MunkirjatApp extends React.Component {
 
     render() {

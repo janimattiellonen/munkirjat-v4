@@ -2,7 +2,7 @@ import api from '../api';
 import { List } from 'immutable';
 import Noty from '../components/Noty';
 import { Router, Route, Redirect, IndexRoute } from 'react-router';
-import history from '../components/history';
+import { browserHistory as history } from 'react-router';
 import * as Errors from './Errors';
 
 export function deleteAuthor(id) {
@@ -61,8 +61,9 @@ export function updateAuthor(author) {
 
 	return function(dispatch, getState) {
 		api.updateAuthor(author).then(author => {
-			dispatch(replaceAuthor(author));
 			Noty.info('Author updated');
+			dispatch(replaceAuthor(author));
+			history.pushState(null, '/authors');
 		}).catch(Errors.handleError);
 	}
 }
@@ -100,9 +101,9 @@ export function resetAuthor() {
 export function createAuthor(author) {
 	return function(dispatch, getState) {
 		api.saveAuthor(author).then(author => {
-			dispatch(addAuthor(author));
-			history.replaceState(null, '/authors');
 			Noty.info('Author Created');
+			dispatch(addAuthor(author));
+			history.pushState(null, '/authors');
 		}).catch(Errors.handleError);
 	};
 }

@@ -1,8 +1,6 @@
 import api from '../api';
-import history from '../components/history';
 import Noty from '../components/Noty';
 import * as Errors from './Errors';
-
 
 export function setGenres(genres) {
 	return {

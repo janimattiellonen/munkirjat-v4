@@ -53,7 +53,7 @@ export default React.createClass({
 		if (Utils.isLoggedIn()) {
 			const {author} = this.props;
 			return (
-				<a key={'edit-' + author.id} href={'/#/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<a key={'edit-' + author.id} href={'/author/' + author.id + '/edit'} ><span className="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 			)
 		}
 	},

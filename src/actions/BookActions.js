@@ -1,5 +1,5 @@
 import api from '../api';
-import history from '../components/history';
+import { browserHistory as history } from 'react-router';
 import Noty from '../components/Noty';
 import * as Errors from './Errors';
 
@@ -50,6 +50,7 @@ export function setBookInfo(book) {
 
 export function fetchBookInfo(bookId) {
 	return function(dispatch, getState) {
+		
 		api.getBook(bookId).then(book => {
 			dispatch(setBookInfo(book));
 		}).catch(Errors.handleError);
@@ -73,6 +74,7 @@ export function fetchBooks(mode = null) {
 export function createBook(book) {
 	return function(dispatch, getState) {
 		api.saveBook(book).then(book => {
+			Noty.info('Book created');
 			dispatch(addBook(book));
 			history.pushState(null, '/book/' + book.id);
 		}).catch(Errors.handleError);

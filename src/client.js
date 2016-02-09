@@ -5,13 +5,8 @@ window.$ = window.jQuery;
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import { browserHistory as history } from 'react-router';
-//const history = createBrowserHistory();
 import { browserHistory as history } from 'react-router';
 import { createStore } from './util/redux';
-
-console.log("history1: " + (history == null));
-
 import {createApp} from './util/app';
 import * as reducers from './reducers';
 import { createRouter } from './router';

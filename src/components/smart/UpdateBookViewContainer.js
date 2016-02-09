@@ -7,24 +7,20 @@ import * as BookActions from '../../actions/BookActions';
 
 class UpdateBookViewContainer extends React.Component {
     componentWillMount() {
-        console.log("UpdateBookViewContainer::componentWillMount");
         if (this.props.params.id) {
-            console.log("UpdateBookViewContainer::componentWillMount: " + this.props.params.id);
             this.props.bookActions.fetchBookInfo(this.props.params.id);
         }   
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("UpdateBookViewContainer::componentWillReceiveProps");
         if (this.props.params.id && nextProps.params.id && this.props.params.id != nextProps.params.id) {
-            console.log("UpdateBookViewContainer::componentWillReceiveProps: " + this.props.params.id);
             this.props.bookActions.fetchBookInfo(nextProps.params.id);
         } 
     }
 
     render() {
         const {book} = this.props;
-        console.log("book: " + JSON.stringify(book));
+
         return (
             <BookForm key={book.id} book={book} params={this.props.params} handleSubmit={::this.handleSubmit} />
         );

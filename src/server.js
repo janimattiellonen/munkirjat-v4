@@ -206,7 +206,15 @@ createServer(config, webpackConfig, (app) => {
                         handleGetBook(id);
                     }); 
                 } else {
-                    handleGetBook(id);
+                    bookService.removeGenres(id, function(err, result) {
+                        if (err) {
+                            handleError(err, res);
+                            connection.end();
+                            return;
+                        }   
+
+                        handleGetBook(id);
+                    });
                 }
             });
         });

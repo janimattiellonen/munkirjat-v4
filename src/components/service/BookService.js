@@ -132,7 +132,7 @@ export default class BookService {
                 throw err;
             }
                         
-            this.addGenres(id, genres, callback);
+            this.addGenres(id, genres, callback);  
         });
     }    
 

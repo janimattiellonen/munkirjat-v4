@@ -36,7 +36,6 @@ export default React.createClass({
 	},
 
 	componentWillMount() {
-		console.log("component will wount: " + this.props.params.id);
 		this.props.bookActions.setSelectedBook(this.props.params.id);	
 	}
 });	

@@ -5,7 +5,6 @@ import moment from 'moment';
 import numeral from 'numeral';
 import Immutable, {List, OrderedMap, Seq} from 'immutable';
 import Api from '../../api';
-import _ from 'underscore';
 import jqueryui from 'jquery-ui';
 
 export default class BookForm extends Component {

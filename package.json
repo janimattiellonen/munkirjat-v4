@@ -34,7 +34,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^6.2.1",
-        "autoprefixer-loader": "^3.1.0",
+        "postcss-loader": "^0.8.0",
         "babel-cli": "^6.3.17",
         "babel-core": "^6.3.21",
         "babel-eslint": "5.0.0-beta6",

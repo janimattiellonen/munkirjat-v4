@@ -76,23 +76,9 @@ const common = {
                 loaders: [
                     'style-loader',
                     'css-loader',
-                    'autoprefixer-loader?browsers=last 2 version',
                     'less-loader'
                 ]
             },
-            getStyleLoader(
-                ENV,
-                {
-                   test: /\.p?css$/,
-                    include: [
-                        PATHS.src,
-                    ]
-                },
-                [
-                    'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-                    'postcss-loader'
-                ]
-            ),
             getStyleLoader(
                 ENV,
                 {

@@ -44,7 +44,10 @@ export default React.createClass({
 			timeToReadAllBooks: this.getTimeTakenToReadAllUnreadBooks(books),
 			averageBookPrice: this.getAverageBookPrice(books),
 			moneySpentOnBooks: this.getMoneySpentOnBooks(books),
-			pagesReadSoFar: this.getPagesReadSoFar(books)
+			pagesReadSoFar: this.getPagesReadSoFar(books),
+			mostPagesInBook: this.getMostPagesInBook(books),
+			leastPagesInBook: this.getLeastPagesInBook(books),
+			averagePageCount: this.getAveragePageCount(books),
 		});
 	},
 
@@ -55,19 +58,19 @@ export default React.createClass({
 
 				<h3>Unread books</h3>
 
-				<p>{this.state.unreadBookCount}</p>
+				<p><Link to="/books/unread">{this.state.unreadBookCount}</Link></p>	
 
 				<h3>Read books</h3>
 
-				<p>{this.state.readBookCount}</p>	
+				<p><Link to="/books/read">{this.state.readBookCount}</Link></p>	
 
 				<h3>Books in bookshelf</h3>
 
-				<p>{this.state.bookCount}</p>
+				<p><Link to="/books">{this.state.bookCount}</Link></p>	
 
 				<h3>Authors in bookshelf</h3>
 
-				<p>{this.state.authorCount}</p>	
+				<p><Link to="/authors">{this.state.authorCount}</Link></p>	
 
 				<h3>Slowest read time</h3>		
 
@@ -96,6 +99,18 @@ export default React.createClass({
 				<h3>Pages read so far</h3>
 
 				<p>{this.state.pagesReadSoFar}</p>
+
+				<h3>Least pages in a book</h3>
+
+				<p>{this.state.leastPagesInBook}</p>					
+
+				<h3>Most pages in a book</h3>
+
+				<p>{this.state.mostPagesInBook}</p>
+
+				<h3>Average page count</h3>
+
+				<p>{this.state.averagePageCount}</p>
 			</div>	
 		);
 	},
@@ -144,17 +159,34 @@ export default React.createClass({
 
 	getAverageBookPrice(books) {
 		let avg = Stats.getAverageBookPrice(books);
-		return avg > 0 ? numeral(avg).format('0.00') + '€' : '0€';
+
+		return this.formatCurrency(avg);
 	},
 
 	getMoneySpentOnBooks(books) {
 		let sum = Stats.getMoneySpentOnBooks(books);
 
-		return sum > 0 ? numeral(sum).format('0.00') + '€' : '0€';
+		return this.formatCurrency(sum);
+	},
+
+	formatCurrency(value) {
+		return value > 0 ? numeral(value).format('0.00').replace('.', ',') + '€' : '0€';
 	},
 
 	getPagesReadSoFar(books) {
 		return Stats.getPagesReadSoFar(books);
+	},
+
+	getMostPagesInBook(books) {
+		return Stats.getMostPagesInBook(books);
+	},
+
+	getLeastPagesInBook(books) {
+		return Stats.getLeastPagesInBook(books);
+	},
+
+	getAveragePageCount(books) {
+		return numeral(Stats.getAveragePageCount(books)).format('0.00');
 	},
 
 	formatDays(days, isDecimal = false) {
@@ -162,6 +194,6 @@ export default React.createClass({
 			days = numeral(days).format('0.00');
 		}
 
-		return days > 1 ? days + ' days' : days + ' day';
+		return days > 1.0 ? days.replace(/\.[0]+$/, '') + ' days' : days.replace(/\.[0]+$/, '') + ' day';
 	}		
 });

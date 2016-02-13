@@ -10,6 +10,22 @@ import { createStore } from './util/redux';
 import {createApp} from './util/app';
 import * as reducers from './reducers';
 import { createRouter } from './router';
+import numeral from 'numeral';
+
+
+numeral.language('fi', {
+    delimiters: {
+        thousands: '',
+        decimal: '.'
+    },
+
+    currency: {
+        symbol: '€',
+        decimal: ','
+    }
+});
+
+numeral.language('fi');
 
 require('bootstrap/dist/css/bootstrap.css');
 require('react-select/dist/default.css');

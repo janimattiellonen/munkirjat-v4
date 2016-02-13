@@ -129,4 +129,20 @@ export default class Stats {
 	static getPagesReadSoFar(books) {
 		return _.sumBy(this.getReadBooks(books).toArray(), book => book.page_count);
 	}
+
+	static getPageCount(books) {
+		return _.sumBy(books.toArray(), book => book.page_count); 
+	}
+
+	static getMostPagesInBook(books) {
+		return _.maxBy(books.toArray(), 'page_count').page_count;
+	}
+
+	static getLeastPagesInBook(books) {
+		return _.minBy(books.toArray(), 'page_count').page_count;
+	}	
+
+	static getAveragePageCount(books) {
+		return Stats.getPageCount(books) / books.count();
+	}
 }

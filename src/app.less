@@ -262,10 +262,6 @@ a.is-read {
 	}
 }
 
-.form-control {
-	
-}
-
 .errorized-message {
 	color: red;
 }
@@ -274,6 +270,26 @@ a.is-read {
 	float: left;
     border-spacing: 0 8px;
     padding-left: 0;
+
+    h1 {
+    	margin-bottom: 0;
+    }
+
+    ul {
+    	display: inline;
+
+    	li {
+    		display: inline;
+    	}
+
+    	li::after {
+    		content: ", "
+    	}
+
+    	li:last-child::after {
+    		content: ""
+    	}
+    }
 
     .row {
         display: table-row;

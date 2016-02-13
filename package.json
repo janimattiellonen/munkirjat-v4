@@ -87,9 +87,6 @@
         "webpack-dev-server": "^1.14.0",
         "webpack-hot-middleware": "^2.6.0",
         "webpack-isomorphic-tools": "^2.2.24",
-
-
-
         "101": "^1.0.0",
         "auth0-lock": "^7.12",
         "bootstrap": "^3.3.6",

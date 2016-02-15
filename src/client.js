@@ -15,13 +15,20 @@ import numeral from 'numeral';
 
 numeral.language('fi', {
     delimiters: {
-        thousands: '',
+        thousands: ' ',
         decimal: '.'
     },
-
+    abbreviations: {
+        thousand: 'k',
+        million: 'M',
+        billion: 'G',
+        trillion: 'T'
+    },
+    ordinal: function (number) {
+        return '.';
+    },
     currency: {
-        symbol: '€',
-        decimal: ','
+        symbol: '€'
     }
 });
 

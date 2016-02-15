@@ -85,6 +85,5 @@ export default handleActions({
 			book: action.book,
 			showBookInfo: action.book != undefined && action.book.id != undefined
 		};
-	},	
-
+	}
 }, {authors: List(), author: {}, books: List(), book: {}});

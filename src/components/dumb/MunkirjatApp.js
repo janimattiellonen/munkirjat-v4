@@ -7,30 +7,34 @@ import Menubar from '../dumb/Menubar';
 
 export default class MunkirjatApp extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        const {authors, books} = this.props;
+
         return (
             <div id="page-inner">
                 <Menubar />
                 {this.props.children}
 
-                <StatisticsView books={this.props.books} authors={this.props.authors} />
+                <StatisticsView books={books} authors={authors} />
 
             </div>
         );
     }
 
     componentWillMount() {
-        
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
         this.props.genreActions.fetchGenres();
     }
 
-    componenDidMount() {
-
+    componentDidMount() {
         let self = this;
         $( document ).ajaxSend(function() {
             self.setupAjax();
         });
-    }     
+    }  
 }

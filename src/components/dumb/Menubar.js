@@ -4,6 +4,7 @@ import * as Utils from '../utils';
 import {Link} from 'react-router';
 
 export default class Menubar extends Component {
+
 	render() {
 		return (
 		    <div className="navbar navbar-inverse navbar-fixed-top" >
@@ -71,6 +72,6 @@ export default class Menubar extends Component {
 		e.preventDefault();
 
         localStorage.removeItem('userToken');
-        history.pushState(null, '/');
+        location.href = "/";
 	}
 };

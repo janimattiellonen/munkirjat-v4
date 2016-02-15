@@ -178,11 +178,27 @@ export default React.createClass({
 	},
 
 	getMostPagesInBook(books) {
-		return Stats.getMostPagesInBook(books);
+		var book = Stats.getMostPagesInBook(books);
+
+		if (null == book) {
+			return 0;
+		}
+
+		return (
+			<Link to={'/book/' + book.id}>{book.page_count}</Link>
+		)
 	},
 
 	getLeastPagesInBook(books) {
-		return Stats.getLeastPagesInBook(books);
+		var book = Stats.getLeastPagesInBook(books);
+
+		if (null == book) {
+			return 0;
+		}
+
+		return (
+			<Link to={'/book/' + book.id}>{book.page_count}</Link>
+		)
 	},
 
 	getAveragePageCount(books) {

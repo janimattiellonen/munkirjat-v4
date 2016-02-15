@@ -258,7 +258,7 @@ export default class BookService {
     }
 
     toArray(book) {
-        book.genres = book.genres.toArray();
+        book.genres = null != book.genres ? book.genres.toArray() : [];
         book.authors = book.authors.toArray();
 
         return book;

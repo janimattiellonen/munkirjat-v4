@@ -135,11 +135,11 @@ export default class Stats {
 	}
 
 	static getMostPagesInBook(books) {
-		return _.maxBy(books.toArray(), 'page_count').page_count;
+		return _.maxBy(books.toArray(), 'page_count');
 	}
 
 	static getLeastPagesInBook(books) {
-		return _.minBy(books.toArray(), 'page_count').page_count;
+		return _.minBy(books.toArray(), 'page_count');
 	}	
 
 	static getAveragePageCount(books) {

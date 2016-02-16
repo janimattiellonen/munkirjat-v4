@@ -15,7 +15,8 @@ Munkirjat V4...V5
 * `git fetch --all`
 * `git merge origin/master`
 * `npm install`
-* `npm run deploy`
+* `npm run build`
+* `sudo pm2 start/restart src/server.js --interpreter ./node_modules/.bin/babel-node --log munkirjat.log` (while in project directory)
 * Visit website
 
 ## Database

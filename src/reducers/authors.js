@@ -3,11 +3,11 @@ import { List, Map} from 'immutable';
 import _ from 'lodash';
 
 function sortAuthors(authors) {
-	return _.sortByOrder(authors.toArray(), ['lastname', 'firstname'], ['asc']);
+	return _.orderBy(authors.toArray(), ['lastname', 'firstname'], ['asc']);
 }
 
 function sortAuthorsByBookCount(authors) {
-	return _.sortByOrder(authors.toArray(), ['amount'], ['desc']);
+	return _.orderBy(authors.toArray(), ['amount'], ['desc']);
 }
 
 export default handleActions({

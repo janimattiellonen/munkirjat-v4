@@ -4,7 +4,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 function sortBooks(books) {
-	return _.sortByOrder(books.toArray(), ['title'], ['asc']);
+	return _.orderBy(books.toArray(), ['title'], ['asc']);
 }
 
 export default handleActions({

@@ -69,11 +69,11 @@ export default React.createClass({
 		if (null != book.authors && book.authors.count() > 0) {
 			if (book.authors.count() == 1) {
 				return (
-					<div>Author: {this.renderAuthors(book)}</div>
+					<div><span className="author">Author:</span> {this.renderAuthors(book)}</div>
 				)
 			} else {
 				return (
-					<div>Authors: {this.renderAuthors(book)}</div>
+					<div><span className="author">Authors:</span> {this.renderAuthors(book)}</div>
 				)
 			}
 		}
@@ -84,7 +84,7 @@ export default React.createClass({
 			<ul>
 				{book.authors.map(author => {
 					return (
-						<li key={author.id}><Link className={!this.props.singleMode ? 'hidden' : ''} to={'/author/' + author.id}>{author.name}</Link></li>	
+						<li key={author.id}><Link to={'/author/' + author.id}>{author.name}</Link></li>	
 					)
 				})}
 			</ul>
@@ -95,27 +95,14 @@ export default React.createClass({
 		if (null != book.genres && book.genres.count() > 0) {
 			if (book.genres.count() == 1) {
 				return (
-					<div>Genre: {this.renderGenres(book)}</div>
+					<div><span className="genre">Genre:</span>{Utils.renderGenres(book)}</div>
 				)
 			} else {
 				return (
-					<div>Genres: {this.renderGenres(book)}</div>
+					<div><span className="genre">Genres:</span>{Utils.renderGenres(book)}</div>
 				)
 			}
 		}
-	},
-
-	renderGenres(book) {
-		return (
-			<ul>
-				{book.genres.map(genre => {
-					return (
-						<li><Link to={'/books/all/all/' + genre.id}>{genre.name}</Link></li>
-					)
-				})}
-
-			</ul>
-		)
 	},
 
 	getEditBookLink(book) {

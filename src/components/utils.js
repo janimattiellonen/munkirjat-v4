@@ -1,7 +1,9 @@
+import React from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
 import SmartSearch from 'smart-search';
 import {List} from 'immutable';
+import {Link} from 'react-router';
 
 export function date_format(date, format = "D.M.YYYY") {
 	return date != null && date != undefined ? moment(date).format(format) : '';
@@ -81,4 +83,17 @@ export function filter(items, searchTerm, fields) {
 
 export function isLoggedIn() {
 	return localStorage.getItem("userToken") != null;
+}
+
+export function renderGenres(book) {
+	return (
+		<ul>
+			{book.genres.map(genre => {
+				return (
+					<li><Link to={'/books/all/all/' + genre.id}>{genre.name}</Link></li>
+				)
+			})}
+
+		</ul>
+	)
 }

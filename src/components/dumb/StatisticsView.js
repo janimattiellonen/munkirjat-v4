@@ -4,6 +4,9 @@ import moment from 'moment';
 import numeral from 'numeral';
 import Stats from '../Stats';
 import {Link} from 'react-router';
+import {Tooltip, OverlayTrigger} from 'react-bootstrap';
+import * as Utils from '../utils';
+import BookInfoView from './BookInfoView';	
 
 export default React.createClass({
 
@@ -141,8 +144,16 @@ export default React.createClass({
 
 	getBookLink(book, title) {
 		if (null != book) {
+			const tooltip = (
+			  	<Tooltip id={"tooltip-book-" + book.id}>
+			  		<BookInfoView book={book} singleMode={true}/>
+			  	</Tooltip>
+			);
+
 			return (
-				<Link to={"/book/" + book.id}>{title}</Link>
+			    <OverlayTrigger placement="left" overlay={tooltip}>
+			      	<Link to={"/book/" + book.id}>{title}</Link>
+			    </OverlayTrigger>
 			)	
 		} else {
 			return 0;
@@ -180,25 +191,13 @@ export default React.createClass({
 	getMostPagesInBook(books) {
 		var book = Stats.getMostPagesInBook(books);
 
-		if (null == book) {
-			return 0;
-		}
-
-		return (
-			<Link to={'/book/' + book.id}>{book.page_count}</Link>
-		)
+		return this.getBookLink(book, book.page_count);
 	},
 
 	getLeastPagesInBook(books) {
 		var book = Stats.getLeastPagesInBook(books);
 
-		if (null == book) {
-			return 0;
-		}
-
-		return (
-			<Link to={'/book/' + book.id}>{book.page_count}</Link>
-		)
+		return this.getBookLink(book, book.page_count);
 	},
 
 	getAveragePageCount(books) {

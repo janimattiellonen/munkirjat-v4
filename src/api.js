@@ -58,5 +58,11 @@ export default {
 
 	getGenres() {
 		return axios.get('/api/genres').then(res => List(res.data));
+	},
+
+	uploadFile(file, data) {
+		console.log("Filename: " + file.name);
+
+		return axios.post('/api/file', {file: data, filename: file.name}, headers).then(res => res.data);
 	}
 };

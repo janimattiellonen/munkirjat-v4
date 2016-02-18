@@ -11,12 +11,17 @@ class NewAuthorViewContainer extends React.Component {
         this.props.authorActions.createAuthor(data);
     }
 
+    handleFileSubmit(file, data) {
+        console.log("NewAuthorViewContainer::handleFileSubmit");
+        this.props.authorActions.uploadFile(file, data);
+    }
+
     render() {
         
         let author = {};
-        
+        console.log("NewAuthorViewContainer::render");
         return (
-            <AuthorForm key={null} author={author} handleSubmit={::this.handleSubmit} />
+            <AuthorForm key={null} author={author} handleSubmit={::this.handleSubmit} handleFileSubmit={::this.handleFileSubmit}/>
         );
     }
 }

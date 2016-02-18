@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import FileForm from './FileForm';
+
 
 export default class AuthorForm extends Component {
 	constructor(props) {
@@ -46,6 +48,8 @@ export default class AuthorForm extends Component {
 
     	let title = this.state.id ? 'Edit author': 'New author';
 
+    	const {handleFileSubmit} = this.props;
+
     	const renderInput = (value, name, label) =>
 		<div className="form-group">
 			<label htmlFor={name} className="col-sm-2">{label}</label>
@@ -69,6 +73,8 @@ export default class AuthorForm extends Component {
 						</div>
 					</div>
 				</form>
+
+				<FileForm handleSubmit={handleFileSubmit}/>
 
 			</div>
     	);

@@ -13,6 +13,7 @@ import BookService from './components/service/BookService';
 import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
 import * as Utils from './components/utils';
+import fs from 'fs';
 
 dotenv.load();
 
@@ -26,6 +27,11 @@ let authenticate = jwt({
 createServer(config, webpackConfig, (app) => {
 
     app.use(bodyParser.json());
+    //app.use(bodyParser.json({limit: "50mb"}));
+    //app.use(bodyParser.raw({ limit: "50mb", extended: true }));
+    //app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+    app.use(bodyParser.urlencoded({limit: '50Mb'}));
+    app.use(bodyParser.json({limit: '50Mb'}));
 
     let authorService = new AuthorService();
     let bookService = new BookService();
@@ -391,42 +397,66 @@ createServer(config, webpackConfig, (app) => {
         });
     });
 
-function handleError(err, res) {
-    if(err) {
-        console.log("Request failed: " + err);
+    app.post('/api/file', function(req, res) {
+        const {body, params} = req;
 
-        let result = {
-            status: false,
-            message: 'Request failed due to server error'
-        };
+        //console.log("body: " + JSON.stringify(req.body));
+        //console.log("params: " + JSON.stringify(req.params));
+        //console.log("files: " + JSON.stringify(req.files));
 
-        res.charSet = 'utf8';
-        res.status(500).json(result);
-    }
-}
+        //var buf = new Buffer(req.body.file, 'base64');
+        var buf = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
-function getConnection() {
-    let connection = mysql.createConnection({
-        host: config.db.host,
-        user: config.db.user,
-        password: config.db.password,
-        database: config.db.database
+        var newPath = __dirname + "/uploads/" + req.body.filename;
+        console.log("PATH: " + newPath);
+        /*
+        fs.writeFile(newPath, buf, function (err) {
+    
+        });
+        */
+
+
+
+        
+ 
     });
 
-    connection.config.queryFormat = function (query, values) {
-        if (!values) return query;
-        return query.replace(/\:(\w+)/g, function (txt, key) {
+    function handleError(err, res) {
+        if(err) {
+            console.log("Request failed: " + err);
 
-            if (values.hasOwnProperty(key)) {
-                return this.escape(values[key]);
-            }
+            let result = {
+                status: false,
+                message: 'Request failed due to server error'
+            };
 
-            return txt;
-        }.bind(this));
-    };
+            res.charSet = 'utf8';
+            res.status(500).json(result);
+        }
+    }
 
-    connection.connect();
+    function getConnection() {
+        let connection = mysql.createConnection({
+            host: config.db.host,
+            user: config.db.user,
+            password: config.db.password,
+            database: config.db.database
+        });
 
-    return connection;
-}    
+        connection.config.queryFormat = function (query, values) {
+            if (!values) return query;
+            return query.replace(/\:(\w+)/g, function (txt, key) {
+
+                if (values.hasOwnProperty(key)) {
+                    return this.escape(values[key]);
+                }
+
+                return txt;
+            }.bind(this));
+        };
+
+        connection.connect();
+
+        return connection;
+    }    
 });

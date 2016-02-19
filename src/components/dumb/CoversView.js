@@ -1,13 +1,46 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import ReactSwipe from 'react-swipe';
 
-export default class GenresView extends Component {
+export default class CoversView extends Component {
+	next() {
+    	this.refs.ReactSwipe.swipe.next();
+  	}
+
+	prev() {
+		this.refs.ReactSwipe.swipe.prev();
+	}
+
+	selectedItem(index, elem) {
+		
+	}
+
 	render() {
-		const {genres} = this.props;
+		const {covers} = this.props;
 
 		return (
 			<div className="component">
 				<h1>Covers</h1>
+
+				<ReactSwipe ref="ReactSwipe"
+	                continuous={true}
+	                callback={this.selectedItem}
+	            >
+	            	{covers.map((cover, i) => {
+	            		return (
+	            			<div key={i}><img src={cover} /></div>
+	            		)
+	            	})}
+
+	 
+
+            	</ReactSwipe>
+
+            	<div>
+            		<button onClick={::this.prev}>Prev</button>
+            		<button onClick={::this.next}>Next</button>
+            	</div>
+
 			</div>
 		)
 	}

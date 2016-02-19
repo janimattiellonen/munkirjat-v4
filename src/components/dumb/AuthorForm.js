@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import FileForm from './FileForm';
-import ReactSwipe from 'react-swipe';
 
 export default class AuthorForm extends Component {
 	constructor(props) {
@@ -44,18 +43,6 @@ export default class AuthorForm extends Component {
 		handleSubmit(formData);
 	}	
 
-	next() {
-    	this.refs.ReactSwipe.swipe.next();
-  	}
-
-	prev() {
-		this.refs.ReactSwipe.swipe.prev();
-	}
-
-	selectedItem(index, elem) {
-		alert(index);
-	}
-
     render() {
 
     	let title = this.state.id ? 'Edit author': 'New author';
@@ -87,20 +74,6 @@ export default class AuthorForm extends Component {
 				</form>
 
 				<FileForm handleSubmit={handleFileSubmit}/>
-
-				<ReactSwipe ref="ReactSwipe"
-	                continuous={true}
-	                callback={this.selectedItem}
-	            >
-	                <div>'PANE 1'</div>
-	                <div>'PANE 2'</div>
-	                <div>'PANE 3'</div>
-            	</ReactSwipe>
-
-            	<div>
-            		<button onClick={::this.prev}>Prev</button>
-            		<button onClick={::this.next}>Next</button>
-            	</div>
 			</div>
     	);
   	}	

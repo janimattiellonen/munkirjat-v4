@@ -5,5 +5,7 @@ export function handleError(response) {
 		if (response.status == 401) {
 			Noty.error("You must login first!");
 		} 
+
+		console.log(JSON.stringify(response));
 	}
 }

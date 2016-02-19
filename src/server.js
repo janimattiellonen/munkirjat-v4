@@ -14,6 +14,7 @@ import GenreService from './components/service/GenreService';
 import Immutable from 'immutable';
 import * as Utils from './components/utils';
 import fs from 'fs';
+import express from 'express';
 
 dotenv.load();
 
@@ -26,6 +27,7 @@ let authenticate = jwt({
 
 createServer(config, webpackConfig, (app) => {
     app.use(bodyParser({limit: '50mb'}));
+    app.use(express.static('web'));
 
     let authorService = new AuthorService();
     let bookService = new BookService();
@@ -388,6 +390,21 @@ createServer(config, webpackConfig, (app) => {
             connection.end();
             res.charSet = 'utf8';
             res.status(200).json(result);
+        });
+    });
+
+    app.get('/api/covers', function(req, res) {
+        let path = __dirname + "/../uploads/";
+
+        fs.readdir(path, (err, files) => {
+
+            let valid = function (file) {
+                return file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.png') || file.toLowerCase().endsWith('.gif');
+            }
+
+            let filtered = List(files).filter(file => valid(file)).map(file => '/uploads/' + file);
+        
+            res.status(200).json(filtered.toArray());
         });
     });
 

@@ -8,9 +8,12 @@ export function setCovers(covers) {
 	};
 }
 
-export function fechCovers() {
+export function fetchCovers() {
 	return function(dispatch, getState) {
+		console.log("fetchCovers:1");
 		api.getCovers().then(covers => {
+			console.log("fetchCovers:2");
+
 			dispatch(setCovers(covers));
 		}).catch(Errors.handleError);
 	};

@@ -60,9 +60,11 @@ export default {
 		return axios.get('/api/genres').then(res => List(res.data));
 	},
 
-	uploadFile(file, data) {
-		console.log("Filename: " + file.name);
+	getCovers() {
+		return axios.get('/api/covers').then(res => List(res.data));
+	},
 
+	uploadFile(file, data) {
 		return axios.post('/api/file', {file: data, filename: file.name}, headers).then(res => res.data);
 	}
 };

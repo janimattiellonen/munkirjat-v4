@@ -394,20 +394,13 @@ createServer(config, webpackConfig, (app) => {
     app.post('/api/file', function(req, res) {
         const {body, params} = req;
 
-        //console.log("body: " + JSON.stringify(req.body));
-        //console.log("params: " + JSON.stringify(req.params));
-        //console.log("files: " + JSON.stringify(req.files));
-
-        //var buf = new Buffer(req.body.file, 'base64');
         var buf = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
-        var newPath = __dirname + "/uploads/" + req.body.filename;
-        console.log("PATH: " + newPath);
+        var newPath = __dirname + "/../uploads/" + req.body.filename;
         
         fs.writeFile(newPath, buf, function (err) {
-    
+            res.status(200).json({status: 'ok'});
         });
-        
     });
 
     function handleError(err, res) {

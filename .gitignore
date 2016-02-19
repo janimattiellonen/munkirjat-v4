@@ -11,3 +11,4 @@ npm-debug.log
 munkirjatscala.sql
 .env
 webpack-assets.json
+/uploads

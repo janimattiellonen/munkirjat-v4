@@ -25,13 +25,7 @@ let authenticate = jwt({
 });
 
 createServer(config, webpackConfig, (app) => {
-
-    app.use(bodyParser.json());
-    //app.use(bodyParser.json({limit: "50mb"}));
-    //app.use(bodyParser.raw({ limit: "50mb", extended: true }));
-    //app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-    app.use(bodyParser.urlencoded({limit: '50Mb'}));
-    app.use(bodyParser.json({limit: '50Mb'}));
+    app.use(bodyParser({limit: '50mb'}));
 
     let authorService = new AuthorService();
     let bookService = new BookService();
@@ -409,16 +403,11 @@ createServer(config, webpackConfig, (app) => {
 
         var newPath = __dirname + "/uploads/" + req.body.filename;
         console.log("PATH: " + newPath);
-        /*
+        
         fs.writeFile(newPath, buf, function (err) {
     
         });
-        */
-
-
-
         
- 
     });
 
     function handleError(err, res) {

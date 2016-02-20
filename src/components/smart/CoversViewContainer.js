@@ -9,6 +9,7 @@ import {List} from 'immutable';
 
 class CoversViewContainer extends React.Component {
     componentWillMount() {
+        console.log("lits");
         this.props.coverActions.fetchCovers();
     }
 

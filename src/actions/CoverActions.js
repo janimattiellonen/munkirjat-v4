@@ -18,3 +18,11 @@ export function fetchCovers() {
 		}).catch(Errors.handleError);
 	};
 }
+
+export function uploadFile(file, data) {
+	return function(dispatch, getState) {
+		api.uploadFile(file, data).then(result => {
+			console.log("UPLOADED FILE: " + JSON.stringify(result));
+		}).catch(Errors.handleError);
+	}
+}

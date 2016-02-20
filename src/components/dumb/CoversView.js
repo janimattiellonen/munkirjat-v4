@@ -4,10 +4,12 @@ import ReactSwipe from 'react-swipe';
 
 export default class CoversView extends Component {
 	next() {
+		console.log("next");
     	this.refs.ReactSwipe.swipe.next();
   	}
 
 	prev() {
+		console.log("prev");
 		this.refs.ReactSwipe.swipe.prev();
 	}
 
@@ -17,23 +19,22 @@ export default class CoversView extends Component {
 
 	render() {
 		const {covers} = this.props;
-
 		return (
-			<div className="component">
+			<div className="component swipe-container">
 				<h1>Covers</h1>
+
+				<p>Select cover image for book.</p>
 
 				<ReactSwipe ref="ReactSwipe"
 	                continuous={true}
 	                callback={this.selectedItem}
+	                key={covers.count()}
 	            >
-	            	{covers.map((cover, i) => {
+ 	            	{covers.map((cover, i) => {
 	            		return (
-	            			<div key={i}><img src={cover} /></div>
+	            			<div key={i}><img src={cover}/></div>
 	            		)
 	            	})}
-
-	 
-
             	</ReactSwipe>
 
             	<div>

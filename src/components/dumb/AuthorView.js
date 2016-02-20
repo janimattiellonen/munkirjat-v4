@@ -81,7 +81,9 @@ export default React.createClass({
 		});
 	},
 
-	componentDidMount() {
+	componentWillMount() {
+		console.log("luts");
+
 		this.props.authorActions.fetchAuthor(this.props.params.id);
 	},
 });

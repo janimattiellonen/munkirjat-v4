@@ -1,0 +1,2 @@
+ALTER TABLE `book` ADD COLUMN `cover_url` VARCHAR (255) DEFAULT NULL;
+ALTER TABLE `book` ADD INDEX (`cover_url`);

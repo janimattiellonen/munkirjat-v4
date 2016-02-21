@@ -26,3 +26,12 @@ export function uploadFile(file, data) {
 		}).catch(Errors.handleError);
 	}
 }
+
+export function linkBookAndCover(bookId, coverUrl) {
+	console.log("linkBookAndCover");
+	return function(dispatch, getState) {
+		api.linkBookAndCover(bookId, coverUrl).then(result => {
+
+		}).catch(Errors.handleError);
+	}
+}

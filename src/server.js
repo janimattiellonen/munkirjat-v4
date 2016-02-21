@@ -408,6 +408,23 @@ createServer(config, webpackConfig, (app) => {
         });
     });
 
+    app.post('/api/cover/link', function(req, res) {
+
+        const {bookId, coverUrl} = req.body;
+
+        let connection = getConnection();
+        bookService.setConnection(connection);
+        bookService.linkBookWithCover(bookId, coverUrl, (err, result) => {
+            if (err) {
+                handleError(err, res);
+                connection.end();
+                return;
+            }
+
+            res.status(200).json({status: 'ok'});
+        });
+    });
+
     app.post('/api/file', function(req, res) {
         const {body, params} = req;
 

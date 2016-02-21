@@ -129,6 +129,19 @@ export default React.createClass({
 	},
 
 	getUrl(mode, language, genre) {
-		return '/books/' + mode + (null != language ? '/' + language : '/all') + (null != genre ? '/' + genre : '	');
+		let getBasePath = function() {
+			let path = location.pathname;
+
+			// /books/all/null
+			// /books
+
+			if (path.indexOf('/', 1) !== -1) {
+				path = path.substring(0, path.indexOf('/', 1));
+			} 
+
+			return path;
+		};
+
+		return getBasePath() + '/' + mode + (null != language ? '/' + language : '/all') + (null != genre ? '/' + genre : '	');
 	}
 });

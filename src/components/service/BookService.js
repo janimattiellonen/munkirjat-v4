@@ -314,4 +314,20 @@ export default class BookService {
 
         return books;
     }
+
+    linkBookWithCover(id, coverUrl, callback) {
+        this.connection.query(
+            `UPDATE 
+                book 
+            SET 
+                cover_url = :coverUrl
+            WHERE 
+                id = :id`,
+            {
+                coverUrl: coverUrl,
+                id: id
+            },
+            callback
+        );
+    }
 };

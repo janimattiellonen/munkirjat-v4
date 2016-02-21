@@ -18,12 +18,13 @@ class CoversViewContainer extends React.Component {
         const {books, covers} = this.props;
 
         return (
-            <CoversView books={books} covers={covers} />
+            <CoversView books={books} covers={covers} {...this.props} />
         )
     }
 }
 
 CoversViewContainer.defaultProps = {
+    params: {},
     books: List(),
     covers: List()
 };
@@ -31,6 +32,7 @@ CoversViewContainer.defaultProps = {
 function mapStateToProps(state) {
     return {
         books: state.books.books,
+        mode: state.books.mode,
         covers: state.covers.covers
     };
 }

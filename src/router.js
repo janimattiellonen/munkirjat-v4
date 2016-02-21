@@ -52,7 +52,7 @@ export function createRouter({ store, history }) {
                 <Route path="author/:id" component={AuthorViewContainer} />
                 <Route path="genres" component={GenresViewContainer} />
                 <Route path="login" component={LoginViewContainer} />
-                <Route path="covers" component={CoversViewContainer} />
+                <Route path="covers(/:mode)(/:language)(/:genre)" component={CoversViewContainer} />
                 <Route path="cover/upload" component={UploadCoverViewContainer} />
                 <Route path="access_token/:id" component={LoginViewContainer} />
             </Route>

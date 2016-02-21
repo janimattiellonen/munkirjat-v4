@@ -330,4 +330,17 @@ export default class BookService {
             callback
         );
     }
+
+    getBooksWithCoverImages(callback) {
+        this.connection.query(
+            `SELECT
+                b.id,
+                b.cover_url
+            FROM
+                book AS book
+            WHERE
+                b.cover_url IS NOT NULL`,
+            callback
+        );
+    }
 };

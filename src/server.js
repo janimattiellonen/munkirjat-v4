@@ -394,6 +394,9 @@ createServer(config, webpackConfig, (app) => {
     });
 
     app.get('/api/covers', function(req, res) {
+        let connection = getConnection();
+        bookService.setConnection(connection);
+
         let path = __dirname + "/../uploads/";
 
         fs.readdir(path, (err, files) => {
@@ -402,9 +405,20 @@ createServer(config, webpackConfig, (app) => {
                 return file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.png') || file.toLowerCase().endsWith('.gif');
             }
 
-            let filtered = List(files).filter(file => valid(file)).map(file => '/uploads/' + file);
+            let valid = List(files).filter(file => valid(file)).map(file => '/uploads/' + file);
         
-            res.status(200).json(filtered.toArray());
+            bookService.getBooksWithCoverImages((err, result) => {
+                if (err) {
+                    handleError(err, res);
+                    connection.end();
+                    return;
+                }
+
+                //let filtered = valid.filter(file => )
+
+                res.status(200).json(valid.toArray());
+            });
+            
         });
     });
 

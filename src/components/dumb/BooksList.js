@@ -16,6 +16,8 @@ export default React.createClass({
 	render() {
 	
 		let books = _.chunk(this.props.books.toArray(), Math.ceil(this.props.books.count() / 2));
+		let self = this;
+
 		return (
 
 			<div>
@@ -24,7 +26,7 @@ export default React.createClass({
 						return (
 							<ul key={i}>
 								{set.map(book => {
-									return(<li key={book.id}>{this.getViewBookLink(book)} {this.getEditBookLink(book)}</li>)
+									return(<li key={book.id}>{self.getViewBookLink(book)} {self.getEditBookLink(book)}</li>)
 								})}
 							</ul>
 						)
@@ -36,8 +38,9 @@ export default React.createClass({
 	},
 
 	getViewBookLink(book) {
+
 		return (
-			<Link className={classNames({'is-read': book.is_read})} to={"/book/" + book.id} onClick={this.loadBookInfo.bind(this, book.id)}>{book.title}</Link>
+			<Link className={classNames({'is-read': book.is_read})} to={"/book/" + book.id} onClick={this.getOnClickEvent(book)}>{book.title}</Link>
 		)
 	},
 
@@ -49,11 +52,19 @@ export default React.createClass({
 		}
 	},
 
-	loadBookInfo(bookId, e) {
-		if (this.props.enableEvent) {
-			this.props.loadBookInfo(bookId);
+	getOnClickEvent(book) {
 
-			e.preventDefault();
+		let onClickEvent = function (book, e) {
+			if (this.props.bookSelectionCallback) {
+				e.preventDefault();
+				this.props.bookSelectionCallback(book);
+			}
+		};
+
+		if (this.props.bookSelectionCallback) {
+			return onClickEvent.bind(this, book);
 		}
+
+		return null;
 	}
 });

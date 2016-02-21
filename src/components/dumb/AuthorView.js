@@ -42,11 +42,15 @@ export default React.createClass({
 				
 				<h2>Books</h2>
 
-				<BooksList enableEvent={true} loadBookInfo={this.loadBookInfo} books={author.books} {...this.props}/>
+				<BooksList bookSelectionCallback={this.showBookInfo} enableEvent={true} loadBookInfo={this.loadBookInfo} books={author.books} {...this.props}/>
 				
                 { book ? <BookInfoView showBookInfo={this.state.showBookInfo} key={book.id} book={book} singleMode={false} {...this.props}/> : null }
 			</div>
 		);
+	},
+
+	showBookInfo(book) {
+		this.loadBookInfo(book.id);
 	},
 
 	getEditAuthorLink(author) {

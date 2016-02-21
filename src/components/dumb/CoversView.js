@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import ReactSwipe from 'react-swipe';
+import BooksList from './BooksList';
 
 export default class CoversView extends Component {
 	next() {
@@ -17,8 +18,12 @@ export default class CoversView extends Component {
 		
 	}
 
+	selectBook(book) {
+		alert(book.id);
+	}
+
 	render() {
-		const {covers} = this.props;
+		const {books, covers} = this.props;
 		return (
 			<div className="component swipe-container">
 				<h1>Covers</h1>
@@ -41,6 +46,8 @@ export default class CoversView extends Component {
             		<button onClick={::this.prev}>Prev</button>
             		<button onClick={::this.next}>Next</button>
             	</div>
+
+            	<BooksList books={books} bookSelectionCallback={this.selectBook} />
 
 			</div>
 		)

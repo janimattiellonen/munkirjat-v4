@@ -28,7 +28,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return { 
-      coverActions: bindActionCreators(CoverActions, dispatch)
+      	coverActions: bindActionCreators(CoverActions, dispatch)
     };
 }
 

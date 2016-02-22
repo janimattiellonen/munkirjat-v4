@@ -405,8 +405,9 @@ createServer(config, webpackConfig, (app) => {
                 return file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.png') || file.toLowerCase().endsWith('.gif');
             }
 
-            let valid = List(files).filter(file => valid(file)).map(file => '/uploads/' + file);
-        
+            let validated = List(files).filter(file => valid(file)).map(file => '/uploads/' + file);
+            let notUsed = List();
+
             bookService.getBooksWithCoverImages((err, result) => {
                 if (err) {
                     handleError(err, res);
@@ -414,9 +415,13 @@ createServer(config, webpackConfig, (app) => {
                     return;
                 }
 
+                result.map(row => {
+                    validated = validated.filter(file => file != row.cover_url);
+                });
+
                 //let filtered = valid.filter(file => )
 
-                res.status(200).json(valid.toArray());
+                res.status(200).json(validated.toArray());
             });
             
         });

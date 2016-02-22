@@ -337,7 +337,7 @@ export default class BookService {
                 b.id,
                 b.cover_url
             FROM
-                book AS book
+                book AS b
             WHERE
                 b.cover_url IS NOT NULL`,
             callback

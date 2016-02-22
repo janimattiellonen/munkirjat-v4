@@ -163,6 +163,7 @@ export default class BookService {
                 b.finished_reading,
                 b.rating,
                 b.price,
+                b.cover_url,
                 g.id AS genre_id,
                 g.name AS genre_name
             FROM 
@@ -230,6 +231,7 @@ export default class BookService {
                 b.finished_reading,
                 b.rating,
                 b.price,
+                b.cover_url,
                 a.id AS author_id,
                 a.firstname,
                 a.lastname,
@@ -291,7 +293,8 @@ export default class BookService {
                     finished_reading: row.finished_reading,
                     price: row.price,
                     authors: OrderedMap(),
-                    genres: OrderedMap()
+                    genres: OrderedMap(),
+                    cover_url: row.cover_url
                 };
             }
 

@@ -3,28 +3,59 @@ import {Link} from 'react-router';
 import ReactSwipe from 'react-swipe';
 import BooksView from './BooksView';
 import {Button} from 'react-bootstrap';
+import {List} from 'immutable';
 
 export default class CoversView extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+        	covers: List(),
+        	currentIndex: 1,
         	coverUrl: null,
             book: null
         };
     }
 
 	next() {
-		console.log("next");
-    	this.refs.ReactSwipe.swipe.next();
+		console.log("NEXT");
+		const covers = this.state.covers;
+		let index = 1;
+
+		if (this.state.currentIndex < covers.count()) {
+			index = this.state.currentIndex + 1;
+		}
+
+		this.setState({
+			currentIndex: index,
+		});
+
+		if (covers.count() > 1) {
+			this.refs.ReactSwipe.swipe.next();
+		} else if (covers.count() == 1) {
+			this.refs.ReactSwipe.swipe.next();
+			this.refs.ReactSwipe.swipe.slide(0, 0);
+		}
   	}
 
 	prev() {
-		console.log("prev");
+		const covers = this.state.covers;
+		let index = covers.count();
+
+		if (this.state.currentIndex > 1) {
+			index = this.state.currentIndex - 1;
+		}
+
+		this.setState({
+			currentIndex: index,
+		});
+
 		this.refs.ReactSwipe.swipe.prev();
 	}
 
 	selectedItem(index, element) {
+		console.log("selected index: " + index + ": " + element.dataset.href);
+
 		this.setState({
 			coverUrl: element.dataset.href
 		});
@@ -37,7 +68,17 @@ export default class CoversView extends Component {
 	}
 
 	linkBookAndCover() {
-		this.props.coverActions.linkBookAndCover(this.state.book.id, this.state.coverUrl);
+		let index = this.state.covers.findIndex(cover => cover == this.state.coverUrl );
+		console.log("Found index: " + index);
+		this.props.coverActions.linkBookAndCover(this.state.book, this.state.coverUrl);
+
+		this.setState({
+			covers: this.state.covers.remove(index),
+		});
+
+		if (this.state.covers.count() > 0) {
+			this.refs.ReactSwipe.swipe.next();
+		}
 	}
 
 	getLinkTitle() {
@@ -50,39 +91,63 @@ export default class CoversView extends Component {
 		return title;
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.covers.count() > 0) {
+			this.setState({
+				covers: nextProps.covers
+			});
+
+			this.refs.ReactSwipe.swipe.slide(0, 0);
+		}
+	}
+
 	render() {
-		const {books, covers} = this.props;
+		let books =  this.props.books;
+		const covers = this.state.covers;
+
+		books = books.filter(book => book.cover_url == null);
+
 		return (
 			<div className="component swipe-container">
 				<h1>Covers</h1>
 
-				<p>Select cover image for book.</p>
+				{covers.count() > 0 ?
+					<div>
+						<p>Select cover image for book.</p>
+						
+						<p>{this.state.currentIndex} / {covers.count()}</p>
 
-				<ReactSwipe ref="ReactSwipe"
-	                continuous={true}
-	                callback={::this.selectedItem}
-	                key={covers.count()}
-	            >
- 	            	{covers.map((cover, i) => {
-	            		return (
-	            			<div key={i} data-href={cover}><img src={cover}/></div>
-	            		)
-	            	})}
-            	</ReactSwipe>
+						<ReactSwipe ref="ReactSwipe"
+			                continuous={true}
+			                callback={::this.selectedItem}
+			                key={covers.count()}
+			            >
+		 	            	{covers.map((cover, i) => {
+			            		return (
+			            			<div key={i} data-href={cover}><img src={cover}/></div>
+			            		)
+			            	})}
+		            	</ReactSwipe>
 
-            	<div>
-            		<button className="btn btn-default" onClick={::this.prev}>Prev</button>
-            		<button className="btn btn-default" onClick={::this.next}>Next</button>
-            	</div>
+		            	<div>
+		            		<button className="btn btn-default" onClick={::this.prev}>Prev</button>
+		            		<button className="btn btn-default" onClick={::this.next}>Next</button>
+		            	</div>
 
-            	<div>
-            		<Button bsStyle="primary" bsSize="large" block disabled={!this.state.book} onClick={::this.linkBookAndCover}>{this.getLinkTitle()}</Button>
-            	</div>
+    	            	<div>
+            				<Button bsStyle="primary" bsSize="large" block disabled={!this.state.book} onClick={::this.linkBookAndCover}>{this.getLinkTitle()}</Button>
+            			</div>
+		            </div>
 
-            	<BooksView books={books} bookSelectionCallback={::this.selectBook} {...this.props} />
+	            	:
+	            	<div>
+	            		<p>No images available.</p>
+	            	</div>
+	            }
+
+            	<BooksView key={books.count()} {...this.props} books={books} bookSelectionCallback={::this.selectBook}  />
 
 			</div>
 		)
 	}
-
 }

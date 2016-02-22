@@ -1,6 +1,8 @@
 import api from '../api';
 import * as Errors from './Errors';
 
+import {replaceBook} from './BookActions';
+
 export function setCovers(covers) {
 	return {
 		type: 'COVERS_SET',
@@ -27,11 +29,12 @@ export function uploadFile(file, data) {
 	}
 }
 
-export function linkBookAndCover(bookId, coverUrl) {
-	console.log("linkBookAndCover");
+export function linkBookAndCover(book, coverUrl) {
+	console.log("linkBookAndCover: coverUrl: " + coverUrl + ", book: " + JSON.stringify(book));
 	return function(dispatch, getState) {
-		api.linkBookAndCover(bookId, coverUrl).then(result => {
-
+		api.linkBookAndCover(book.id, coverUrl).then(result => {
+			book.cover_url = coverUrl;
+			dispatch(replaceBook(book));
 		}).catch(Errors.handleError);
 	}
 }

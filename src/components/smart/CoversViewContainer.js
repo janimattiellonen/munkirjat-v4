@@ -16,7 +16,7 @@ class CoversViewContainer extends React.Component {
 
     render() {
         const {books, covers} = this.props;
-
+        console.log("PASTEEEE: " + covers.count());
         return (
             <CoversView books={books} covers={covers} {...this.props} />
         )

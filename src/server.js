@@ -419,8 +419,6 @@ createServer(config, webpackConfig, (app) => {
                     validated = validated.filter(file => file != row.cover_url);
                 });
 
-                //let filtered = valid.filter(file => )
-
                 res.status(200).json(validated.toArray());
             });
             

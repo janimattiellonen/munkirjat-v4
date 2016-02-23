@@ -74,14 +74,13 @@ export default class CoversView extends Component {
 
 		const cover = this.state.covers.get(index);
 
-		console.log("Found index: " + index + " and cover: " + JSON.stringify(cover));
 		this.props.coverActions.linkBookAndCover(this.state.book, cover);
 		let covers = this.state.covers.remove(index);
-		console.log("COUNT NOW: " + covers.count());
 
+		console.log("PPOS: " + this.refs.ReactSwipe.swipe.getPos());
 		this.setState({
 			covers: this.state.covers.remove(index),
-			currentIndex: this.refs.ReactSwipe.swipe.getPos() + 1
+			currentIndex: this.refs.ReactSwipe.swipe.getPos()
 		});
 	}
 

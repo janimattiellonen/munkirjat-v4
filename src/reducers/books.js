@@ -33,7 +33,6 @@ export default handleActions({
 	BOOK_UPDATE: (state, action) => {
 		let list = List(state.books);
 		let i = list.findIndex(item => item.id === action.book.id);
-		console.log("FOUND INDEX: " + i);
 		
 		list = list.set(i, action.book);
 

@@ -11,6 +11,20 @@ export default handleActions({
 			...state,
 			covers: covers
 		}
+	},
+
+	COVER_REMOVE: (state, action) => {
+		console.log("COVER_REMOVE:A");
+		let covers = state.covers;
+		console.log("COVER_REMOVE:B");
+		let index = covers.findIndex(cover => cover == action.payload);
+
+		console.log("COVER_REMOVE: " + index);
+
+		return {
+			...state,
+			covers: covers.remove(index)
+		}
 	}
 
 }, {covers: List()});

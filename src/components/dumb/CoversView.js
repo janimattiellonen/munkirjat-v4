@@ -26,9 +26,7 @@ export default class CoversView extends Component {
 			index = this.state.currentIndex + 1;
 		}
 
-		this.setState({
-			currentIndex: index,
-		});
+
 
 		if (covers.count() > 1) {
 			this.refs.ReactSwipe.swipe.next();
@@ -36,6 +34,10 @@ export default class CoversView extends Component {
 			this.refs.ReactSwipe.swipe.next();
 			this.refs.ReactSwipe.swipe.slide(0, 0);
 		}
+
+		this.setState({
+			currentIndex: this.refs.ReactSwipe.swipe.getPos() + 1,
+		});
   	}
 
 	prev() {
@@ -68,17 +70,19 @@ export default class CoversView extends Component {
 	}
 
 	linkBookAndCover() {
-		let index = this.state.covers.findIndex(cover => cover == this.state.coverUrl );
-		console.log("Found index: " + index);
-		this.props.coverActions.linkBookAndCover(this.state.book, this.state.coverUrl);
+		let index = this.refs.ReactSwipe.swipe.getPos();
+
+		const cover = this.state.covers.get(index);
+
+		console.log("Found index: " + index + " and cover: " + JSON.stringify(cover));
+		this.props.coverActions.linkBookAndCover(this.state.book, cover);
+		let covers = this.state.covers.remove(index);
+		console.log("COUNT NOW: " + covers.count());
 
 		this.setState({
 			covers: this.state.covers.remove(index),
+			currentIndex: this.refs.ReactSwipe.swipe.getPos() + 1
 		});
-
-		if (this.state.covers.count() > 0) {
-			this.refs.ReactSwipe.swipe.next();
-		}
 	}
 
 	getLinkTitle() {
@@ -92,7 +96,8 @@ export default class CoversView extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.covers.count() > 0) {
+		if (nextProps.covers.count() > 0 && nextProps.covers.count() != this.props.covers.count()) {
+			console.log("RECEIVING covers: " + nextProps.covers.count());
 			this.setState({
 				covers: nextProps.covers
 			});

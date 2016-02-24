@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {List} from 'immutable';
 import moment from 'moment';
 import numeral from 'numeral';
@@ -7,11 +7,14 @@ import {Link} from 'react-router';
 import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 import * as Utils from '../utils';
 import BookInfoView from './BookInfoView';	
+import classNames from 'classnames';
 
-export default React.createClass({
+export default class StatisticsView extends Component {
 
-	getInitialState() {
-		return {
+	constructor(props) {
+		super(props);
+
+		this.state = {
 			unreadBookCount: 0,
 			readBookCount: 0,
 			bookCount: 0,
@@ -24,15 +27,7 @@ export default React.createClass({
 			moneySpentOnBooks: 0,
 			pagesRedSoFar: 0
 		}
-	},
-
-	getDefaultProps() {
-		return {
-			stats: List(),
-			books: List(),
-			authors: List()
-		}
-	},
+	}
 
 	componentWillReceiveProps(nextProps) {
 		const {authors, books} = nextProps;
@@ -52,11 +47,11 @@ export default React.createClass({
 			leastPagesInBook: this.getLeastPagesInBook(books),
 			averagePageCount: this.getAveragePageCount(books),
 		});
-	},
+	}
 
 	render() {
 		return (
-            <div className="stats">
+            <div className={classNames("stats")} >
 				<h2>Statistics</h2>
 
 				<h3>Unread books</h3>
@@ -114,33 +109,34 @@ export default React.createClass({
 				<h3>Average page count</h3>
 
 				<p>{this.state.averagePageCount}</p>
+
 			</div>	
 		);
-	},
+	}
 
 	getAuthorCount(authors) {
 		return authors.count();
-	},
+	}
 
 	getUnreadBookCount(books) {
 		return Stats.getUnreadBookCount(books);
-	},
+	}
 
 	getReadBookCount(books) {
 		return Stats.getReadBookCount(books);
-	},
+	}
 
 	getSlowestReadTime(books) {
 		const {book, readTime} = Stats.getSlowestReadTime(books);
 
 		return this.getBookLink(book, this.formatDays(readTime, true));
-	},	
+	}
 
 	getFastestReadTime(books) {
 		const {book, readTime} = Stats.getFastestReadTime(books);
 
 		return this.getBookLink(book, this.formatDays(readTime, true));
-	},
+	}
 
 	getBookLink(book, title) {
 		if (null != book) {
@@ -158,51 +154,51 @@ export default React.createClass({
 		} else {
 			return 0;
 		}
-	},
+	}
 
 	getAverageReadTime(books) {
 		return this.formatDays(Stats.getAverageReadTime(books), true);
-	},
+	}
 
 	getTimeTakenToReadAllUnreadBooks(books) {
 		return numeral(Stats.getTimeTakenToReadAllUnreadBooks(books)).format('0.00') + ' year(s)';
-	},
+	}
 
 	getAverageBookPrice(books) {
 		let avg = Stats.getAverageBookPrice(books);
 
 		return this.formatCurrency(avg);
-	},
+	}
 
 	getMoneySpentOnBooks(books) {
 		let sum = Stats.getMoneySpentOnBooks(books);
 
 		return this.formatCurrency(sum);
-	},
+	}
 
 	formatCurrency(value) {
 		return value > 0 ? numeral(value).format('0.00').replace('.', ',') + '€' : '0€';
-	},
+	}
 
 	getPagesReadSoFar(books) {
 		return Stats.getPagesReadSoFar(books);
-	},
+	}
 
 	getMostPagesInBook(books) {
 		var book = Stats.getMostPagesInBook(books);
 
 		return this.getBookLink(book, book.page_count);
-	},
+	}
 
 	getLeastPagesInBook(books) {
 		var book = Stats.getLeastPagesInBook(books);
 
 		return this.getBookLink(book, book.page_count);
-	},
+	}
 
 	getAveragePageCount(books) {
 		return numeral(Stats.getAveragePageCount(books)).format('0.00');
-	},
+	}
 
 	formatDays(days, isDecimal = false) {
 		if (isDecimal) {
@@ -211,4 +207,10 @@ export default React.createClass({
 
 		return days > 1.0 ? days.replace(/\.[0]+$/, '') + ' days' : days.replace(/\.[0]+$/, '') + ' day';
 	}		
-});
+};
+
+StatisticsView.defaultProps = {
+	stats: List(),
+	books: List(),
+	authors: List()
+};

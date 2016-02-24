@@ -39,6 +39,13 @@ export function removeCover(cover) {
 export function linkBookAndCover(book, coverUrl) {
 	console.log("linkBookAndCover: coverUrl: " + coverUrl + ", book: " + JSON.stringify(book));
 	return function(dispatch, getState) {
+
+			//book.cover_url = coverUrl;
+			//dispatch(replaceBook(book));
+			//dispatch(removeCover(coverUrl));
+
+			// temporarilly disabled so I don't have to reset the database
+			
 		api.linkBookAndCover(book.id, coverUrl).then(result => {
 			book.cover_url = coverUrl;
 			dispatch(replaceBook(book));
@@ -46,6 +53,7 @@ export function linkBookAndCover(book, coverUrl) {
 		}).catch((s) => {
 			console.log("s: " + JSON.stringify(s));
 		});
+		
 	}
 }
 

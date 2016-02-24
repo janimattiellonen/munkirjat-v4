@@ -11,7 +11,7 @@ export default class CoversView extends Component {
 
         this.state = {
         	covers: List(),
-        	currentIndex: 1,
+        	currentIndex: 0,
         	coverUrl: null,
             book: null
         };
@@ -20,37 +20,36 @@ export default class CoversView extends Component {
 	next() {
 		console.log("NEXT");
 		const covers = this.state.covers;
-		let index = 1;
+		let index = 0;
 
-		if (this.state.currentIndex < covers.count()) {
+		if (this.state.currentIndex < covers.count() - 1) {
 			index = this.state.currentIndex + 1;
 		}
 
-
-
 		if (covers.count() > 1) {
 			this.refs.ReactSwipe.swipe.next();
-		} else if (covers.count() == 1) {
-			this.refs.ReactSwipe.swipe.next();
-			this.refs.ReactSwipe.swipe.slide(0, 0);
 		}
 
 		this.setState({
-			currentIndex: this.refs.ReactSwipe.swipe.getPos() + 1,
+			currentIndex: index,
 		});
+
+		console.log("next:index: " + index);
   	}
 
 	prev() {
 		const covers = this.state.covers;
-		let index = covers.count();
+		let index = covers.count() - 1;
 
-		if (this.state.currentIndex > 1) {
+		if (this.state.currentIndex > 0) {
 			index = this.state.currentIndex - 1;
 		}
 
 		this.setState({
 			currentIndex: index,
 		});
+
+		console.log("prev:index: " + index);
 
 		this.refs.ReactSwipe.swipe.prev();
 	}
@@ -70,17 +69,21 @@ export default class CoversView extends Component {
 	}
 
 	linkBookAndCover() {
-		let index = this.refs.ReactSwipe.swipe.getPos();
-
+		let index = parseInt(this.refs.ReactSwipe.swipe.getPos());
+		console.log("linkBookAndCover: " + index);
 		const cover = this.state.covers.get(index);
 
 		this.props.coverActions.linkBookAndCover(this.state.book, cover);
 		let covers = this.state.covers.remove(index);
 
-		console.log("PPOS: " + this.refs.ReactSwipe.swipe.getPos());
+		if (index == covers.count()) {
+			index = index - 1;
+		}
+
 		this.setState({
-			covers: this.state.covers.remove(index),
-			currentIndex: this.refs.ReactSwipe.swipe.getPos()
+			covers: covers,
+			currentIndex: index,
+			book: null
 		});
 	}
 
@@ -100,9 +103,15 @@ export default class CoversView extends Component {
 			this.setState({
 				covers: nextProps.covers
 			});
-
-			this.refs.ReactSwipe.swipe.slide(0, 0);
 		}
+	}
+
+	getStartSlide() {
+		let index = this.state.currentIndex;
+
+		console.log("getStartSlide: " + index);
+
+		return index;
 	}
 
 	render() {
@@ -119,12 +128,13 @@ export default class CoversView extends Component {
 					<div>
 						<p>Select cover image for book.</p>
 						
-						<p>{this.state.currentIndex} / {covers.count()}</p>
+						<p>{this.state.currentIndex + 1} / {covers.count()}</p>
 
 						<ReactSwipe ref="ReactSwipe"
 			                continuous={true}
 			                callback={::this.selectedItem}
 			                key={covers.count()}
+			                startSlide={this.getStartSlide()}
 			            >
 		 	            	{covers.map((cover, i) => {
 			            		return (
@@ -134,8 +144,8 @@ export default class CoversView extends Component {
 		            	</ReactSwipe>
 
 		            	<div>
-		            		<button className="btn btn-default" onClick={::this.prev}>Prev</button>
-		            		<button className="btn btn-default" onClick={::this.next}>Next</button>
+		            		<button className="btn btn-default" disabled={this.state.covers.count() <= 1} onClick={::this.prev}>Prev</button>
+		            		<button className="btn btn-default" disabled={this.state.covers.count() <= 1} onClick={::this.next}>Next</button>
 		            	</div>
 
     	            	<div>

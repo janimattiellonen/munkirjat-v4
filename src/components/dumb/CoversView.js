@@ -125,7 +125,7 @@ export default class CoversView extends Component {
 				<h1>Covers</h1>
 
 				{covers.count() > 0 ?
-					<div>
+					<div className="cover-image-container">
 						<p>Select cover image for book.</p>
 						
 						<p>{this.state.currentIndex + 1} / {covers.count()}</p>
@@ -138,7 +138,7 @@ export default class CoversView extends Component {
 			            >
 		 	            	{covers.map((cover, i) => {
 			            		return (
-			            			<div key={i} data-href={cover}><img src={cover}/></div>
+			            			<div className="swipe-image-container" key={i} data-href={cover}><img src={cover}/></div>
 			            		)
 			            	})}
 		            	</ReactSwipe>

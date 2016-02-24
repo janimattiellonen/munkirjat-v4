@@ -15,6 +15,8 @@ import Immutable from 'immutable';
 import * as Utils from './components/utils';
 import fs from 'fs';
 import express from 'express';
+import Jimp from 'jimp';
+
 
 dotenv.load();
 
@@ -449,8 +451,22 @@ createServer(config, webpackConfig, (app) => {
 
         var newPath = __dirname + "/../uploads/" + req.body.filename;
         
-        fs.writeFile(newPath, buf, function (err) {
+
+        Jimp.read(buf, (err, image) => {
+
+            image.resize(456, 600).write(newPath);
             res.status(200).json({status: 'ok'});
+
+/*
+            fs.writeFile(newPath, buf, function (err) {
+
+                // modify the size of the image to suite our needs
+
+
+
+                res.status(200).json({status: 'ok'});
+            });
+            */
         });
     });
 

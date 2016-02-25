@@ -122,10 +122,9 @@ export default class CoversView extends Component {
 
 		return (
 			<div className="component swipe-container">
-				<h1>Covers</h1>
-
 				{covers.count() > 0 ?
 					<div className="cover-image-container">
+						<h1>Covers</h1>
 						<p>Select cover image for book.</p>
 						
 						<p>{this.state.currentIndex + 1} / {covers.count()}</p>

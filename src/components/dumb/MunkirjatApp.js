@@ -13,9 +13,9 @@ export default class MunkirjatApp extends React.Component {
 
     render() {
         const {authors, books} = this.props;
-
+        console.log(JSON.stringify(location));
         return (
-            <div id="page-inner">
+            <div id="page-inner" className={location.pathname.substring(1).replace('/', '-')}>
                 <Menubar />
                 {this.props.children}
 

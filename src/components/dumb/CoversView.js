@@ -91,7 +91,7 @@ export default class CoversView extends Component {
 		let title = 'Link';
 
 		if (null !== this.state.book) {
-			title += ' "' + this.state.book.title +'" with selected cover image';
+			title += ' "' + this.state.book.title +'"';
 		}
 
 		return title;
@@ -142,18 +142,19 @@ export default class CoversView extends Component {
 			            	})}
 		            	</ReactSwipe>
 
-		            	<div>
+		            	<div className="buttons">
 		            		<button className="btn btn-default" disabled={this.state.covers.count() <= 1} onClick={::this.prev}>Prev</button>
 		            		<button className="btn btn-default" disabled={this.state.covers.count() <= 1} onClick={::this.next}>Next</button>
 		            	</div>
 
     	            	<div>
-            				<Button bsStyle="primary" bsSize="large" block disabled={!this.state.book} onClick={::this.linkBookAndCover}>{this.getLinkTitle()}</Button>
+            				<Button className="link-btn" bsStyle="primary" bsSize="large" block disabled={!this.state.book} onClick={::this.linkBookAndCover}>{this.getLinkTitle()}</Button>
             			</div>
 		            </div>
 
 	            	:
-	            	<div>
+	            	<div className="cover-image-container">
+	            		<h1>Covers</h1>
 	            		<p>No images available.</p>
 	            	</div>
 	            }

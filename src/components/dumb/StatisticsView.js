@@ -129,16 +129,16 @@ export default class StatisticsView extends Component {
 	getSlowestReadTime(books) {
 		const {book, readTime} = Stats.getSlowestReadTime(books);
 
-		return this.getBookLink(book, this.formatDays(readTime, true));
+		return this.getBookLink(book, this.formatDays(readTime, true), this.getAdditionalInfoIcon());
 	}
 
 	getFastestReadTime(books) {
 		const {book, readTime} = Stats.getFastestReadTime(books);
 
-		return this.getBookLink(book, this.formatDays(readTime, true));
+		return this.getBookLink(book, this.formatDays(readTime, true), this.getAdditionalInfoIcon());
 	}
 
-	getBookLink(book, title) {
+	getBookLink(book, title, icon = null) {
 		if (null != book) {
 			const tooltip = (
 			  	<Tooltip id={"tooltip-book-" + book.id}>
@@ -148,7 +148,7 @@ export default class StatisticsView extends Component {
 
 			return (
 			    <OverlayTrigger placement="left" overlay={tooltip}>
-			      	<Link to={"/book/" + book.id}>{title}</Link>
+			      	<Link to={"/book/" + book.id}>{title} {icon}</Link>
 			    </OverlayTrigger>
 			)	
 		} else {
@@ -187,13 +187,13 @@ export default class StatisticsView extends Component {
 	getMostPagesInBook(books) {
 		var book = Stats.getMostPagesInBook(books);
 
-		return this.getBookLink(book, book.page_count);
+		return this.getBookLink(book, book.page_count, this.getAdditionalInfoIcon());
 	}
 
 	getLeastPagesInBook(books) {
 		var book = Stats.getLeastPagesInBook(books);
 
-		return this.getBookLink(book, book.page_count);
+		return this.getBookLink(book, book.page_count, this.getAdditionalInfoIcon());
 	}
 
 	getAveragePageCount(books) {
@@ -207,6 +207,12 @@ export default class StatisticsView extends Component {
 
 		return days > 1.0 ? days.replace(/\.[0]+$/, '') + ' days' : days.replace(/\.[0]+$/, '') + ' day';
 	}		
+
+	getAdditionalInfoIcon() {
+		return (
+			<span className="glyphicon glyphicon-stats" aria-hidden="true"></span>
+		);
+	}
 };
 
 StatisticsView.defaultProps = {

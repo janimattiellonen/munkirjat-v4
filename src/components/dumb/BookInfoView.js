@@ -22,44 +22,50 @@ export default React.createClass({
 		const {book, showBookInfo} = this.props;
 
 		return (
-			<div className={classNames("book-info col-md-12 component", {hidden: !showBookInfo})}>
-				{this.getTitleElement(book)}
+			<div className={classNames("book-info col-md-12 ", {hidden: !showBookInfo})}>
+				<div className="book-details">
+					{this.getTitleElement(book)}
 
-				{this.renderAuthorDiv(book)}
+					{this.renderAuthorDiv(book)}
 
-				{this.renderGenreDiv(book)}
+					{this.renderGenreDiv(book)}
 
-				<p>{this.getEditBookLink(book)}</p> 
+					<p>{this.getEditBookLink(book)}</p> 
 
-				<div className="row">
-					<div className="title">Language</div>
-					<div>{Utils.language(book.language_id)}</div>
+					<div className="row">
+						<div className="title">Language</div>
+						<div>{Utils.language(book.language_id)}</div>
+					</div>
+					
+					<div className="row">
+						<div className="title">Page count</div>
+						<div>{book.page_count}</div>
+					</div>
+
+					<div className="row">
+						<div className="title">Price</div>
+						<div>{Utils.money(book.price)}</div>
+					</div>
+					
+					<div className="row">
+						<div className="title">Is read</div>
+						<div>{Utils.yes_no(book.is_read)}</div>
+					</div>
+
+
+					<div className="row">
+						<div className="title">Started reading</div>
+						<div>{Utils.date_format(book.started_reading)}</div>
+					</div>
+
+					<div className="row">
+						<div className="title">Finished reading</div>
+						<div>{Utils.date_format(book.finished_reading)}</div>
+					</div>
 				</div>
-				
-				<div className="row">
-					<div className="title">Page count</div>
-					<div>{book.page_count}</div>
-				</div>
 
-				<div className="row">
-					<div className="title">Price</div>
-					<div>{Utils.money(book.price)}</div>
-				</div>
-				
-				<div className="row">
-					<div className="title">Is read</div>
-					<div>{Utils.yes_no(book.is_read)}</div>
-				</div>
-
-
-				<div className="row">
-					<div className="title">Started reading</div>
-					<div>{Utils.date_format(book.started_reading)}</div>
-				</div>
-
-				<div className="row">
-					<div className="title">Finished reading</div>
-					<div>{Utils.date_format(book.finished_reading)}</div>
+				<div className="cover-image">
+					<img src={book.cover_url} />
 				</div>
 			</div>
 		);

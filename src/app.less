@@ -8,6 +8,10 @@ html, body {
     height: 100%;
 }
 
+h1, h2 {
+	margin-top: 0;
+}
+
 h1 {
     margin-bottom: 20px;
 }
@@ -266,43 +270,62 @@ a.is-read {
 	color: red;
 }
 
+.book-info > .component {
+    width: 100%;
+}
+
 .book-info {
 	float: left;
     border-spacing: 0 8px;
     padding-left: 0;
+ 
+    .book-details {
+    	float: left;
+    	width: 40%;
 
-    h1 {
-    	margin-bottom: 0;
-    }
+	    h1 {
+	    	margin-bottom: 0;
+	    }
 
-    ul {
-    	display: inline;
+	    ul {
+	    	display: inline;
 
-    	li {
-    		display: inline;
-    	}
+	    	li {
+	    		display: inline;
+	    	}
 
-    	li::after {
-    		content: ", "
-    	}
+	    	li::after {
+	    		content: ", "
+	    	}
 
-    	li:last-child::after {
-    		content: ""
-    	}
-    }
+	    	li:last-child::after {
+	    		content: ""
+	    	}
+	    }
 
-    .row {
-        display: table-row;
+	    .row {
+	        display: table-row;
 
-        div {
-            display: table-cell;
+	        div {
+	            display: table-cell;
 
-            &.title {
-                width: 10em;
-                font-weight: bold;
-            }
-        }
-    }
+	            &.title {
+	                width: 10em;
+	                font-weight: bold;
+	            }
+	        }
+	    }
+	}
+
+	.cover-image {
+		float: left;
+		width: 56%;
+
+		img {
+			width: 100%;
+		}
+	}
+
 }
 
 
@@ -371,12 +394,18 @@ a.is-read {
 	}
 }
 
-@media screen and (max-width: 920px) {
+
+@media screen and (max-width: 1168px) {
 	div#app #page {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
 
+
+
+	.navbar > .container {
+		width: 100%;
+	}
 
 	.stats {
 		display: none;
@@ -395,6 +424,13 @@ a.is-read {
 	}
 }
 
+@media screen and (max-width: 1199px) {
+	.navbar {
+		li {
+			font-size: 0.8em;
+		}
+	}
+}
 
 @media screen and (min-width: 786px) and (max-width: 920px) {
 	.stats-main {
@@ -415,17 +451,9 @@ a.is-read {
 	}
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and (min-width: 768px) and (max-width: 1199px) {
 	.navbar-brand {
 		display: none;
-	}
-
-	.nav {
-		li {
-			a {
-				padding: 10px;
-			}
-		}
 	}
 }
 
@@ -466,7 +494,6 @@ ul.horizontal-list {
 		display: inline;
 	}
 }
-
 
 .covers {
 	.swipe-container {
@@ -515,5 +542,11 @@ ul.horizontal-list {
 
 	.stats {
 		display: none;
+	}
+}
+
+@media screen and (max-width: 845) {
+	.nav li a {
+		padding: 7px !important;
 	}
 }

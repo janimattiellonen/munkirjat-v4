@@ -36,7 +36,7 @@ export default React.createClass({
                     }
                 )}
 				<h1>Author</h1>
-				{author.name} {this.getEditAuthorLink(author)}  
+				<p>{author.name} {this.getEditAuthorLink(author)}</p>  
 
 				{this.getRemoveAuthorLink(author)}
 				

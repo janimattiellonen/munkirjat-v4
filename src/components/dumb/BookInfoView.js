@@ -26,11 +26,11 @@ export default React.createClass({
 				<div className="book-details">
 					{this.getTitleElement(book)}
 
+					<p>{this.getEditBookLink(book)}</p> 
+
 					{this.renderAuthorDiv(book)}
 
 					{this.renderGenreDiv(book)}
-
-					<p>{this.getEditBookLink(book)}</p> 
 
 					<div className="row">
 						<div className="title">Language</div>

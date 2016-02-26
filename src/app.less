@@ -283,9 +283,11 @@ a.is-read {
     	float: left;
     	width: 40%;
 
-	    h1 {
-	    	margin-bottom: 0;
-	    }
+    	span {
+    		&.author, &.genre {
+    			margin-right: 10px;
+    		}
+    	}
 
 	    ul {
 	    	display: inline;
@@ -383,6 +385,9 @@ a.is-read {
 	}
 }
 
+
+
+
 @media screen and (max-width: 785px) {
 	.stats-main {
 		width: 100%;
@@ -394,6 +399,20 @@ a.is-read {
 	}
 }
 
+
+
+@media screen and (max-width: 895px) {
+	#single-book {
+		.book-details {
+			width: 100%;
+			margin-bottom: 20px;
+		}
+
+		.cover-image {
+			width: 100%;
+		}
+	}
+}
 
 @media screen and (max-width: 1168px) {
 	div#app #page {
@@ -548,5 +567,13 @@ ul.horizontal-list {
 @media screen and (max-width: 845) {
 	.nav li a {
 		padding: 7px !important;
+	}
+}
+
+@media screen and (min-width: 766px) and (max-width: 813px) {
+	div#app {
+		#page {
+			padding: 100px 50px 75px 50px !important;
+		}
 	}
 }

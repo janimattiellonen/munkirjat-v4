@@ -105,7 +105,15 @@ div#app {
 
 #single-author {
     .data-list {
- 		margin-bottom: 20px;   
+ 		margin-bottom: 20px; 
+
+ 		ul {
+ 			width: 39%;
+
+	 		&:last-child {
+	 			width: 60%;
+	 		}  
+ 		}
     }
 }
 
@@ -361,6 +369,8 @@ a.is-read {
     }
 }
 
+
+
 .navbar-brand {
 	padding: 10px;
 }
@@ -412,6 +422,18 @@ a.is-read {
 			width: 100%;
 		}
 	}
+
+	#single-author {
+	    .data-list {
+	 		ul {
+	 			width: 50%;
+
+	 			&:last-child {
+	 				width: 50%;
+	 			}
+	 		}
+	    }
+	}	
 }
 
 @media screen and (max-width: 1168px) {
@@ -564,7 +586,7 @@ ul.horizontal-list {
 	}
 }
 
-@media screen and (max-width: 845) {
+@media screen and (max-width: 845px) {
 	.nav li a {
 		padding: 7px !important;
 	}

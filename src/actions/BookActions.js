@@ -61,12 +61,12 @@ export function fetchBooks(mode = null) {
 	return function(dispatch, getState) {
 		let books = getState().books.books;
 
-		if (!books || books.length == 0) {
+		if (!books || books.count() == 0) {
 			api.getBooks(null).then(books => {
 				dispatch(setBooks(books, mode));
-			});	
+			});
 		} else {
-			dispatch(setBooks(books, mode));		
+			dispatch(setBooks(books, mode));
 		}
 	};
 }

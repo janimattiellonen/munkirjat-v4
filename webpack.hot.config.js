@@ -20,7 +20,7 @@ module.exports = assign({}, webpackConfig, {
     devServer: {
         publicPath: webpackConfig.output.publicPath,
         contentBase: webpackConfig.output.path,
-        port: 5688,
+        port: 5689,
         hot: true,
         inline: true,
         proxy: {

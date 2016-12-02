@@ -27,12 +27,12 @@ let authorService = new AuthorService();
 let bookService = new BookService();
 let genreService = new GenreService();
 
-server.get('/api/book/:id', function(req, res) {    
+server.get('/api/book/:id', function(req, res) {
     let connection = getConnection();
     bookService.setConnection(connection);
 
     let id = req.params.id;
-    
+
     bookService.getBook(id, function(err, result) {
         if (err) {
             handleError(err, res);
@@ -116,7 +116,7 @@ server.post('/api/book', authenticate, function(req, res) {
 
         req.params.genres.map(genre => {
             genres.push(genre.value);
-        });      
+        });
 
         bookService.addAuthors(createdBookId, authors, function(err, result) {
             if (err) {
@@ -130,7 +130,7 @@ server.post('/api/book', authenticate, function(req, res) {
                     handleError(err, res);
                     connection.end();
                     return;
-                }                
+                }
                 res.charSet('utf8');
                 res.send(200, {"status": "OK", "id": createdBookId});
                 connection.end();
@@ -179,7 +179,7 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                     res.charSet('utf8');
                     res.send(200, book);
                     connection.end();
-                }); 
+                });
             };
 
             if (null != genres && genres.length > 0) {
@@ -188,10 +188,10 @@ server.put('/api/book/:id', authenticate, function(req, res) {
                         handleError(err, res);
                         connection.end();
                         return;
-                    }     
+                    }
 
                     handleGetBook(id);
-                }); 
+                });
             } else {
                 handleGetBook(id);
             }
@@ -238,7 +238,7 @@ server.post('/api/author', authenticate, function(req, res) {
                 handleError(err, res);
                 connection.end();
                 return;
-            } 
+            }
 
             let author = {};
 
@@ -281,7 +281,7 @@ function loadAuthorWithBooks(authorId, connection, res) {
             handleError(err, res);
             connection.end();
             return;
-        } 
+        }
 
         let author = {};
 
@@ -298,7 +298,7 @@ function loadAuthorWithBooks(authorId, connection, res) {
 server.get('/api/author/:id', function(req, res) {
     let connection = getConnection();
     authorService.setConnection(connection);
-    
+
     loadAuthorWithBooks(req.params.id, connection, res);
 });
 
@@ -346,7 +346,7 @@ server.get('/api/genres', function(req, res) {
             connection.end();
             return;
         }
-        
+
         connection.end();
         res.charSet('utf8');
         res.send(200, result);

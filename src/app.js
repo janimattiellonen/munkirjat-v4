@@ -34,8 +34,8 @@ require('react-select/dist/default.css');
 require('./app.less');
 require('bootstrap/dist/js/bootstrap.js');
 require('react-datepicker/dist/react-datepicker.min.css');
-require('jquery-ui/themes/base/jquery-ui.css');
-require('jquery-ui/themes/base/jquery.ui.datepicker.css');
+require('jquery-ui/themes/base/base.css');
+require('jquery-ui/themes/base/datepicker.css');
 
 ReactDOM.render(
 	<Provider store = {store}>
@@ -55,7 +55,7 @@ ReactDOM.render(
 				<Route name="login" path="login" component={LoginViewContainer} />
 				<Route name="afterLogin" path="access_token/:id" component={LoginViewContainer} />
 	        </Route>
-	    </Router>	
+	    </Router>
 	</Provider>,
 	document.getElementById('page')
 );

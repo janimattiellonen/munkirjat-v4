@@ -32,14 +32,14 @@ export default class AuthorService {
                 a.firstname,
                 a.lastname,
                 CONCAT(firstname, ' ', lastname) AS name
-            FROM 
+            FROM
                 author AS a
             WHERE
                 a.id = :id`,
             {id: id},
             callback
         );
-    }  
+    }
 
     getAuthorWithBooks(id, callback) {
         this.connection.query(
@@ -51,7 +51,7 @@ export default class AuthorService {
                 b.id AS book_id,
                 b.title,
                 b.is_read
-            FROM 
+            FROM
                 book AS b
                 LEFT JOIN book_author AS ba ON b.id = ba.book_id
                 RIGHT JOIN author AS a ON a.id = ba.author_id
@@ -60,7 +60,7 @@ export default class AuthorService {
             {id: id},
             callback
         );
-    }  
+    }
 
     createAuthor(author, callback) {
         this.connection.query(
@@ -95,7 +95,7 @@ export default class AuthorService {
               author a
             WHERE
               a.firstname LIKE :term
-              OR a.lastname LIKE :term 
+              OR a.lastname LIKE :term
             ORDER BY
               a.lastname ASC, a.firstname ASC`;
 
@@ -118,7 +118,7 @@ export default class AuthorService {
               a.id
             ORDER BY
               lastname ASC, firstname ASC`;
-        
+
         return query;
     }
 
@@ -142,7 +142,7 @@ export default class AuthorService {
                     id: row['book_id'],
                     title: row['title'],
                     is_read: row['is_read'],
-                });                
+                });
             }
 
             author.amount = author.books.length;

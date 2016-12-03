@@ -35,26 +35,26 @@ createServer(config, webpackConfig, (app) => {
     let bookService = new BookService();
     let genreService = new GenreService();
 
-    app.get('/api/book/:id', function(req, res) {    
-        let connection = getConnection();
-        bookService.setConnection(connection);
+    app.get('/api/book/:id', function(req, res) {
+      let connection = getConnection();
+      bookService.setConnection(connection);
 
-        let id = req.params.id;
-        
-        bookService.getBook(id, function(err, result) {
-            if (err) {
-                handleError(err, res);
-                connection.end();
-                return;
-            }
+      let id = req.params.id;
 
-            let book = bookService.createBookObject(result);
-            book = bookService.toArray(book);
+      bookService.getBook(id, function(err, result) {
+          if (err) {
+              handleError(err, res);
+              connection.end();
+              return;
+          }
 
-            res.charSet = 'utf8';
-            res.status(200).json(book);
-            connection.end();
-        });
+          let book = bookService.createBookObject(result);
+          book = bookService.toArray(book);
+
+          res.charSet = 'utf8';
+          res.status(200).json(book);
+          connection.end();
+      });
     });
 
     app.get('/api/protected', authenticate, function( req, res) {
@@ -121,7 +121,7 @@ createServer(config, webpackConfig, (app) => {
 
             req.body.genres.map(genre => {
                 genres.push(genre.value);
-            });      
+            });
 
             bookService.addAuthors(createdBookId, authors, function(err, result) {
                 if (err) {
@@ -136,8 +136,8 @@ createServer(config, webpackConfig, (app) => {
                         res.charSet = 'utf8';
                         res.status(200).json(book);
                         connection.end();
-                    }); 
-                };        
+                    });
+                };
 
                 if (null != genres && genres.length > 0) {
                     bookService.addGenres(createdBookId, genres, function(err, result) {
@@ -145,7 +145,7 @@ createServer(config, webpackConfig, (app) => {
                             handleError(err, res);
                             connection.end();
                             return;
-                        }                
+                        }
 
                         handleGetBook(createdBookId);
                     });
@@ -157,89 +157,72 @@ createServer(config, webpackConfig, (app) => {
     });
 
     app.put('/api/book/:id', authenticate, function(req, res) {
-        let connection = getConnection();
-        bookService.setConnection(connection);
+    let connection = getConnection();
+    bookService.setConnection(connection);
 
-        const {body, params} = req;
+    const {body, params} = req;
 
-        let updatedBook = {
-            title: body.title,
-            language: body.language,
-            pageCount: body.pageCount,
-            price: body.price,
-            isRead: body.isRead,
-            startedReading: Utils.mysql_date(body.startedReading),
-            finishedReading: Utils.mysql_date(body.finishedReading)
+    let updatedBook = {
+        title: body.title,
+        language: body.language,
+        pageCount: body.pageCount,
+        price: body.price,
+        isRead: body.isRead,
+        startedReading: Utils.mysql_date(body.startedReading),
+        finishedReading: Utils.mysql_date(body.finishedReading)
+    }
+
+    let authors = body.authors.map(author => { return author.value });
+    let genres  = body.genres.map(genre => { return genre.value});
+    let id      = params.id;
+
+    bookService.updateBook(id, updatedBook, function(err, result) {
+        if (err) {
+            handleError(err, res);
+            connection.end();
+            return;
         }
 
-        let authors = body.authors.map(author => { return author.value });
-        let genres  = body.genres.map(genre => { return genre.value});
-        let id      = params.id;
-
-        bookService.updateBook(id, updatedBook, function(err, result) {
+        bookService.setAuthors(id, authors, function(err, result) {
             if (err) {
                 handleError(err, res);
                 connection.end();
                 return;
             }
 
-            bookService.setAuthors(id, authors, function(err, result) {
-                if (err) {
-                    handleError(err, res);
+            let handleGetBook = function(id) {
+                bookService.getBook(id, function(err, result) {
+                    let book = bookService.createBookObject(result);
+                    res.charSet = 'utf8';
+                    res.status(200).json(book);
                     connection.end();
-                    return;
-                }
+                });
+            };
 
-                let handleGetBook = function(id) {
-                    bookService.getBook(id, function(err, result) {
-                        let book = bookService.createBookObject(result);
-                        res.charSet = 'utf8';
-                        res.status(200).json(book);
+            if (null != genres && genres.length > 0) {
+                bookService.setGenres(id, genres, function(err, result) {
+                    if (err) {
+                        handleError(err, res);
                         connection.end();
-                    }); 
-                };
+                        return;
+                    }
 
-                if (null != genres && genres.length > 0) {
-                    bookService.setGenres(id, genres, function(err, result) {
-                        if (err) {
-                            handleError(err, res);
-                            connection.end();
-                            return;
-                        }     
+                    handleGetBook(id);
+                });
+            } else {
+                bookService.removeGenres(id, function(err, result) {
+                    if (err) {
+                        handleError(err, res);
+                        connection.end();
+                        return;
+                    }
 
-                        handleGetBook(id);
-                    }); 
-                } else {
-                    bookService.removeGenres(id, function(err, result) {
-                        if (err) {
-                            handleError(err, res);
-                            connection.end();
-                            return;
-                        }   
-
-                        handleGetBook(id);
-                    });
-                }
-            });
-        });
-    });
-
-    app.delete('/api/author/:id', authenticate, function(req, res) {
-        let connection = getConnection();
-        authorService.setConnection(connection);
-
-        authorService.removeAuthor(req.params.id, function(err, result) {
-            if (err) {
-                handleError(err, res);
-                connection.end();
-                return;
+                    handleGetBook(id);
+                });
             }
-
-            res.charSet = 'utf8';
-            res.status(200).json({status: "OK"});
-            connection.end();
         });
     });
+});
 
     app.post('/api/author', authenticate, function(req, res) {
         let connection = getConnection();
@@ -263,7 +246,7 @@ createServer(config, webpackConfig, (app) => {
                     handleError(err, res);
                     connection.end();
                     return;
-                } 
+                }
 
                 let author = {};
 
@@ -306,7 +289,7 @@ createServer(config, webpackConfig, (app) => {
                 handleError(err, res);
                 connection.end();
                 return;
-            } 
+            }
 
             let author = {};
 
@@ -323,7 +306,7 @@ createServer(config, webpackConfig, (app) => {
     app.get('/api/author/:id', function(req, res) {
         let connection = getConnection();
         authorService.setConnection(connection);
-        
+
         loadAuthorWithBooks(req.params.id, connection, res);
     });
 
@@ -371,7 +354,7 @@ createServer(config, webpackConfig, (app) => {
                 connection.end();
                 return;
             }
-            
+
             connection.end();
             res.charSet = 'utf8';
             res.status(200).json(result);
@@ -423,7 +406,7 @@ createServer(config, webpackConfig, (app) => {
 
                 res.status(200).json(validated.toArray());
             });
-            
+
         });
     });
 
@@ -446,12 +429,9 @@ createServer(config, webpackConfig, (app) => {
 
     app.post('/api/file', function(req, res) {
         const {body, params} = req;
-
         var buf = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
         var newPath = __dirname + "/../uploads/" + req.body.filename;
-        
-
         Jimp.read(buf, (err, image) => {
 
             image.resize(456, 600).write(newPath);
@@ -507,5 +487,5 @@ createServer(config, webpackConfig, (app) => {
         connection.connect();
 
         return connection;
-    }    
+    }
 });

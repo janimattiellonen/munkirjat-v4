@@ -26,6 +26,7 @@ export default class MunkirjatApp extends React.Component {
     }
 
     componentWillMount() {
+      console.log("MunkirjatApp::componentWillMount()");
         this.props.bookActions.fetchBooks();
         this.props.authorActions.fetchAuthors();
         this.props.genreActions.fetchGenres();

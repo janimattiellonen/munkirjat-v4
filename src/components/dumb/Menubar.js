@@ -31,14 +31,11 @@ export default class Menubar extends Component {
 		                    {this.renderNewAuthorMenuitem()}
 
 		                    <li><Link to="/genres">Genres</Link></li>
-							<li><Link to="/covers">Covers</Link></li>
-							<li><Link to="/cover/upload">Upload cover</Link></li>
-
 
 		                    {this.renderUserMenuitem()}
 		                </ul>
 		            </div>
-		        </div>       
+		        </div>
 		    </div>
 		)
 	}

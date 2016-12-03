@@ -13,9 +13,9 @@ export default class BookService {
 
     createBook(book, callback) {
         this.connection.query(
-            `INSERT INTO 
-                book (title, language_id, page_count, is_read, started_reading, finished_reading, price) 
-            VALUES 
+            `INSERT INTO
+                book (title, language_id, page_count, is_read, started_reading, finished_reading, price)
+            VALUES
                 (:title, :language, :pageCount, :isRead, :startedReading, :finishedReading, :price)`,
             {
                 title: book.title,
@@ -32,17 +32,17 @@ export default class BookService {
 
     updateBook(id, book, callback) {
         this.connection.query(
-            `UPDATE 
-                book 
-            SET 
-                title = :title, 
-                language_id = :language_id, 
-                page_count = :page_count, 
-                is_read = :is_read, 
-                started_reading = :started_reading, 
-                finished_reading = :finished_reading, 
-                price = :price 
-            WHERE 
+            `UPDATE
+                book
+            SET
+                title = :title,
+                language_id = :language_id,
+                page_count = :page_count,
+                is_read = :is_read,
+                started_reading = :started_reading,
+                finished_reading = :finished_reading,
+                price = :price
+            WHERE
                 id = :id`,
             {
                 title: book.title,
@@ -79,7 +79,7 @@ export default class BookService {
             `INSERT INTO book_author (book_id, author_id) VALUES ${placeHolders}`,
             params,
             callback
-        ); 
+        );
     }
 
     setAuthors(id, authors, callback) {
@@ -122,7 +122,7 @@ export default class BookService {
             `INSERT INTO xi_tagging (resource_id, tag_id, resource_type) VALUES ${placeHolders}`,
             params,
             callback
-        ); 
+        );
     }
 
     setGenres(id, genres, callback) {
@@ -131,10 +131,10 @@ export default class BookService {
             if (err) {
                 throw err;
             }
-                        
-            this.addGenres(id, genres, callback);  
+
+            this.addGenres(id, genres, callback);
         });
-    }    
+    }
 
     removeGenres(bookId, callback) {
         this.connection.query(
@@ -163,10 +163,9 @@ export default class BookService {
                 b.finished_reading,
                 b.rating,
                 b.price,
-                b.cover_url,
                 g.id AS genre_id,
                 g.name AS genre_name
-            FROM 
+            FROM
                 book AS b LEFT JOIN book_author AS ba ON b.id = ba.book_id
                 LEFT JOIN author AS a ON a.id = ba.author_id
                 LEFT JOIN xi_tagging AS bg ON b.id = bg.resource_id
@@ -180,7 +179,7 @@ export default class BookService {
 
     getBooks(mode, callback) {
         switch (mode) {
-            case 'read': 
+            case 'read':
                 this.getReadBooks(callback);
                 break;
             case 'unread':
@@ -231,14 +230,13 @@ export default class BookService {
                 b.finished_reading,
                 b.rating,
                 b.price,
-                b.cover_url,
                 a.id AS author_id,
                 a.firstname,
                 a.lastname,
                 CONCAT(firstname, ' ', lastname) AS author_name,
                 g.id AS genre_id,
                 g.name AS genre_name
-        FROM 
+        FROM
             book AS b
             LEFT JOIN book_author AS ba ON ba.book_id = b.id
             LEFT JOIN author AS a ON ba.author_id = a.id
@@ -255,7 +253,7 @@ export default class BookService {
         }
 
         query += ' ORDER BY b.title ASC';
-        
+
         return query;
     }
 
@@ -294,7 +292,6 @@ export default class BookService {
                     price: row.price,
                     authors: OrderedMap(),
                     genres: OrderedMap(),
-                    cover_url: row.cover_url
                 };
             }
 
@@ -309,41 +306,12 @@ export default class BookService {
                 book.genres = book.genres.set(row.genre_id, {
                     id: row.genre_id,
                     name: row.genre_name
-                });   
+                });
             }
 
             books = books.set(book.id, book);
         });
 
         return books;
-    }
-
-    linkBookWithCover(id, coverUrl, callback) {
-        this.connection.query(
-            `UPDATE 
-                book 
-            SET 
-                cover_url = :coverUrl
-            WHERE 
-                id = :id`,
-            {
-                coverUrl: coverUrl,
-                id: id
-            },
-            callback
-        );
-    }
-
-    getBooksWithCoverImages(callback) {
-        this.connection.query(
-            `SELECT
-                b.id,
-                b.cover_url
-            FROM
-                book AS b
-            WHERE
-                b.cover_url IS NOT NULL`,
-            callback
-        );
     }
 };

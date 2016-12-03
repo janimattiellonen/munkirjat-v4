@@ -26,7 +26,7 @@ export default React.createClass({
 				<div className="book-details">
 					{this.getTitleElement(book)}
 
-					<p>{this.getEditBookLink(book)}</p> 
+					<p>{this.getEditBookLink(book)}</p>
 
 					{this.renderAuthorDiv(book)}
 
@@ -36,7 +36,7 @@ export default React.createClass({
 						<div className="title">Language</div>
 						<div>{Utils.language(book.language_id)}</div>
 					</div>
-					
+
 					<div className="row">
 						<div className="title">Page count</div>
 						<div>{book.page_count}</div>
@@ -46,7 +46,7 @@ export default React.createClass({
 						<div className="title">Price</div>
 						<div>{Utils.money(book.price)}</div>
 					</div>
-					
+
 					<div className="row">
 						<div className="title">Is read</div>
 						<div>{Utils.yes_no(book.is_read)}</div>
@@ -62,10 +62,6 @@ export default React.createClass({
 						<div className="title">Finished reading</div>
 						<div>{Utils.date_format(book.finished_reading)}</div>
 					</div>
-				</div>
-
-				<div className="cover-image">
-					<img src={book.cover_url} />
 				</div>
 			</div>
 		);
@@ -90,7 +86,7 @@ export default React.createClass({
 			<ul>
 				{book.authors.map(author => {
 					return (
-						<li key={author.id}><Link to={'/author/' + author.id}>{author.name}</Link></li>	
+						<li key={author.id}><Link to={'/author/' + author.id}>{author.name}</Link></li>
 					)
 				})}
 			</ul>

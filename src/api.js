@@ -59,16 +59,4 @@ export default {
 	getGenres() {
 		return axios.get('/api/genres').then(res => List(res.data));
 	},
-
-	getCovers() {
-		return axios.get('/api/covers').then(res => List(res.data));
-	},
-
-	linkBookAndCover(bookId, coverUrl) {
-		return axios.post('/api/cover/link', {bookId: bookId, coverUrl: coverUrl}).then(res => res.data);
-	},
-
-	uploadFile(file, data) {
-		return axios.post('/api/file', {file: data, filename: file.name}, headers).then(res => res.data);
-	}
 };

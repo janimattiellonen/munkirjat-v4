@@ -1,10 +1,22 @@
-// TODO: remove this file when fuktored
-import api from '../api';
-import { List } from 'immutable';
-import Noty from '../components/Noty';
-import { Router, Route, Redirect, IndexRoute } from 'react-router';
-import { browserHistory as history } from 'react-router';
+import { List, Map} from 'immutable';
+import _ from 'lodash';
 import * as Errors from './Errors';
+import Noty from '../components/Noty';
+
+const defaultState = Map({
+	authors: List(),
+	author: {},
+	books: List(),
+	book: {}
+});
+
+function sortAuthors(authors) {
+	return _.orderBy(authors.toArray(), ['lastname', 'firstname'], ['asc']);
+}
+
+function sortAuthorsByBookCount(authors) {
+	return _.orderBy(authors.toArray(), ['amount'], ['desc']);
+}
 
 export function deleteAuthor(id) {
 	return {
@@ -113,5 +125,80 @@ export function searchAuthors(input) {
 	return function(dispatch, getState) {
 		api.searchAuthors(input).then(authors => {
 		}).catch(Errors.handleError);
+	}
+}
+
+
+export default function (state = defaultState, action) {
+	const { type, payload } = action;
+
+	switch (type) {
+		case 'AUTHORS_SORT_BY_BOOK_COUNT':
+			return {
+				...state,
+				authors: List(sortAuthorsByBookCount(state.authors))
+			}
+
+		case 'AUTHORS_SORT_BY_NAME':
+			return {
+				...state,
+				authors: List(sortAuthors(state.authors))
+			}
+
+		case 'AUTHOR_DELETE':
+			let list = List(state.authors);
+			let i = list.findIndex(item => item.id === action.id);
+
+			return {
+				...state,
+				authors: list.remove(i)
+			}
+
+		case 'AUTHOR_ADD':
+			let authors = List(state.authors.push(action.author));
+
+			return {
+				...state,
+				authors: List(sortAuthors(authors))
+			}
+
+		case 'AUTHOR_UPDATE':
+			let list = List(state.authors);
+			let i = list.findIndex(item => item.id === action.author.id);
+
+			list = list.set(i, action.author);
+
+			return {
+				...state,
+				authors: List(sortAuthors(list))
+			}
+
+		case 'AUTHOR_RESET':
+			return {
+				...state,
+				author: {}
+			};
+
+		case 'AUTHOR_FETCH':
+			return {
+				...state,
+				author: action.author
+			};
+
+		case 'AUTHORS_FETCH':
+			return {
+				...state,
+				authors: action.authors
+			};
+
+		case 'SET_BOOK_INFO':
+			return {
+				...state,
+				book: action.book,
+				showBookInfo: action.book != undefined && action.book.id != undefined
+			};
+
+		default:
+			return state;
 	}
 }

@@ -26,9 +26,10 @@ export default class MunkirjatApp extends React.Component {
     }
 
     componentWillMount() {
+      const { fetchAuthors } = this.props;
       console.log("MunkirjatApp::componentWillMount()");
         this.props.bookActions.fetchBooks();
-        this.props.authorActions.fetchAuthors();
+        fetchAuthors();
         this.props.genreActions.fetchGenres();
     }
 
@@ -37,5 +38,5 @@ export default class MunkirjatApp extends React.Component {
         $( document ).ajaxSend(function() {
             self.setupAjax();
         });
-    }  
+    }
 }

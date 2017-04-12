@@ -2,7 +2,7 @@ import uuid from 'node-uuid';
 import { List } from 'immutable';
 import { createServer } from './util/server';
 import config from '../config.server';
-import webpackConfig from '../webpack.config';
+import webpackConfig from '../webpack.config.babel';
 import bodyParser from 'body-parser';
 import mysql from 'mysql';
 import jwt from 'express-jwt';
